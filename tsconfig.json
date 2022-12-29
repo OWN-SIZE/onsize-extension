@@ -13,8 +13,13 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noEmit": false,
-    "jsx": "react"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
+  "files": ["svg.d.ts"],
   "include": ["src"],
   "exclude": ["build", "node_modules"]
 }

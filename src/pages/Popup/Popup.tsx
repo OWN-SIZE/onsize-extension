@@ -1,19 +1,12 @@
-import React from 'react';
+import Landing from './landing';
 import './Popup.css';
 
-const Popup = () => {
+function Popup() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/pages/Popup/Popup.tsx</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React!
-        </a>
-      </header>
+      <Landing />
     </div>
   );
-};
+}
 
 export default Popup;

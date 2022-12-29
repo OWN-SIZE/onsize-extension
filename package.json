@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension-boilerplate-react",
+  "name": "on-size-chrome-extension",
   "version": "4.4.0",
-  "description": "A chrome extension boilerplate built with React 17, Webpack 5, and Webpack Dev Server 4",
+  "description": "Chrome Extension for On Size",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -9,14 +9,17 @@
   },
   "scripts": {
     "build": "node utils/build.js",
-    "start": "node utils/webserver.js",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
+    "start": "node utils/webserver.js"
   },
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.2",
+    "@types/styled-components": "^5.1.26",
+    "axios": "^1.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hot-loader": "^4.13.1"
+    "react-hot-loader": "^4.13.1",
+    "recoil": "^0.7.6",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
@@ -28,6 +31,7 @@
     "@types/react-dom": "^17.0.11",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.3.0",
+    "babel-plugin-styled-components": "^2.0.7",
     "babel-preset-react-app": "^10.0.1",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^7.0.0",
@@ -48,6 +52,7 @@
     "sass-loader": "^13.2.0",
     "source-map-loader": "^3.0.1",
     "style-loader": "^3.3.1",
+    "styled-component": "^2.8.0",
     "terser-webpack-plugin": "^5.3.6",
     "ts-loader": "^9.4.1",
     "typescript": "^4.9.3",
