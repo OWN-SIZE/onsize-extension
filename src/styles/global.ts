@@ -3,20 +3,19 @@ import reset from 'styled-reset';
 
 const GlobalStyle: any = createGlobalStyle`
   ${reset};
-  html{
-    font-size:62.5%;
-  }
-
   html,
   body {
-    max-width: 100vw;
+    font-size:62.5%;
     margin: 0 auto;
   }
 
-  body{
+  #app-container{
     width:38rem;
     height:38rem;
-    border:1px solid black;
+    margin:0;
+    padding:0;
+    border:1px solid #000;
+    border-radius: 1.2rem;
   }
   
   * {
@@ -32,7 +31,6 @@ const GlobalStyle: any = createGlobalStyle`
   }
   input {
     -webkit-appearance: none;
-    -webkit-border-radius: 0;
   }
   input:focus {
     outline: none;

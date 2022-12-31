@@ -1,10 +1,13 @@
+import GlobalStyle from '../../styles/global';
+import Layout from '../../components/common/Layout';
 import Landing from './landing';
 
 function Popup() {
   return (
-    <div className="App">
+    <Layout back close>
+      <GlobalStyle />
       <Landing />
-    </div>
+    </Layout>
   );
 }
 

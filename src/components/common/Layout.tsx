@@ -1,20 +1,27 @@
 import { PropsWithChildren, ReactNode } from 'react';
 import styled from 'styled-components';
+import Header from './Header';
 
 interface LayoutProps {
   children: ReactNode;
+  back?: boolean;
+  title?: string;
+  close?: boolean;
 }
 
 function Layout(props: PropsWithChildren<LayoutProps>) {
-  const { children } = props;
-  return <Root>{children}</Root>;
+  const { children, back, title, close } = props;
+  return (
+    <Root>
+      <Header back={back} title={title} close={close} />
+      {children}
+    </Root>
+  );
 }
 
 export default Layout;
 
 const Root = styled.div`
-  width: 100vw;
-  height: 100vh;
   display: flex;
   flex-direction: column;
 `;
