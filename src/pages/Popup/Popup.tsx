@@ -1,5 +1,4 @@
 import Landing from './landing';
-import './Popup.css';
 
 function Popup() {
   return (
