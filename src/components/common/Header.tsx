@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import icBack from '../../assets/img/back.svg';
-import icClose from '../../assets/img/close.svg';
+import icBack from '../../assets/icons/back.svg';
+import icClose from '../../assets/icons/close.svg';
 interface HeaderProps {
   back?: boolean;
   title?: string;
