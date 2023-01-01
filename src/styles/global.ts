@@ -14,7 +14,6 @@ const GlobalStyle: any = createGlobalStyle`
     height:38rem;
     margin:0;
     padding:0;
-    border:1px solid #000;
     border-radius: 1.2rem;
   }
   

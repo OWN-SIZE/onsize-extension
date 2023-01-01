@@ -1,8 +1,16 @@
 import React from 'react';
 import Button from './Button';
+import SplitedButton from './SplitedButton';
 
-function Bottom() {
-  return <Button content="저장" />;
+interface BottomProps {}
+
+function Bottom(props: BottomProps) {
+  return (
+    <>
+      {/* <Button content="저장" /> */}
+      <SplitedButton />
+    </>
+  );
 }
 
 export default Bottom;

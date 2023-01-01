@@ -13,12 +13,12 @@ interface ColorMapType {
 
 const contentMap = {
   저장: {
-    background: '#1E2025',
     text: '#D9D9D9',
+    background: '#1E2025',
   },
   '사이즈 추천 받기': {
-    background: ' #FBF26C',
     text: '#1E2025',
+    background: ' #FBF26C',
   },
 };
 const mappingColor = (content: ContentType): ColorMapType => {
