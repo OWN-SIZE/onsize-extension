@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { default as IcBack } from '../../assets/img/back.svg';
-import { default as IcClose } from '../../assets/img/close.svg';
+import icBack from '../../assets/img/back.svg';
+import icClose from '../../assets/img/close.svg';
 interface HeaderProps {
   back?: boolean;
   title?: string;
@@ -12,9 +12,9 @@ function Header(props: HeaderProps) {
 
   return (
     <Root>
-      <Back>{back && <img src={IcBack} />}</Back>
+      <Back>{back && <img src={icBack} alt="back" />}</Back>
       <Title>{title || null}</Title>
-      <Close>{close && <img src={IcClose} />}</Close>
+      <Close>{close && <img src={icClose} alt="close" />}</Close>
     </Root>
   );
 }
@@ -22,11 +22,31 @@ function Header(props: HeaderProps) {
 export default Header;
 
 const Root = styled.div`
+  width: 100%;
+  height: 4.2rem;
+  border: 1px solid #000;
   display: flex;
+  padding: 1.8rem 1.7rem;
+  justify-content: space-between;
+  align-items: center;
 `;
 
-const Back = styled.div``;
+const Back = styled.div`
+  width: 2.4rem;
+  height: 2.4rem;
+  & > img {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+`;
 
 const Title = styled.h1``;
 
-const Close = styled.div``;
+const Close = styled.div`
+  width: 2.4rem;
+  height: 2.4rem;
+  & > img {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+`;
