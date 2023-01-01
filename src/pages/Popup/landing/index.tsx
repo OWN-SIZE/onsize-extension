@@ -7,5 +7,6 @@ function Landing() {
 export default Landing;
 
 const Root = styled.div`
-  color: #fff;
+  height: 27rem;
+  /* color: #fff; */
 `;

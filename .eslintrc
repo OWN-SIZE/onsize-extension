@@ -11,16 +11,19 @@
   },
   "plugins": ["react"],
   "rules": {
-    "prettier/prettier": [
-      "error",
-      { "endOfLine": "auto" },
-      { "usePrettierrc": true }
-    ],
+    "prettier/prettier": ["error", { "endOfLine": "auto" }, { "usePrettierrc": true }],
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "react/display-name": "off",
     "no-unused-expressions": "off",
     "no-unused-vars": "warn",
     "no-console": "warn"
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [["@", "./src"]]
+      }
+    }
   }
 }

@@ -1,5 +1,4 @@
 import { render } from 'react-dom';
-import Popup from './Popup';
-import './index.css';
+import App from './App';
 
-render(<Popup />, window.document.querySelector('#app-container'));
+render(<App />, window.document.querySelector('#app-container'));

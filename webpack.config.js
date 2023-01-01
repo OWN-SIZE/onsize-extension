@@ -58,15 +58,6 @@ var options = {
         ],
       },
       {
-        test: new RegExp('.(' + fileExtensions.join('|') + ')$'),
-        type: 'asset/resource',
-        exclude: /node_modules/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]',
-        },
-      },
-      {
         test: /\.html$/,
         loader: 'html-loader',
         exclude: /node_modules/,
@@ -83,6 +74,17 @@ var options = {
           },
         ],
         exclude: /node_modules/,
+      },
+      {
+        test: /\.(png|jp(e*)g|svg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[hash]-[name].[ext]',
+            },
+          },
+        ],
       },
     ],
   },
