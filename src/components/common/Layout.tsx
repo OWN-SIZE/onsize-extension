@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactNode } from 'react';
 import styled from 'styled-components';
+import Bottom from './Bottom';
 import Header from './Header';
 
 interface LayoutProps {
@@ -15,6 +16,7 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
     <Root>
       <Header back={back} title={title} close={close} />
       {children}
+      <Bottom />
     </Root>
   );
 }
