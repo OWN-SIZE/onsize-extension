@@ -39,7 +39,12 @@ const Back = styled.div`
   }
 `;
 
-const Title = styled.h1``;
+const Title = styled.h1`
+  font-weight: 600;
+  font-size: 1.8rem;
+  line-height: 2.5rem;
+  color: #000000;
+`;
 
 const Close = styled.div`
   width: 2.4rem;
