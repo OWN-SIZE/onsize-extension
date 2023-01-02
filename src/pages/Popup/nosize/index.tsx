@@ -1,11 +1,12 @@
-import Alert from '../../../components/common/Alert';
-import { ALERT_LINK, ALERT_MESSAGE } from '../../../contants/alert';
 import styled from 'styled-components';
+import Main from '../../../components/common/Main';
+import { LINK, MESSAGE } from '../../../contants/main';
+import icAlert from '../../../assets/icons/alert.svg';
 
 function NoSize() {
-  const getLink = <Styled.Link>{ALERT_LINK}</Styled.Link>;
+  const getLink = <Styled.Link>{LINK}</Styled.Link>;
 
-  return <Alert content={ALERT_MESSAGE.NO_PROPER_SIZE} link={getLink} />;
+  return <Main src={icAlert} content={MESSAGE.NO_PROPER_SIZE} link={getLink} />;
 }
 
 export default NoSize;

@@ -1,19 +1,19 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
-import icAlert from '../../../assets/icons/alert.svg';
 
 interface AlertProps {
+  src?: string;
   content?: string;
   caption?: boolean;
   link?: ReactNode;
 }
 
-function Alert(props: AlertProps) {
-  const { content, caption, link } = props;
+function Main(props: AlertProps) {
+  const { src, content, caption, link } = props;
 
   return (
     <Styled.Root>
-      <Styled.AlertImage src={icAlert} alt="alert" />
+      <Styled.Image src={src} alt="main icon" />
       <Styled.Content>{content}</Styled.Content>
       {caption && <Styled.Caption>{caption}</Styled.Caption>}
       {link && <Styled.Link>{link}</Styled.Link>}
@@ -21,7 +21,7 @@ function Alert(props: AlertProps) {
   );
 }
 
-export default Alert;
+export default Main;
 
 const Styled = {
   Root: styled.div`
@@ -30,7 +30,7 @@ const Styled = {
     align-items: center;
     justify-content: center;
   `,
-  AlertImage: styled.img`
+  Image: styled.img`
     margin-bottom: 2.6rem;
   `,
   Content: styled.h1`
