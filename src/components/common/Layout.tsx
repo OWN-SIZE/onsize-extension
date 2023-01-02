@@ -13,18 +13,23 @@ interface LayoutProps {
 function Layout(props: PropsWithChildren<LayoutProps>) {
   const { children, back, title, close } = props;
   return (
-    <Root>
+    <Styled.Root>
       <Header back={back} title={title} close={close} />
-      {children}
+      <Styled.Main>{children}</Styled.Main>
       <Bottom />
-    </Root>
+    </Styled.Root>
   );
 }
 
 export default Layout;
 
-const Root = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-`;
+const Styled = {
+  Root: styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  `,
+  Main: styled.main`
+    height: 27.1rem;
+  `,
+};
