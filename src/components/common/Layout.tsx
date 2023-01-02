@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactNode } from 'react';
 import styled from 'styled-components';
 import Bottom from './Bottom';
-import Header from './Header';
+import Header from './Header/Header';
 
 interface LayoutProps {
   children: ReactNode;
