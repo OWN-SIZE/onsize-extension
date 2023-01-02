@@ -27,7 +27,4 @@ const Root = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 1.26667px solid #959595;
-  box-shadow: 0px 5.06667px 5.06667px rgba(217, 217, 217, 0.5);
-  border-radius: 12px;
 `;
