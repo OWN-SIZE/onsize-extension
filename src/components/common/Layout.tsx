@@ -1,6 +1,5 @@
 import { PropsWithChildren, ReactNode } from 'react';
 import styled from 'styled-components';
-import Bottom from './Bottom';
 import Header from './Header/Header';
 
 interface LayoutProps {
@@ -15,8 +14,7 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
   return (
     <Styled.Root>
       <Header back={back} title={title} close={close} />
-      <Styled.Main>{children}</Styled.Main>
-      <Bottom />
+      {children}
     </Styled.Root>
   );
 }
@@ -28,8 +26,5 @@ const Styled = {
     position: relative;
     display: flex;
     flex-direction: column;
-  `,
-  Main: styled.main`
-    height: 27.1rem;
   `,
 };

@@ -21,7 +21,7 @@ const Styled = {
     width: 26.6rem;
     color: #1e2025;
     background-color: #fbf26c;
-    border-radius: 0px 33.5525px 0px 12px;
+    border-radius: 0px 33.5525px 0px 0px;
     font-weight: 600;
     font-size: 16px;
     line-height: 120%;
@@ -30,7 +30,7 @@ const Styled = {
     width: 11.4rem;
     color: #d9d9d9;
     background-color: #1e2025;
-    border-radius: 33.552px 0px 12px 0px;
+    border-radius: 33.552px 0px 0px 0px;
     font-weight: 600;
     font-size: 16px;
     line-height: 120%;

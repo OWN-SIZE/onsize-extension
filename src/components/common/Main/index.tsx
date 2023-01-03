@@ -25,6 +25,7 @@ export default Main;
 
 const Styled = {
   Root: styled.div`
+    height: 27.1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
