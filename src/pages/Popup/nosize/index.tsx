@@ -2,11 +2,17 @@ import styled from 'styled-components';
 import Main from '../../../components/common/Main';
 import { LINK, MESSAGE } from '../../../contants/main';
 import icAlert from '../../../assets/icons/alert.svg';
+import Button from '../../../components/common/Button';
 
 function NoSize() {
   const getLink = <Styled.Link>{LINK}</Styled.Link>;
 
-  return <Main src={icAlert} content={MESSAGE.NO_PROPER_SIZE} link={getLink} />;
+  return (
+    <>
+      <Main src={icAlert} content={MESSAGE.NO_PROPER_SIZE} link={getLink} />
+      <Button content="저장" />
+    </>
+  );
 }
 
 export default NoSize;
