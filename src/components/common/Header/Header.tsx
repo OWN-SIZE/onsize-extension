@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import icBack from '../../../assets/icons/back.svg';
 import icClose from '../../../assets/icons/close.svg';
 interface HeaderProps {
@@ -10,11 +11,15 @@ interface HeaderProps {
 function Header(props: HeaderProps) {
   const { back, title, close } = props;
 
+  const closePopup = () => {
+    window.close();
+  };
+
   return (
     <Styled.Root>
       <Styled.Back>{back && <img src={icBack} alt="back" />}</Styled.Back>
       <Styled.Title>{title || null}</Styled.Title>
-      <Styled.Close>{close && <img src={icClose} alt="close" />}</Styled.Close>
+      <Styled.Close onClick={closePopup}>{close && <img src={icClose} alt="close" />}</Styled.Close>
     </Styled.Root>
   );
 }
@@ -33,6 +38,8 @@ const Styled = {
   Back: styled.div`
     width: 2.4rem;
     height: 2.4rem;
+    cursor: pointer;
+
     & > img {
       width: 2.4rem;
       height: 2.4rem;
@@ -47,6 +54,8 @@ const Styled = {
   Close: styled.div`
     width: 2.4rem;
     height: 2.4rem;
+    cursor: pointer;
+
     & > img {
       width: 2.4rem;
       height: 2.4rem;
