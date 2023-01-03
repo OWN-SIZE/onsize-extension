@@ -6,4 +6,7 @@ export const MESSAGE = {
 
 export const CAPTION = '먼저 나의 사이즈를 등록해주세요';
 
-export const LINK = '내 사이즈와 비교하기';
+export const LINK = {
+  ANCHOR: '내 사이즈와 비교하기',
+  BUTTON: '내 사이즈 등록하기',
+};
