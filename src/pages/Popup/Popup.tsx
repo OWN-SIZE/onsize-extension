@@ -1,8 +1,10 @@
-import GlobalStyle from '../../styles/global';
 import Layout from '../../components/common/Layout';
+import GlobalStyle from '../../styles/global';
+
+import CannotLoadSize from './cannotloadsize';
 import Landing from './landing';
 import NoSize from './nosize';
-import CannotLoadSize from './cannotloadsize';
+import NoSizeCompare from './nosizecompare';
 
 function Popup() {
   return (
@@ -10,7 +12,8 @@ function Popup() {
       <GlobalStyle />
       {/* <Landing /> */}
       {/* <NoSize /> */}
-      <CannotLoadSize />
+      {/* <CannotLoadSize /> */}
+      <NoSizeCompare />
     </Layout>
   );
 }

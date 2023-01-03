@@ -1,11 +1,12 @@
 import styled from 'styled-components';
-import Main from '../../../components/common/Main';
-import { LINK, MESSAGE } from '../../../contants/main';
+
 import icAlert from '../../../assets/icons/alert.svg';
 import Button from '../../../components/common/Button';
+import Main from '../../../components/common/Main';
+import { LINK, MESSAGE } from '../../../contants/main';
 
 function NoSize() {
-  const getLink = <Styled.Link>{LINK}</Styled.Link>;
+  const getLink = <Styled.Link>{LINK.ANCHOR}</Styled.Link>;
 
   return (
     <>

@@ -1,11 +1,12 @@
-import Main from '../../../components/common/Main';
-import icAlert from '../../../assets/icons/alert.svg';
-import { LINK, MESSAGE } from '../../../contants/main';
 import styled from 'styled-components';
+
+import icAlert from '../../../assets/icons/alert.svg';
+import Main from '../../../components/common/Main';
 import SplitedButton from '../../../components/common/SplitedButton';
+import { LINK, MESSAGE } from '../../../contants/main';
 
 function CannotLoadSize() {
-  const getLink = <Styled.Link>{LINK}</Styled.Link>;
+  const getLink = <Styled.Link>{LINK.ANCHOR}</Styled.Link>;
 
   return (
     <>
