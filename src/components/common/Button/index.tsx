@@ -21,13 +21,13 @@ const contentMap = {
     background: ' #FBF26C',
   },
 };
-const mappingColor = (content: ContentType): ColorMapType => {
+const colorMapper = (content: ContentType): ColorMapType => {
   return contentMap[content];
 };
 
 function Button(props: ButtonProps) {
   const { content } = props;
-  const { background, text } = mappingColor(content);
+  const { background, text } = colorMapper(content);
 
   return (
     <Root text={text} background={background}>
