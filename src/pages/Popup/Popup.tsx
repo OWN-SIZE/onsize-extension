@@ -4,7 +4,7 @@ import GlobalStyle from '../../styles/global';
 import CannotLoadSize from './cannotloadsize';
 import Landing from './landing';
 import NoSize from './nosize';
-import NoSizeCompare from './nosizecompare';
+import SizeCompare from './size-compare';
 
 function Popup() {
   return (
@@ -13,7 +13,7 @@ function Popup() {
       {/* <Landing /> */}
       {/* <NoSize /> */}
       {/* <CannotLoadSize /> */}
-      <NoSizeCompare />
+      <SizeCompare />
     </Layout>
   );
 }
