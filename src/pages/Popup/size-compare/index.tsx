@@ -6,7 +6,7 @@ import SplitedButton from '../../../components/common/SplitedButton';
 import { BottomType, ContentsType, TopType } from '../../../components/size-compare';
 import Sizes from '../../../components/size-compare/Sizes';
 import Tabs from '../../../components/size-compare/Tabs';
-import { LINK, MESSAGE } from '../../../contants/main';
+import { CAPTION, LINK, MESSAGE } from '../../../contants/main';
 import useTabs from '../../../hooks/ui/useTabs';
 
 const top: TopType | null = {
@@ -14,13 +14,7 @@ const top: TopType | null = {
   '가슴 단면': 200,
   '어깨 단면': 300,
 };
-const bottom: BottomType | null = {
-  총장: 100,
-  '밑단 단면': 100,
-  밑위: 50.2,
-  '허리 단면': 12.3,
-  '허벅지 단면': 56.34,
-};
+const bottom: BottomType | null = null;
 
 const contentsMapper: ContentsType = {
   top,
@@ -42,14 +36,10 @@ function SizeCompare() {
         </Styled.Root>
       ) : (
         <>
-          <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} link={!nosize && getLink} />
+          <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} caption={nosize} link={!nosize && getLink} />
           {nosize && <SplitedButton />}
         </>
       )}
-      {/* TODO : 
-    top, bottom 둘 다 없는 경우 > 내 사이즈 등록하기 링크
-    top, bottom 둘 중 하나라도 입력해둔 경우 > SplitedButton
-     */}
     </>
   );
 }
@@ -64,6 +54,7 @@ const Styled = {
   `,
   Link: styled.button`
     padding: 1.2rem 5.8rem;
+    margin-top: 2.6rem;
     background: #fffaad;
     box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.05);
     border-radius: 2.15rem;

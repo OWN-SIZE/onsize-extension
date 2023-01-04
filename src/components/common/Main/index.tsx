@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 
+import { CAPTION } from '../../../contants/main';
+
 interface AlertProps {
   src?: string;
   content?: string;
@@ -15,7 +17,7 @@ function Main(props: AlertProps) {
     <Styled.Root>
       <Styled.Image src={src} alt="main icon" />
       <Styled.Content>{content}</Styled.Content>
-      {caption && <Styled.Caption>{caption}</Styled.Caption>}
+      {caption && <Styled.Caption>{CAPTION}</Styled.Caption>}
       {link && <Styled.Link>{link}</Styled.Link>}
     </Styled.Root>
   );
@@ -29,7 +31,7 @@ const Styled = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    padding-top: 4rem;
   `,
   Image: styled.img`
     margin-bottom: 2.6rem;
@@ -39,7 +41,6 @@ const Styled = {
     font-size: 1.8rem;
     line-height: 2.5rem;
     color: #1e2025;
-    margin-bottom: 2.6rem;
   `,
   Caption: styled.div`
     font-weight: 400;

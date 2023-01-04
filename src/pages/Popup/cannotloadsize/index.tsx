@@ -20,6 +20,7 @@ export default CannotLoadSize;
 
 const Styled = {
   Link: styled.a`
+    margin-top: 0.815rem;
     font-weight: 500;
     font-size: 1.4rem;
     line-height: 1.9rem;
