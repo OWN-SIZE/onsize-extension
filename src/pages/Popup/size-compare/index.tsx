@@ -2,21 +2,51 @@ import styled from 'styled-components';
 
 import icAlert from '../../../assets/icons/alert.svg';
 import Main from '../../../components/common/Main';
+import SplitedButton from '../../../components/common/SplitedButton';
+import { BottomType, ContentsType, TopType } from '../../../components/size-compare';
+import Sizes from '../../../components/size-compare/Sizes';
 import Tabs from '../../../components/size-compare/Tabs';
 import { LINK, MESSAGE } from '../../../contants/main';
 import useTabs from '../../../hooks/ui/useTabs';
 
+const top: TopType | null = {
+  총장: 100,
+  '가슴 단면': 200,
+  '어깨 단면': 300,
+};
+const bottom: BottomType | null = {
+  총장: 100,
+  '밑단 단면': 100,
+  밑위: 50.2,
+  '허리 단면': 12.3,
+  '허벅지 단면': 56.34,
+};
+
+const contentsMapper: ContentsType = {
+  top,
+  bottom,
+};
+
 function SizeCompare() {
   const { currentTab, handleTab } = useTabs();
+  const nosize = !contentsMapper['top'] && !contentsMapper['bottom'];
 
   const getLink = <Styled.Link>{LINK.BUTTON}</Styled.Link>;
 
   return (
     <>
-      <Tabs currentTab={currentTab} handler={handleTab} />
-      <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} link={getLink} />
+      {!nosize && <Tabs currentTab={currentTab} handler={handleTab} />}
+      {contentsMapper[currentTab] ? (
+        <Styled.Root isTop={currentTab === 'top'}>
+          <Sizes sizes={contentsMapper[currentTab]} currentTab={currentTab} />
+        </Styled.Root>
+      ) : (
+        <>
+          <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} link={!nosize && getLink} />
+          {nosize && <SplitedButton />}
+        </>
+      )}
       {/* TODO : 
-      sizeInfo 컴포넌트 구현.
     top, bottom 둘 다 없는 경우 > 내 사이즈 등록하기 링크
     top, bottom 둘 중 하나라도 입력해둔 경우 > SplitedButton
      */}
@@ -27,6 +57,11 @@ function SizeCompare() {
 export default SizeCompare;
 
 const Styled = {
+  Root: styled.div<{ isTop: boolean }>`
+    display: flex;
+    justify-content: center;
+    padding-top: ${({ isTop }) => (isTop ? '5.6rem' : '3rem')};
+  `,
   Link: styled.button`
     padding: 1.2rem 5.8rem;
     background: #fffaad;

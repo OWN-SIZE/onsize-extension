@@ -7,6 +7,7 @@ const GlobalStyle: any = createGlobalStyle`
   body {
     font-size:62.5%;
     margin: 0 auto;
+    background-color: #F6F6F6;
   }
 
   #app-container{
