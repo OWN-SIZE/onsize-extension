@@ -7,14 +7,14 @@ const GlobalStyle: any = createGlobalStyle`
   body {
     font-size:62.5%;
     margin: 0 auto;
+    background-color: #F6F6F6;
   }
 
   #app-container{
     width:38rem;
-    height:38rem;
+    height:37.5rem;
     margin:0;
     padding:0;
-    border-radius: 1.2rem;
   }
   
   * {
