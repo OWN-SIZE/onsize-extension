@@ -1,4 +1,3 @@
-import Layout from '../../components/common/Layout';
 import GlobalStyle from '../../styles/global';
 
 import CannotLoadSize from './cannotloadsize';
@@ -8,13 +7,13 @@ import SizeCompare from './size-compare';
 
 function Popup() {
   return (
-    <Layout back close>
+    <>
       <GlobalStyle />
       {/* <Landing /> */}
       {/* <NoSize /> */}
       {/* <CannotLoadSize /> */}
-      <SizeCompare />
-    </Layout>
+      <SizeCompare isSelfWrite={true} />
+    </>
   );
 }
 
