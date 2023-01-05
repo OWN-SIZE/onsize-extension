@@ -12,7 +12,7 @@ function Popup() {
       {/* <Landing /> */}
       {/* <NoSize /> */}
       {/* <CannotLoadSize /> */}
-      <SizeCompare isSelfWrite={true} />
+      <SizeCompare isSelfWrite={false} />
     </>
   );
 }

@@ -39,7 +39,6 @@ const bottom: Omit<BottomType, 'isWidthOfBottom'> = {
 
 function SizeCompare(props: SizeCompareProps) {
   const { isSelfWrite } = props;
-  // const selectedType = 'top';
 
   return isSelfWrite ? (
     <Layout title="내 사이즈와 이렇게 달라요" close>

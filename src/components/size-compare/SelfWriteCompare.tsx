@@ -6,7 +6,7 @@ import Sizes from './Sizes';
 import { BottomType, TopType } from '.';
 
 interface SelfWriteCompareProps {
-  sizes: Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'> | null;
+  sizes: Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>;
 }
 
 function SelfWriteCompare(props: SelfWriteCompareProps) {

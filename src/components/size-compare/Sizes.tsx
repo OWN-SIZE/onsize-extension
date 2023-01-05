@@ -4,7 +4,7 @@ import { topBottomTextConverter, topBottomTextMapper } from '../../../utils/topB
 
 import { BottomType, TabName, TopType } from '.';
 interface SizesProps {
-  sizes: Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'> | null;
+  sizes: Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>;
   currentTab: TabName;
   isSelfWrite?: boolean;
 }
@@ -20,17 +20,16 @@ function Sizes(props: SizesProps) {
 
   return (
     <Styled.Root>
-      {sizes &&
-        Object.entries(sizes).map(([key, size]) => (
-          <Styled.Size isTop={currentTab === 'top'}>
-            <Styled.SizeKey>{topBottomTextConverter(key as keyof typeof topBottomTextMapper)}</Styled.SizeKey>
-            <Styled.SizeValue isSelfWrite={isSelfWrite ? true : false}>
-              {size.toFixed(1)}
-              <span>cm</span>
-              {isSelfWrite && <Styled.Differ>+2</Styled.Differ>}
-            </Styled.SizeValue>
-          </Styled.Size>
-        ))}
+      {Object.entries(sizes).map(([key, size]) => (
+        <Styled.Size isTop={currentTab === 'top'}>
+          <Styled.SizeKey>{topBottomTextConverter(key as keyof typeof topBottomTextMapper)}</Styled.SizeKey>
+          <Styled.SizeValue isSelfWrite={isSelfWrite ? true : false}>
+            {size.toFixed(1)}
+            <span>cm</span>
+            {isSelfWrite && <Styled.Differ>+2</Styled.Differ>}
+          </Styled.SizeValue>
+        </Styled.Size>
+      ))}
     </Styled.Root>
   );
 }
