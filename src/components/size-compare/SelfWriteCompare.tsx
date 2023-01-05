@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import Button from '../common/Button';
 
 import Sizes from './Sizes';
-import { BottomType, TopType } from '.';
+import { BottomType, TabName, TopType } from '.';
 
 interface SelfWriteCompareProps {
   sizes: Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>;
@@ -11,7 +12,7 @@ interface SelfWriteCompareProps {
 
 function SelfWriteCompare(props: SelfWriteCompareProps) {
   const { sizes } = props;
-  const currentTab = 'top';
+  const [currentTab, setCurrentTab] = useState<TabName>('top');
 
   return (
     <>

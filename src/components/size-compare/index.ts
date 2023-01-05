@@ -8,9 +8,9 @@ export interface TopType {
 }
 export interface BottomType {
   bottomLength: number;
+  rise: number;
   waist: number;
   thigh: number;
-  rise: number;
   hem: number;
   isWidthOfBottom: boolean;
 }

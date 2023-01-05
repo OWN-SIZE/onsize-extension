@@ -31,9 +31,9 @@ const top: Omit<TopType, 'isWidthOfTop'> = {
 };
 const bottom: Omit<BottomType, 'isWidthOfBottom'> = {
   bottomLength: mySize.bottom.bottomLength,
+  rise: mySize.bottom.rise,
   waist: mySize.bottom.waist,
   thigh: mySize.bottom.thigh,
-  rise: mySize.bottom.rise,
   hem: mySize.bottom.hem,
 };
 
@@ -42,11 +42,11 @@ function SizeCompare(props: SizeCompareProps) {
 
   return isSelfWrite ? (
     <Layout title="내 사이즈와 이렇게 달라요" close>
-      <SelfWriteCompare sizes={top} />
+      <SelfWriteCompare sizes={bottom} />
     </Layout>
   ) : (
     <Layout back close>
-      <Compare sizes={top} noSize={!top && !bottom} />
+      <Compare sizes={bottom} noSize={!top && !bottom} />
     </Layout>
   );
 }
