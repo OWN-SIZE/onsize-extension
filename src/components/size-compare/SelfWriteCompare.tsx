@@ -1,23 +1,24 @@
-import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
+import { topOrBottomState } from '../../states/atom';
 import Button from '../common/Button';
 
 import Sizes from './Sizes';
-import { BottomType, TabName, TopType } from '.';
+import { BottomType, TopType } from '.';
 
 interface SelfWriteCompareProps {
-  sizes: Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>;
+  sizes: Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
 }
 
 function SelfWriteCompare(props: SelfWriteCompareProps) {
   const { sizes } = props;
-  const [currentTab, setCurrentTab] = useState<TabName>('top');
+  const topOrBottom = useRecoilValue(topOrBottomState);
 
   return (
     <>
-      <Styled.Root isTop={currentTab === 'top'}>
-        <Sizes sizes={sizes} currentTab={currentTab} isSelfWrite />
+      <Styled.Root isTop={topOrBottom === 'top'}>
+        <Sizes sizes={sizes} currentTab={topOrBottom} isSelfWrite />
       </Styled.Root>
       <Button content="저장" />
     </>

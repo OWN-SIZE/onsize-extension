@@ -1,21 +1,25 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { topBottomTextConverter, topBottomTextMapper } from '../../../utils/topBottomTextMapper';
+import { mySizeState, topOrBottomState } from '../../states/atom';
 
-import { BottomType, TabName, TopType } from '.';
+import { BottomType, TabName, TopBottomType, TopType } from '.';
 interface SizesProps {
-  sizes: Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>;
+  sizes: Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
   currentTab: TabName;
   isSelfWrite?: boolean;
 }
 
 function Sizes(props: SizesProps) {
   const { sizes, currentTab, isSelfWrite } = props;
+  const mySize = useRecoilValue(mySizeState);
+  const topOrBottom = useRecoilValue(topOrBottomState);
 
-  const calculateDifference = () => {
-    /** TODO
-     * 내 사이즈(sizes)랑 수동입력받은 데이터랑 오차범위 계산
-     */
+  const calculateDifference = (key: keyof TopBottomType, size: number) => {
+    const mysize = mySize[topOrBottom] as unknown as TopBottomType;
+    const compareTarget = mysize[key] as unknown as number;
+    return (size - compareTarget).toFixed(1);
   };
 
   return (
@@ -26,7 +30,7 @@ function Sizes(props: SizesProps) {
           <Styled.SizeValue isSelfWrite={isSelfWrite ? true : false}>
             {size.toFixed(1)}
             <span>cm</span>
-            {isSelfWrite && <Styled.Differ>+2</Styled.Differ>}
+            {isSelfWrite && <Styled.Differ>{calculateDifference(key as keyof TopBottomType, size)}</Styled.Differ>}
           </Styled.SizeValue>
         </Styled.Size>
       ))}

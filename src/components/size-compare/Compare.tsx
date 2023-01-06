@@ -8,15 +8,15 @@ import SplitedButton from '../common/SplitedButton';
 
 import Sizes from './Sizes';
 import Tabs from './Tabs';
-import { BottomType, SizeType, TopType } from '.';
+import { BottomType, TopType } from '.';
 
 interface CompareProps {
-  sizes: Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'> | null;
+  sizes: Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
   noSize: boolean;
 }
 
 function Compare(props: CompareProps) {
-  const { sizes, noSize } = props;
+  const { noSize, sizes } = props;
   const { currentTab, handleTab } = useTabs();
 
   const getLink = <Styled.Link>{LINK.BUTTON}</Styled.Link>;
