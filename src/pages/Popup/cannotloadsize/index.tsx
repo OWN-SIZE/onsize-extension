@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import icAlert from '../../../assets/icons/alert.svg';
+import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import SplitedButton from '../../../components/common/SplitedButton';
 import { LINK, MESSAGE } from '../../../contants/main';
@@ -9,10 +10,10 @@ function CannotLoadSize() {
   const getLink = <Styled.Link>{LINK.ANCHOR}</Styled.Link>;
 
   return (
-    <>
+    <Layout close>
       <Main src={icAlert} content={MESSAGE.CANNOT_LOAD_SIZE} link={getLink} />
       <SplitedButton />
-    </>
+    </Layout>
   );
 }
 
@@ -20,7 +21,6 @@ export default CannotLoadSize;
 
 const Styled = {
   Link: styled.a`
-    margin-top: 0.815rem;
     font-weight: 500;
     font-size: 1.4rem;
     line-height: 1.9rem;
