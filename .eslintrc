@@ -23,7 +23,7 @@
     }
   },
   "env": {
-    "browser": true,
+    "node": true,
     "es2021": true,
     "commonjs": true,
     "jest": true
@@ -39,7 +39,8 @@
     "no-unused-expressions": "off",
     "no-unused-vars": "warn",
     "no-console": "warn",
-    "@typescript-eslint/explicit-module-boundary-types": "off"
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-var-requires": 0
   },
   "overrides": [
     // override "simple-import-sort" config

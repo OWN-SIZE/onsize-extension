@@ -1,66 +1,55 @@
-import styled from 'styled-components';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 
-import icAlert from '../../../assets/icons/alert.svg';
-import Main from '../../../components/common/Main';
-import SplitedButton from '../../../components/common/SplitedButton';
-import { BottomType, ContentsType, TopType } from '../../../components/size-compare';
-import Sizes from '../../../components/size-compare/Sizes';
-import Tabs from '../../../components/size-compare/Tabs';
-import { CAPTION, LINK, MESSAGE } from '../../../contants/main';
-import useTabs from '../../../hooks/ui/useTabs';
+import Layout from '../../../components/common/Layout';
+import { SizeType } from '../../../components/size-compare';
+import Compare from '../../../components/size-compare/Compare';
+import SelfWriteCompare from '../../../components/size-compare/SelfWriteCompare';
+import { mySizeState } from '../../../states/atom';
 
-const top: TopType | null = {
-  총장: 100,
-  '가슴 단면': 200,
-  '어깨 단면': 300,
-};
-const bottom: BottomType | null = null;
+interface SizeCompareProps {
+  isSelfWrite: boolean;
+}
 
-const contentsMapper: ContentsType = {
-  top,
-  bottom,
-};
+function SizeCompare(props: SizeCompareProps) {
+  const { isSelfWrite } = props;
 
-function SizeCompare() {
-  const { currentTab, handleTab } = useTabs();
-  const nosize = !contentsMapper['top'] && !contentsMapper['bottom'];
+  // 서버에서 받아오는 사용자 실측 사이즈 데이터
+  const [mySize, setMySize] = useRecoilState(mySizeState);
+  const [inputSize, setInputSize] = useState<SizeType>({
+    top: null,
+    bottom: {
+      bottomLength: 12.3,
+      waist: 45.67,
+      thigh: 24.5,
+      rise: 10,
+      hem: 28,
+      isWidthOfBottom: true,
+    },
+  });
 
-  const getLink = <Styled.Link>{LINK.BUTTON}</Styled.Link>;
+  const top = {
+    topLength: inputSize.top?.topLength,
+    shoulder: inputSize.top?.shoulder,
+    chest: inputSize.top?.chest,
+  };
+  const bottom = {
+    bottomLength: inputSize.bottom?.bottomLength,
+    waist: inputSize.bottom?.waist,
+    thigh: inputSize.bottom?.thigh,
+    rise: inputSize.bottom?.rise,
+    hem: inputSize.bottom?.hem,
+  };
 
-  return (
-    <>
-      {!nosize && <Tabs currentTab={currentTab} handler={handleTab} />}
-      {contentsMapper[currentTab] ? (
-        <Styled.Root isTop={currentTab === 'top'}>
-          <Sizes sizes={contentsMapper[currentTab]} currentTab={currentTab} />
-        </Styled.Root>
-      ) : (
-        <>
-          <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} caption={nosize} link={!nosize && getLink} />
-          {nosize && <SplitedButton />}
-        </>
-      )}
-    </>
+  return isSelfWrite ? (
+    <Layout title="내 사이즈와 이렇게 달라요" close>
+      <SelfWriteCompare sizes={bottom} />
+    </Layout>
+  ) : (
+    <Layout back close>
+      <Compare sizes={bottom} noSize={!top && !bottom} />
+    </Layout>
   );
 }
 
 export default SizeCompare;
-
-const Styled = {
-  Root: styled.div<{ isTop: boolean }>`
-    display: flex;
-    justify-content: center;
-    padding-top: ${({ isTop }) => (isTop ? '5.6rem' : '3rem')};
-  `,
-  Link: styled.button`
-    padding: 1.2rem 5.8rem;
-    margin-top: 2.6rem;
-    background: #fffaad;
-    box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.05);
-    border-radius: 2.15rem;
-
-    font-weight: 600;
-    font-size: 1.4rem;
-    color: #1e2025;
-  `,
-};

@@ -1,22 +1,22 @@
-import Layout from '../../components/common/Layout';
+import { useRecoilValue } from 'recoil';
+
+import { mySizeState } from '../../states/atom';
 import GlobalStyle from '../../styles/global';
 
 import CannotLoadSize from './cannotloadsize';
-import Landing from './landing';
 import NoSize from './nosize';
 import SizeCompare from './size-compare';
 import SizeOption from './sizeoption';
 
 function Popup() {
+  const mySize = useRecoilValue(mySizeState);
+
   return (
-    <Layout back close>
+    <>
       <GlobalStyle />
-      {/* <Landing /> */}
       {/* <NoSize /> */}
-      {/* <CannotLoadSize /> */}
-      {/* <SizeCompare /> */}
-      <SizeOption />
-    </Layout>
+      {mySize ? <SizeCompare isSelfWrite={true} /> : <CannotLoadSize />}
+    </>
   );
 }
 

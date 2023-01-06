@@ -48,5 +48,7 @@ const Styled = {
     line-height: 3.2rem;
     color: #a7a7a7;
   `,
-  Link: styled.div``,
+  Link: styled.div`
+    margin-top: 2.6rem;
+  `,
 };
