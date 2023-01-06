@@ -5,6 +5,7 @@ import CannotLoadSize from './cannotloadsize';
 import Landing from './landing';
 import NoSize from './nosize';
 import SizeCompare from './size-compare';
+import SizeOption from './sizeoption';
 
 function Popup() {
   return (
@@ -13,7 +14,8 @@ function Popup() {
       {/* <Landing /> */}
       {/* <NoSize /> */}
       {/* <CannotLoadSize /> */}
-      <SizeCompare />
+      {/* <SizeCompare /> */}
+      <SizeOption />
     </Layout>
   );
 }
