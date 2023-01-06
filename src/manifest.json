@@ -1,11 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Onsize Chrome Extension",
+  "name": "Ownsize Chrome Extension",
   "description": "온사이즈 크롬 익스텐션",
   "options_page": "options.html",
-  "background": { "service_worker": "background.bundle.js" },
+  "background": { "service_worker": "script/background.js" },
   "action": {
     "default_popup": "popup.html",
+    "default_title": "온사이즈(Own-Size)",
     "default_icon": "icon-34.png"
   },
   "icons": {
@@ -13,14 +14,18 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
-      "js": ["contentScript.bundle.js"]
+      "matches": ["https://www.musinsa.com/*"],
+      "js": ["script/sizeTableContent.js"]
     }
   ],
+  "externally_connectable": {
+    "matches": ["https://programmers.co.kr/"]
+  },
   "web_accessible_resources": [
     {
       "resources": ["icon-128.png", "icon-34.png"],
       "matches": []
     }
-  ]
+  ],
+  "permissions": ["tabs", "activeTab"]
 }

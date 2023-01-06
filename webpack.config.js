@@ -28,10 +28,10 @@ var options = {
     options: path.join(__dirname, 'src', 'pages', 'Options', 'index.tsx'),
     popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.tsx'),
     background: path.join(__dirname, 'src', 'pages', 'Background', 'index.ts'),
-    contentScript: path.join(__dirname, 'src', 'pages', 'Content', 'index.ts'),
+    sizeTableContent: path.join(__dirname, 'src', 'pages', 'Content', 'sizeTableContent', 'index.ts'),
   },
   output: {
-    filename: '[name].bundle.js',
+    filename: 'script/[name].js',
     path: path.resolve(__dirname, 'build'),
     clean: true,
     publicPath: ASSET_PATH,
