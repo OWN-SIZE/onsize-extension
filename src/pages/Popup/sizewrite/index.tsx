@@ -6,9 +6,15 @@ import Layout from '../../../components/common/Layout';
 import FormHeader from '../../../components/sizewrite/FormHeader';
 import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
+import useForm from '../../../hooks/business/useForm';
 
 function SizeWrite() {
   const [measure, setMeasure] = useState('단면');
+  const [sizeRow, setSizeRow] = useState([]);
+  const { values, setValues, handleChange, handleBlur, handleSubmit } = useForm({
+    initialValues: { size: '', topLength: '', shoulder: '', chest: '' },
+    onSubmit: (values) => console.log(values),
+  });
 
   useEffect(() => {
     document.getElementById('app-container')?.style = css`
@@ -33,7 +39,13 @@ function SizeWrite() {
         </Styled.RadioButtonContainer>
         <Styled.FormContainer>
           <FormHeader formHeaderList={['사이즈', '총장', `어깨 ${measure}`, `가슴 ${measure}`]} />
-          <FormRow inputList={TopInputList} />
+          <FormRow
+            inputList={TopInputList}
+            values={values}
+            handleBlur={handleBlur}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          />
         </Styled.FormContainer>
       </Styled.Root>
       <Button content="저장" />

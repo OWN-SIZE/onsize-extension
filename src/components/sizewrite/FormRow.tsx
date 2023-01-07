@@ -5,17 +5,27 @@ import theme from '../../styles/theme';
 
 interface RowProps {
   inputList: { inputKey: string; withcm: boolean }[];
+  values: object;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+  handleSubmit: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
 function FormRow(props: RowProps) {
-  const { inputList } = props;
+  const { inputList, values, handleChange, handleBlur, handleSubmit } = props;
 
   return (
-    <Styled.RootForm>
+    <Styled.RootForm onSubmit={handleSubmit}>
       {inputList.map(({ inputKey, withcm }) => (
         <Styled.InputContainer>
-          <Styled.Input type={withcm ? 'number' : 'text'} name={inputKey} />
-          <Styled.CMContainer iscm={withcm}>cm</Styled.CMContainer>
+          <Styled.Input
+            type={withcm ? 'number' : 'text'}
+            name={inputKey}
+            value={values.inputKey}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <Styled.CmContainer iscm={withcm}>cm</Styled.CmContainer>
         </Styled.InputContainer>
       ))}
     </Styled.RootForm>
@@ -35,7 +45,7 @@ const Styled = {
     display: flex;
     align-items: flex-end;
   `,
-  CMContainer: styled.span<{ iscm: boolean }>`
+  CmContainer: styled.span<{ iscm: boolean }>`
     position: fixed;
     display: ${({ iscm }) => (iscm ? 'flex' : 'none')};
     margin-left: 6.2rem;
