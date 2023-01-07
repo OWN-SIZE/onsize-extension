@@ -12,3 +12,5 @@ export interface ProductType {
   memo?: string | null;
   isPin?: boolean | null;
 }
+
+export type CurrentViewType = 'size-option' | 'result' | 'compare' | 'save';

@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 import { SizeType } from '../components/size-compare';
 
-import { ProductType, TopOrBottom } from '.';
+import { CurrentViewType, ProductType, TopOrBottom } from '.';
 
 export const mySizeState = atom<SizeType>({
   key: 'mySize',
@@ -46,4 +46,9 @@ export const productState = atom<ProductType>({
     isPin: null,
   },
   // effects_UNSTABLE: [persistAtom],
+});
+
+export const currentViewState = atom<CurrentViewType>({
+  key: 'currentView',
+  default: 'size-option',
 });
