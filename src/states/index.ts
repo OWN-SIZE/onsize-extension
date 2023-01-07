@@ -9,4 +9,6 @@ export interface ProductType {
   topOrBottom?: 0 | 1;
   favIconUrl?: string;
   size?: string;
+  memo?: string | null;
+  isPin?: boolean | null;
 }

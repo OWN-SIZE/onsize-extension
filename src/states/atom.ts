@@ -42,6 +42,8 @@ export const productState = atom<ProductType>({
     topOrBottom: 0,
     favIconUrl: '',
     size: '',
+    memo: null,
+    isPin: null,
   },
   // effects_UNSTABLE: [persistAtom],
 });
