@@ -12,7 +12,7 @@ function FormHeader(props: FromHeaderProps) {
   return (
     <Styled.Root>
       {formHeaderList?.map((header) => (
-        <div>{header}</div>
+        <div key={header}>{header}</div>
       ))}
     </Styled.Root>
   );

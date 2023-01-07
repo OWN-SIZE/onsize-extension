@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import icDelete from '../../assets/icons/delete.svg';
+import { IsRowType } from '../../pages/Popup/sizewrite';
 import theme from '../../styles/theme';
 
 interface RowProps {
@@ -10,22 +11,22 @@ interface RowProps {
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   handleSubmit: (event: React.FormEvent<HTMLInputElement>) => void;
-  isSecond?: boolean;
+  isAddRow?: IsRowType;
   onClickDelete?: () => void;
 }
 
 function FormRow(props: RowProps) {
-  const { inputList, values, handleChange, handleBlur, handleSubmit, isSecond, onClickDelete } = props;
+  const { inputList, values, handleChange, handleBlur, handleSubmit, isAddRow, onClickDelete } = props;
 
   return (
     <Styled.RootForm onSubmit={handleSubmit}>
-      {isSecond && (
-        <Styled.DeleteButton onClick={onClickDelete}>
+      {isAddRow && (
+        <Styled.DeleteButton onClick={onClickDelete} isAddRow={isAddRow}>
           <img src={icDelete} />
         </Styled.DeleteButton>
       )}
       {inputList.map(({ inputKey, withcm }) => (
-        <Styled.InputContainer>
+        <Styled.InputContainer key={inputKey}>
           <Styled.Input
             type={withcm ? 'number' : 'text'}
             name={inputKey}
@@ -71,10 +72,11 @@ const Styled = {
     color: ${theme.colors.gray550};
     ${theme.fonts.bodydsb};
   `,
-  DeleteButton: styled.button`
+  DeleteButton: styled.button<{ isAddRow: IsRowType }>`
     position: fixed;
     height: 3rem;
     background: transparent;
     left: 5.9rem;
+    left: ${({ isAddRow }) => (isAddRow === '상의' ? '5.9rem' : '2.1rem')};
   `,
 };

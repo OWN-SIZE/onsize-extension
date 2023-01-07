@@ -16,11 +16,26 @@ const TopInputList = [
   { inputKey: 'chest', withcm: true },
 ];
 
+const TopInitValues = { size: '', topLength: '', shoulder: '', chest: '' };
+
+const BottomInputList = [
+  { inputKey: 'size', withcm: false },
+  { inputKey: 'bottomLength', withcm: true },
+  { inputKey: 'waist', withcm: true },
+  { inputKey: 'thigh', withcm: true },
+  { inputKey: 'rise', withcm: true },
+  { inputKey: 'hem', withcm: true },
+];
+
+const BottomInitValues = { size: '', bottomLength: '', waist: '', thigh: '', rise: '', hem: '' };
+
+export type IsRowType = '상의' | '하의' | null;
+
 function SizeWrite() {
   const [measure, setMeasure] = useState('단면');
-  const [isAddRow, setIsAddRow] = useState(false);
+  const [isAddRow, setIsAddRow] = useState<IsRowType>(null);
   const { values, handleChange, handleBlur, handleSubmit } = useForm({
-    initialValues: { size: '', topLength: '', shoulder: '', chest: '' },
+    initialValues: BottomInitValues,
     onSubmit: (values) => console.log(values),
   });
 
@@ -39,9 +54,19 @@ function SizeWrite() {
           <RadioButton label="둘레" isClicked={measure === '둘레'} onClick={() => setMeasure('둘레')} />
         </Styled.RadioButtonContainer>
         <Styled.FormContainer>
-          <FormHeader formHeaderList={['사이즈', '총장', `어깨 ${measure}`, `가슴 ${measure}`]} />
+          {/* <FormHeader formHeaderList={['사이즈', '총장', `어깨 ${measure}`, `가슴 ${measure}`]} />
           <FormRow
             inputList={TopInputList}
+            values={values}
+            handleBlur={handleBlur}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          /> */}
+          <FormHeader
+            formHeaderList={['사이즈', '총장', '밑위', `허리 ${measure}`, `허벅지 ${measure}`, `밑단 ${measure}`]}
+          />
+          <FormRow
+            inputList={BottomInputList}
             values={values}
             handleBlur={handleBlur}
             handleChange={handleChange}
@@ -49,17 +74,17 @@ function SizeWrite() {
           />
           {isAddRow && (
             <FormRow
-              inputList={TopInputList}
+              inputList={BottomInputList}
               values={values}
               handleBlur={handleBlur}
               handleChange={handleChange}
               handleSubmit={handleSubmit}
-              isSecond={isAddRow}
-              onClickDelete={() => setIsAddRow(false)}
+              isAddRow={isAddRow}
+              onClickDelete={() => setIsAddRow(null)}
             />
           )}
         </Styled.FormContainer>
-        <AddRowButton onClick={() => setIsAddRow(true)} isShow={!isAddRow} />
+        <AddRowButton onClick={() => setIsAddRow('하의')} isShow={!isAddRow} />
       </Styled.Root>
       <Button content="저장" onClick={handleSubmit} />
     </Layout>
