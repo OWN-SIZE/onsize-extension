@@ -36,7 +36,8 @@ interface WriteProps {
   sizeType: SizeType;
 }
 
-function SizeWrite({ sizeType }: WriteProps) {
+function SizeWrite(props: WriteProps) {
+  const { sizeType } = props;
   const [measure, setMeasure] = useState('단면');
   const [isAddRow, setIsAddRow] = useState<IsRowType>(null);
   const { values, handleChange, handleBlur, handleSubmit } = useForm({
