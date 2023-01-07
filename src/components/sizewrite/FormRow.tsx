@@ -10,7 +10,7 @@ interface RowProps {
   values: object;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
-  handleSubmit: (event: React.FormEvent<HTMLInputElement>) => void;
+  handleSubmit: React.FormEventHandler<HTMLFormElement>;
   isAddRow?: IsRowType;
   onClickDelete?: () => void;
 }

@@ -20,7 +20,7 @@ function useForm({ initialValues, onSubmit }: FormProps) {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     // 완료시 처리할 코드
     onSubmit(values);

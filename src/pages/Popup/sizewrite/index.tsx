@@ -8,6 +8,7 @@ import FormHeader from '../../../components/sizewrite/FormHeader';
 import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 import useForm from '../../../hooks/business/useForm';
+import theme from '../../../styles/theme';
 
 const TopInputList = [
   { inputKey: 'size', withcm: false },
@@ -86,7 +87,9 @@ function SizeWrite() {
         </Styled.FormContainer>
         <AddRowButton onClick={() => setIsAddRow('하의')} isShow={!isAddRow} />
       </Styled.Root>
-      <Button content="저장" onClick={handleSubmit} />
+      <Styled.SubmitButton type="submit" onClick={handleSubmit}>
+        사이즈 추천 받기
+      </Styled.SubmitButton>
     </Layout>
   );
 }
@@ -110,5 +113,14 @@ const Styled = {
     display: flex;
     flex-direction: column;
     margin-top: 2.6rem;
+  `,
+  SubmitButton: styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4.8rem;
+    background-color: ${theme.colors.black};
+    color: ${theme.colors.gray000};
+    ${theme.fonts.body2};
   `,
 };
