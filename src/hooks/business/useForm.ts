@@ -28,7 +28,6 @@ function useForm({ initialValues, onSubmit }: FormProps) {
 
   return {
     values,
-    setValues,
     handleChange,
     handleBlur,
     handleSubmit,

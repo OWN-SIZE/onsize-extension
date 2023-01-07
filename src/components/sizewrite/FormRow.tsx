@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import icDelete from '../../assets/icons/delete.svg';
 import theme from '../../styles/theme';
 
 interface RowProps {
@@ -9,13 +10,20 @@ interface RowProps {
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   handleSubmit: (event: React.FormEvent<HTMLInputElement>) => void;
+  isSecond?: boolean;
+  onClickDelete?: () => void;
 }
 
 function FormRow(props: RowProps) {
-  const { inputList, values, handleChange, handleBlur, handleSubmit } = props;
+  const { inputList, values, handleChange, handleBlur, handleSubmit, isSecond, onClickDelete } = props;
 
   return (
     <Styled.RootForm onSubmit={handleSubmit}>
+      {isSecond && (
+        <Styled.DeleteButton onClick={onClickDelete}>
+          <img src={icDelete} />
+        </Styled.DeleteButton>
+      )}
       {inputList.map(({ inputKey, withcm }) => (
         <Styled.InputContainer>
           <Styled.Input
@@ -39,7 +47,8 @@ const Styled = {
     display: flex;
     justify-content: space-around;
     width: 55rem;
-    margin-top: 1.8rem;
+    height: 3rem;
+    margin-bottom: 2.5rem;
   `,
   InputContainer: styled.div`
     display: flex;
@@ -61,5 +70,11 @@ const Styled = {
     text-align: center;
     color: ${theme.colors.gray550};
     ${theme.fonts.bodydsb};
+  `,
+  DeleteButton: styled.button`
+    position: fixed;
+    height: 3rem;
+    background: transparent;
+    left: 5.9rem;
   `,
 };

@@ -26,6 +26,7 @@ const Styled = {
     justify-content: space-around;
     width: 55rem;
     border-bottom: 0.1rem solid ${theme.colors.gray200};
+    margin-bottom: 1.8rem;
     padding-bottom: 1.5rem;
     color: ${theme.colors.gray350};
     ${theme.fonts.radioText};

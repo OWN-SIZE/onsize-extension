@@ -3,15 +3,23 @@ import styled, { css } from 'styled-components';
 
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
+import AddRowButton from '../../../components/sizewrite/AddRowButton';
 import FormHeader from '../../../components/sizewrite/FormHeader';
 import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 import useForm from '../../../hooks/business/useForm';
 
+const TopInputList = [
+  { inputKey: 'size', withcm: false },
+  { inputKey: 'topLength', withcm: true },
+  { inputKey: 'shoulder', withcm: true },
+  { inputKey: 'chest', withcm: true },
+];
+
 function SizeWrite() {
   const [measure, setMeasure] = useState('단면');
-  const [sizeRow, setSizeRow] = useState([]);
-  const { values, setValues, handleChange, handleBlur, handleSubmit } = useForm({
+  const [isAddRow, setIsAddRow] = useState(false);
+  const { values, handleChange, handleBlur, handleSubmit } = useForm({
     initialValues: { size: '', topLength: '', shoulder: '', chest: '' },
     onSubmit: (values) => console.log(values),
   });
@@ -22,13 +30,6 @@ function SizeWrite() {
       min-height: 31.4rem;
     `;
   }, []);
-
-  const TopInputList = [
-    { inputKey: 'size', withcm: false },
-    { inputKey: 'topLength', withcm: true },
-    { inputKey: 'shoulder', withcm: true },
-    { inputKey: 'chest', withcm: true },
-  ];
 
   return (
     <Layout title="지금 보고 있는 옷의 궁금한 사이즈를 입력해주세요" back close>
@@ -46,9 +47,21 @@ function SizeWrite() {
             handleChange={handleChange}
             handleSubmit={handleSubmit}
           />
+          {isAddRow && (
+            <FormRow
+              inputList={TopInputList}
+              values={values}
+              handleBlur={handleBlur}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              isSecond={isAddRow}
+              onClickDelete={() => setIsAddRow(false)}
+            />
+          )}
         </Styled.FormContainer>
+        <AddRowButton onClick={() => setIsAddRow(true)} isShow={!isAddRow} />
       </Styled.Root>
-      <Button content="저장" />
+      <Button content="저장" onClick={handleSubmit} />
     </Layout>
   );
 }
@@ -72,6 +85,5 @@ const Styled = {
     display: flex;
     flex-direction: column;
     margin-top: 2.6rem;
-    margin-bottom: 2.5rem;
   `,
 };

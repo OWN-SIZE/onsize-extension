@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface ButtonProps {
   content: ContentType;
+  onClick?: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
 type ContentType = '저장' | '사이즈 추천 받기';
@@ -26,11 +27,11 @@ const colorMapper = (content: ContentType): ColorMapType => {
 };
 
 function Button(props: ButtonProps) {
-  const { content } = props;
+  const { content, onClick } = props;
   const { background, text } = colorMapper(content);
 
   return (
-    <Root text={text} background={background}>
+    <Root text={text} background={background} onClick={onClick}>
       {content}
     </Root>
   );
