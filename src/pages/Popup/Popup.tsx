@@ -16,7 +16,7 @@ function Popup() {
     <>
       <GlobalStyle />
       {/* <NoSize /> */}
-      <SizeWrite />
+      <SizeWrite sizeType="상의" />
       {/* {mySize ? <SizeCompare isSelfWrite={true} /> : <CannotLoadSize />} */}
     </>
   );

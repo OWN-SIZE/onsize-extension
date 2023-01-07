@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
+import { SizeType } from '../../../components/size-compare';
 import AddRowButton from '../../../components/sizewrite/AddRowButton';
 import FormHeader from '../../../components/sizewrite/FormHeader';
 import FormRow from '../../../components/sizewrite/FormRow';
@@ -30,13 +30,17 @@ const BottomInputList = [
 
 const BottomInitValues = { size: '', bottomLength: '', waist: '', thigh: '', rise: '', hem: '' };
 
-export type IsRowType = '상의' | '하의' | null;
+export type IsRowType = SizeType | null;
 
-function SizeWrite() {
+interface WriteProps {
+  sizeType: SizeType;
+}
+
+function SizeWrite({ sizeType }: WriteProps) {
   const [measure, setMeasure] = useState('단면');
   const [isAddRow, setIsAddRow] = useState<IsRowType>(null);
   const { values, handleChange, handleBlur, handleSubmit } = useForm({
-    initialValues: BottomInitValues,
+    initialValues: sizeType === '상의' ? TopInitValues : BottomInitValues,
     onSubmit: (values) => console.log(values),
   });
 
@@ -55,27 +59,35 @@ function SizeWrite() {
           <RadioButton label="둘레" isClicked={measure === '둘레'} onClick={() => setMeasure('둘레')} />
         </Styled.RadioButtonContainer>
         <Styled.FormContainer>
-          {/* <FormHeader formHeaderList={['사이즈', '총장', `어깨 ${measure}`, `가슴 ${measure}`]} />
-          <FormRow
-            inputList={TopInputList}
-            values={values}
-            handleBlur={handleBlur}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-          /> */}
-          <FormHeader
-            formHeaderList={['사이즈', '총장', '밑위', `허리 ${measure}`, `허벅지 ${measure}`, `밑단 ${measure}`]}
-          />
-          <FormRow
-            inputList={BottomInputList}
-            values={values}
-            handleBlur={handleBlur}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-          />
+          {sizeType === '상의' ? (
+            <>
+              <FormHeader formHeaderList={['사이즈', '총장', `어깨 ${measure}`, `가슴 ${measure}`]} />
+              <FormRow
+                inputList={TopInputList}
+                values={values}
+                handleBlur={handleBlur}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+              />
+            </>
+          ) : (
+            <>
+              <FormHeader
+                formHeaderList={['사이즈', '총장', '밑위', `허리 ${measure}`, `허벅지 ${measure}`, `밑단 ${measure}`]}
+              />
+              <FormRow
+                inputList={BottomInputList}
+                values={values}
+                handleBlur={handleBlur}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+              />
+            </>
+          )}
+
           {isAddRow && (
             <FormRow
-              inputList={BottomInputList}
+              inputList={sizeType === '상의' ? TopInputList : BottomInputList}
               values={values}
               handleBlur={handleBlur}
               handleChange={handleChange}
