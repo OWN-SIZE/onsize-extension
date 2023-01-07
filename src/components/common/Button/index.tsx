@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { ProductType } from '../../../states';
-import { productState } from '../../../states/atom';
+import { productState, topOrBottomState } from '../../../states/atom';
 
 interface ButtonProps {
   content: ContentType;
@@ -34,6 +34,7 @@ function Button(props: ButtonProps) {
   const { content } = props;
   const { background, text } = colorMapper(content);
   const [product, setProductState] = useRecoilState(productState);
+  const topOrBottom = useRecoilValue(topOrBottomState);
 
   const saveProduct = () => {
     const productData = chrome.storage.sync.get(['product']).then(({ product: { image, productName } }) => {
@@ -50,7 +51,12 @@ function Button(props: ButtonProps) {
           const { url, favIconUrl } = tabs[0];
           if (!url || !favIconUrl) return;
 
-          setProductState((prev) => ({ ...prev, favIconUrl, productUrl: url }));
+          setProductState((prev) => ({
+            ...prev,
+            favIconUrl,
+            productUrl: url,
+            topOrBottom: topOrBottom === 'top' ? 0 : 1,
+          }));
         },
       );
   };
