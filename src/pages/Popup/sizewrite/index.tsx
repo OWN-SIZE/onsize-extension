@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import FormHeader from '../../../components/sizewrite/FormHeader';
+import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 
 function SizeWrite() {
@@ -16,6 +17,13 @@ function SizeWrite() {
     `;
   }, []);
 
+  const TopInputList = [
+    { inputKey: 'size', withcm: false },
+    { inputKey: 'topLength', withcm: true },
+    { inputKey: 'shoulder', withcm: true },
+    { inputKey: 'chest', withcm: true },
+  ];
+
   return (
     <Layout title="지금 보고 있는 옷의 궁금한 사이즈를 입력해주세요" back close>
       <Styled.Root>
@@ -25,6 +33,7 @@ function SizeWrite() {
         </Styled.RadioButtonContainer>
         <Styled.FormContainer>
           <FormHeader formHeaderList={['사이즈', '총장', `어깨 ${measure}`, `가슴 ${measure}`]} />
+          <FormRow inputList={TopInputList} />
         </Styled.FormContainer>
       </Styled.Root>
       <Button content="저장" />
@@ -45,10 +54,11 @@ const Styled = {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0 1.4rem;
-    margin-top: 0.9rem;
+    margin-top: 2.3rem;
   `,
   FormContainer: styled.div`
     display: flex;
+    flex-direction: column;
     margin-top: 2.6rem;
     margin-bottom: 2.5rem;
   `,

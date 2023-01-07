@@ -29,5 +29,10 @@ const Styled = {
     padding-bottom: 1.5rem;
     color: ${theme.colors.gray350};
     ${theme.fonts.radioText};
+    div {
+      display: flex;
+      justify-content: center;
+      width: 6rem;
+    }
   `,
 };
