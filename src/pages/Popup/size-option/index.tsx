@@ -1,17 +1,18 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
-import imgTop from '../../../assets/img/top.svg';
 import imgBottom from '../../../assets/img/bottom.svg';
+import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
+import Layout from '../../../components/common/Layout';
 import OptionButton from '../../../components/sizeoption/OptionButton';
 import theme from '../../../styles/theme';
-import { useState } from 'react';
 
 function SizeOption() {
   const [selectedOption, setSelectedOption] = useState<'상의' | '하의'>();
 
   return (
-    <>
+    <Layout>
       <Styled.Root>
         지금 어떤 옷을 보고 있나요?
         <Styled.OptionContainer>
@@ -30,7 +31,7 @@ function SizeOption() {
         </Styled.OptionContainer>
       </Styled.Root>
       <Button content="저장" />
-    </>
+    </Layout>
   );
 }
 

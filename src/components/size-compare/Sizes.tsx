@@ -25,7 +25,7 @@ function Sizes(props: SizesProps) {
   return (
     <Styled.Root>
       {Object.entries(sizes).map(([key, size]) => (
-        <Styled.Size isTop={currentTab === 'top'}>
+        <Styled.Size isTop={currentTab === 'top'} key={key}>
           <Styled.SizeKey>{topBottomTextConverter(key as keyof typeof topBottomTextMapper)}</Styled.SizeKey>
           <Styled.SizeValue isSelfWrite={isSelfWrite ? true : false}>
             {size.toFixed(1)}
