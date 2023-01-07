@@ -27,7 +27,7 @@ export const mySizeState = atom<SizeType>({
 
 export const topOrBottomState = atom<TopOrBottom>({
   key: 'topOrBottom',
-  default: 'top',
+  default: null,
   // effects_UNSTABLE: [persistAtom],
 });
 

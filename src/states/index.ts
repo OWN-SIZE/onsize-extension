@@ -1,4 +1,4 @@
-export type TopOrBottom = 'top' | 'bottom';
+export type TopOrBottom = 'top' | 'bottom' | null;
 
 export interface ProductType {
   productUrl?: string;
