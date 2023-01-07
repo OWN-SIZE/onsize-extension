@@ -32,6 +32,7 @@ const Styled = {
     display: flex;
   `,
   Label: styled.label`
+    margin-left: 0.4rem;
     color: ${theme.colors.gray550};
     font-family: 'Noto Sans';
     font-weight: 500;

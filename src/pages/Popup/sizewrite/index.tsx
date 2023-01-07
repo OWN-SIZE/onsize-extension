@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
+import FormHeader from '../../../components/sizewrite/FormHeader';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 
 function SizeWrite() {
@@ -22,7 +23,9 @@ function SizeWrite() {
           <RadioButton label="단면" isClicked={measure === '단면'} onClick={() => setMeasure('단면')} />
           <RadioButton label="둘레" isClicked={measure === '둘레'} onClick={() => setMeasure('둘레')} />
         </Styled.RadioButtonContainer>
-        <Styled.FormContainer></Styled.FormContainer>
+        <Styled.FormContainer>
+          <FormHeader formHeaderList={['사이즈', '총장', `어깨 ${measure}`, `가슴 ${measure}`]} />
+        </Styled.FormContainer>
       </Styled.Root>
       <Button content="저장" />
     </Layout>
@@ -36,6 +39,7 @@ const Styled = {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
   `,
   RadioButtonContainer: styled.div`
     display: grid;
