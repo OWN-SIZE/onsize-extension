@@ -15,7 +15,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.musinsa.com/*"],
-      "js": ["script/sizeTableContent.js"]
+      "js": ["script/sizeTableContent.js", "script/productContent.js"]
     }
   ],
   "externally_connectable": {
@@ -27,5 +27,5 @@
       "matches": []
     }
   ],
-  "permissions": ["tabs", "activeTab"]
+  "permissions": ["tabs", "activeTab", "storage"]
 }

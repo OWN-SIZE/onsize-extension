@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 import { SizeType } from '../components/size-compare';
 
-import { TopOrBottom } from '.';
+import { ProductType, TopOrBottom } from '.';
 
 export const mySizeState = atom<SizeType>({
   key: 'mySize',
@@ -28,5 +28,20 @@ export const mySizeState = atom<SizeType>({
 export const topOrBottomState = atom<TopOrBottom>({
   key: 'topOrBottom',
   default: 'bottom',
+  // effects_UNSTABLE: [persistAtom],
+});
+
+export const productState = atom<ProductType>({
+  key: 'product',
+  default: {
+    productUrl: '',
+    image: '',
+    mallName: '무신사(MUSINSA)',
+    productName: '',
+    isRecommend: true,
+    topOrBottom: 0,
+    favIconUrl: '',
+    size: '',
+  },
   // effects_UNSTABLE: [persistAtom],
 });

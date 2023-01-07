@@ -1,34 +1,30 @@
-var webpack = require('webpack'),
+const webpack = require('webpack'),
   path = require('path'),
-  fileSystem = require('fs-extra'),
   env = require('./utils/env'),
   CopyWebpackPlugin = require('copy-webpack-plugin'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   TerserPlugin = require('terser-webpack-plugin');
-var { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
-var alias = {
-  'react-dom': '@hot-loader/react-dom',
-};
+// const alias = {
+//   'react-dom': '@hot-loader/react-dom',
+// };
 
-// load the secrets
-var secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js');
+const getAbsolutePath = (pathDir) => path.resolve(__dirname, pathDir);
 
-var fileExtensions = ['jpg', 'jpeg', 'png', 'gif', 'eot', 'otf', 'svg', 'ttf', 'woff', 'woff2'];
+const fileExtensions = ['jpg', 'jpeg', 'png', 'gif', 'eot', 'otf', 'svg', 'ttf', 'woff', 'woff2'];
 
-if (fileSystem.existsSync(secretsPath)) {
-  alias['secrets'] = secretsPath;
-}
-
-var options = {
+const options = {
   mode: process.env.NODE_ENV || 'development',
   entry: {
     options: path.join(__dirname, 'src', 'pages', 'Options', 'index.tsx'),
     popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.tsx'),
     background: path.join(__dirname, 'src', 'pages', 'Background', 'index.ts'),
     sizeTableContent: path.join(__dirname, 'src', 'pages', 'Content', 'sizeTableContent', 'index.ts'),
+    productContent: path.join(__dirname, 'src', 'pages', 'Content', 'productContent', 'index.ts'),
+    // injectContent: path.join(__dirname, 'src', 'pages', 'Content', 'injectContent', 'index.tsx'),
   },
   output: {
     filename: 'script/[name].js',
@@ -89,7 +85,10 @@ var options = {
     ],
   },
   resolve: {
-    alias: alias,
+    alias: {
+      '@src': getAbsolutePath('./src'),
+      '@assets': getAbsolutePath('./assets'),
+    },
     extensions: fileExtensions.map((extension) => '.' + extension).concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
   },
   plugins: [
@@ -102,7 +101,7 @@ var options = {
       verbose: true,
     }),
     new webpack.ProgressPlugin(),
-    // expose and write the allowed env vars on the compiled bundle
+    // expose and write the allowed env consts on the compiled bundle
     new webpack.EnvironmentPlugin(['NODE_ENV']),
     new CopyWebpackPlugin({
       patterns: [

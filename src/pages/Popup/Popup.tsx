@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 
-import { mySizeState } from '../../states/atom';
+import { mySizeState, productState } from '../../states/atom';
 import GlobalStyle from '../../styles/global';
 
 import CannotLoadSize from './cannotloadsize';
@@ -15,8 +15,8 @@ function Popup() {
     <>
       <GlobalStyle />
       {/* <NoSize /> */}
-      {mySize ? <SizeCompare isSelfWrite={true} /> : <CannotLoadSize />}
-      {/* <SizeOption /> */}
+      {/* {mySize ? <SizeCompare isSelfWrite={true} /> : <CannotLoadSize />} */}
+      <SizeOption />
     </>
   );
 }

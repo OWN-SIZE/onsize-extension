@@ -1,4 +1,9 @@
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+
+import { ProductType } from '../../../states';
+import { productState } from '../../../states/atom';
 
 interface ButtonProps {
   content: ContentType;
@@ -28,9 +33,31 @@ const colorMapper = (content: ContentType): ColorMapType => {
 function Button(props: ButtonProps) {
   const { content } = props;
   const { background, text } = colorMapper(content);
+  const [product, setProductState] = useRecoilState(productState);
+
+  const saveProduct = () => {
+    const productData = chrome.storage.sync.get(['product']).then(({ product: { image, productName } }) => {
+      setProductState((prev) => ({ ...prev, image, productName }));
+    });
+
+    chrome.tabs &&
+      chrome.tabs.query(
+        {
+          active: true,
+          currentWindow: true,
+        },
+        (tabs) => {
+          const { url, favIconUrl } = tabs[0];
+          if (!url || !favIconUrl) return;
+
+          setProductState((prev) => ({ ...prev, favIconUrl, productUrl: url }));
+        },
+      );
+  };
+  console.log('product > ', product);
 
   return (
-    <Root text={text} background={background}>
+    <Root text={text} background={background} onClick={saveProduct}>
       {content}
     </Root>
   );
@@ -48,4 +75,5 @@ const Root = styled.div<{ text: string; background: string }>`
   line-height: 120%;
   color: ${({ text }) => text};
   background-color: ${({ background }) => background};
+  cursor: pointer;
 `;
