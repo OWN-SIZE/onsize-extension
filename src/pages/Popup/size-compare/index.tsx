@@ -9,7 +9,9 @@ import SplitedButton from '../../../components/common/SplitedButton';
 import { SizeType } from '../../../components/size-compare';
 import Compare from '../../../components/size-compare/Compare';
 import SelfWriteCompare from '../../../components/size-compare/SelfWriteCompare';
+import Tabs from '../../../components/size-compare/Tabs';
 import { LINK, MESSAGE } from '../../../contants/main';
+import useTabs from '../../../hooks/ui/useTabs';
 import { isSelfWriteState, mySizeState, topOrBottomState } from '../../../states/atom';
 
 function SizeCompare() {
@@ -17,13 +19,10 @@ function SizeCompare() {
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const isSelfWrite = useRecoilValue(isSelfWriteState);
   const topOrBottom = useRecoilValue(topOrBottomState);
+  const { currentTab, handleTab } = useTabs();
+
   const [productSize, setProductSize] = useState<SizeType>({
-    top: {
-      topLength: 13.4,
-      chest: 28,
-      shoulder: 19.8,
-      isWidthOfTop: true,
-    },
+    top: null,
     bottom: {
       bottomLength: 12.3,
       waist: 45.67,
@@ -58,25 +57,14 @@ function SizeCompare() {
       </>
     );
 
-  // 상의인 경우
-  return topOrBottom === 'top' ? (
-    isSelfWrite ? (
-      <Layout title="내 사이즈와 이렇게 달라요" close>
-        <SelfWriteCompare sizes={productTop} />
-      </Layout>
-    ) : (
-      <Layout back close>
-        <Compare sizes={productTop} noSize={noSize} />
-      </Layout>
-    )
-  ) : // 하의인 경우
-  isSelfWrite ? (
+  return isSelfWrite ? (
     <Layout title="내 사이즈와 이렇게 달라요" close>
-      <SelfWriteCompare sizes={productBottom} />
+      <SelfWriteCompare sizes={topOrBottom === 'top' ? productTop : productBottom} />
     </Layout>
   ) : (
     <Layout back close>
-      <Compare sizes={productBottom} noSize={noSize} />
+      <Tabs currentTab={currentTab} handler={handleTab} />
+      <Compare sizes={currentTab === 'top' ? productTop : productBottom} currentTab={currentTab} />
     </Layout>
   );
 }

@@ -1,23 +1,18 @@
 import styled from 'styled-components';
 
-import useTabs from '../../hooks/ui/useTabs';
-
 import Sizes from './Sizes';
-import Tabs from './Tabs';
-import { BottomType, TopType } from '.';
+import { BottomType, TabName, TopType } from '.';
 
 interface CompareProps {
   sizes: Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
-  noSize: boolean;
+  currentTab: TabName;
 }
 
 function Compare(props: CompareProps) {
-  const { noSize, sizes } = props;
-  const { currentTab, handleTab } = useTabs();
+  const { sizes, currentTab } = props;
 
   return (
     <>
-      {!noSize && <Tabs currentTab={currentTab} handler={handleTab} />}
       <Styled.Root isTop={currentTab === 'top'}>
         <Sizes sizes={sizes} currentTab={currentTab} />
       </Styled.Root>
