@@ -7,6 +7,7 @@ import SaveProduct from '../save-product';
 import Result from './result';
 import SizeCompare from './size-compare';
 import SizeOption from './size-option';
+import SizeWrite from './size-write';
 
 function Popup() {
   const currentView = useRecoilValue(currentViewState);
@@ -27,7 +28,8 @@ function Popup() {
   return (
     <>
       <GlobalStyle />
-      {renderView()}
+      {/* {renderView()} */}
+      <SizeWrite />
     </>
   );
 }

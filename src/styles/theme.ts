@@ -47,6 +47,7 @@ const fonts = {
   body2: FONT({ weight: 600, size: 1.4, lineHeight: 1.9 }),
   body3: FONT({ weight: 500, size: 1.4, lineHeight: 1.9 }),
   bodydsb: FONT({ weight: 600, size: 1.2, lineHeight: 1.6 }),
+  radioText: FONT({ weight: 500, size: 1.2, lineHeight: 1.6 }),
 } as const;
 
 const theme = {
