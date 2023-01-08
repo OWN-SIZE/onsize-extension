@@ -22,7 +22,12 @@ function SizeCompare() {
   const { currentTab, handleTab } = useTabs();
 
   const [productSize, setProductSize] = useState<SizeType>({
-    top: null,
+    top: {
+      topLength: 13.4,
+      chest: 28,
+      shoulder: 19.8,
+      isWidthOfTop: true,
+    },
     bottom: {
       bottomLength: 12.3,
       waist: 45.67,
@@ -46,6 +51,20 @@ function SizeCompare() {
     hem: productSize.bottom?.hem,
   };
 
+  const myTop = {
+    topLength: mySize.top?.topLength,
+    shoulder: mySize.top?.shoulder,
+    chest: mySize.top?.chest,
+  };
+
+  const myBottom = {
+    bottomLength: mySize.bottom?.bottomLength,
+    waist: mySize.bottom?.waist,
+    thigh: mySize.bottom?.thigh,
+    rise: mySize.bottom?.rise,
+    hem: mySize.bottom?.hem,
+  };
+
   const getLink = <Styled.Link>{LINK.BUTTON}</Styled.Link>;
   const noSize = !productTop && !productBottom;
 
@@ -64,7 +83,7 @@ function SizeCompare() {
   ) : (
     <Layout back close>
       <Tabs currentTab={currentTab} handler={handleTab} />
-      <Compare sizes={currentTab === 'top' ? productTop : productBottom} currentTab={currentTab} />
+      <Compare sizes={currentTab === 'top' ? myTop : myBottom} currentTab={currentTab} />
     </Layout>
   );
 }
