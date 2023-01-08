@@ -52,3 +52,8 @@ export const currentViewState = atom<CurrentViewType>({
   key: 'currentView',
   default: 'size-option',
 });
+
+export const isSelfWriteState = atom<boolean>({
+  key: 'isSelfWrite',
+  default: false,
+});

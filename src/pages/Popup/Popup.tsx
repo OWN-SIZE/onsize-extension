@@ -19,7 +19,7 @@ function Popup() {
       case 'result':
         return <Result />;
       case 'compare':
-        return <SizeCompare isSelfWrite={false} />;
+        return <SizeCompare />;
       case 'save':
         return <SaveProduct />;
     }
@@ -28,8 +28,8 @@ function Popup() {
   return (
     <>
       <GlobalStyle />
-      {/* {renderView()} */}
-      <SizeWrite />
+      {renderView()}
+      {/* <SizeWrite /> */}
     </>
   );
 }
