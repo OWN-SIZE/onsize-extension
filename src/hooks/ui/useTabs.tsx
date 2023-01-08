@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
 import { TabName } from '../../components/size-compare';
+import { topOrBottomState } from '../../states/atom';
 
 const useTabs = () => {
-  const [currentTab, setCurrentTab] = useState<TabName>('top');
+  const topOrBottom = useRecoilValue(topOrBottomState);
+  const [currentTab, setCurrentTab] = useState<TabName>(topOrBottom);
 
   const handleTab = (tabName: TabName) => {
     setCurrentTab(tabName);

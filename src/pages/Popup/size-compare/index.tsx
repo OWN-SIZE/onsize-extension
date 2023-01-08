@@ -51,30 +51,26 @@ function SizeCompare() {
     hem: productSize.bottom?.hem,
   };
 
-  const myTop = {
-    topLength: mySize.top?.topLength,
-    shoulder: mySize.top?.shoulder,
-    chest: mySize.top?.chest,
-  };
+  const myTop = mySize.top
+    ? {
+        topLength: mySize.top?.topLength,
+        shoulder: mySize.top?.shoulder,
+        chest: mySize.top?.chest,
+      }
+    : null;
 
-  const myBottom = {
-    bottomLength: mySize.bottom?.bottomLength,
-    waist: mySize.bottom?.waist,
-    thigh: mySize.bottom?.thigh,
-    rise: mySize.bottom?.rise,
-    hem: mySize.bottom?.hem,
-  };
+  const myBottom = mySize.bottom
+    ? {
+        bottomLength: mySize.bottom?.bottomLength,
+        waist: mySize.bottom?.waist,
+        thigh: mySize.bottom?.thigh,
+        rise: mySize.bottom?.rise,
+        hem: mySize.bottom?.hem,
+      }
+    : null;
 
   const getLink = <Styled.Link>{LINK.BUTTON}</Styled.Link>;
-  const noSize = !productTop && !productBottom;
-
-  if (!mySize.top || !mySize.bottom)
-    return (
-      <>
-        <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} caption={noSize} link={!noSize && getLink} />
-        {noSize && <SplitedButton />}
-      </>
-    );
+  const noSize = !myTop && !myBottom;
 
   return isSelfWrite ? (
     <Layout title="내 사이즈와 이렇게 달라요" close>
@@ -82,8 +78,24 @@ function SizeCompare() {
     </Layout>
   ) : (
     <Layout back close>
-      <Tabs currentTab={currentTab} handler={handleTab} />
-      <Compare sizes={currentTab === 'top' ? myTop : myBottom} currentTab={currentTab} />
+      {!noSize && <Tabs currentTab={currentTab} handler={handleTab} />}
+      {currentTab === 'top' ? (
+        !myTop ? (
+          <>
+            <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} caption={noSize} link={!noSize && getLink} />
+            {noSize && <SplitedButton />}
+          </>
+        ) : (
+          <Compare sizes={myTop} currentTab={currentTab} />
+        )
+      ) : !myBottom ? (
+        <>
+          <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} caption={noSize} link={!noSize && getLink} />
+          {noSize && <SplitedButton />}
+        </>
+      ) : (
+        <Compare sizes={myBottom} currentTab={currentTab} />
+      )}
     </Layout>
   );
 }
