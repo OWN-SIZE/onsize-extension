@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["react/next", "react-dom/next", "chrome"],
+    "types": ["chrome", "node"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,

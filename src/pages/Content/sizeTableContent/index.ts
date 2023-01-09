@@ -30,7 +30,7 @@ if (table) {
       sizeInfo[MY] = infoType;
     });
   }
-  chrome.runtime.sendMessage({ greeting: 'hello' }, function (response) {
+  chrome.runtime.sendMessage({ isSizeTableExist: sizeInfo ? 'exist' : 'none' }, function (response) {
     console.log(response.farewell);
   });
 

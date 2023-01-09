@@ -1,83 +1,75 @@
-const webpack = require('webpack'),
-  path = require('path'),
-  env = require('./utils/env'),
-  CopyWebpackPlugin = require('copy-webpack-plugin'),
-  HtmlWebpackPlugin = require('html-webpack-plugin'),
-  TerserPlugin = require('terser-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
-const ASSET_PATH = process.env.ASSET_PATH || '/';
-
-// const alias = {
-//   'react-dom': '@hot-loader/react-dom',
-// };
-
+const path = require('path');
 const getAbsolutePath = (pathDir) => path.resolve(__dirname, pathDir);
+const getHtmlPlugins = (chunks) => {
+  return chunks.map(
+    ({ chunk, title }) =>
+      new HtmlPlugin({
+        title: `${title}`,
+        filename: `${chunk}.html`,
+        chunks: [chunk],
+      }),
+  );
+};
 
-const fileExtensions = ['jpg', 'jpeg', 'png', 'gif', 'eot', 'otf', 'svg', 'ttf', 'woff', 'woff2'];
+const Dotenv = require('dotenv-webpack');
+const { ESBuildMinifyPlugin } = require('esbuild-loader');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const HtmlPlugin = require('html-webpack-plugin');
 
-const options = {
-  mode: process.env.NODE_ENV || 'development',
+module.exports = {
   entry: {
-    options: path.join(__dirname, 'src', 'pages', 'Options', 'index.tsx'),
-    popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.tsx'),
-    background: path.join(__dirname, 'src', 'pages', 'Background', 'index.ts'),
-    sizeTableContent: path.join(__dirname, 'src', 'pages', 'Content', 'sizeTableContent', 'index.ts'),
-    productContent: path.join(__dirname, 'src', 'pages', 'Content', 'productContent', 'index.ts'),
-    // injectContent: path.join(__dirname, 'src', 'pages', 'Content', 'injectContent', 'index.tsx'),
+    popup: getAbsolutePath('src/pages/Popup/index.tsx'),
+    background: getAbsolutePath('src/pages/Background/index.ts'),
+    injectContent: getAbsolutePath('src/pages/Content/injectContent/index.tsx'),
   },
   output: {
     filename: 'script/[name].js',
-    path: path.resolve(__dirname, 'build'),
-    clean: true,
-    publicPath: ASSET_PATH,
+    path: getAbsolutePath('build'),
+  },
+  cache: {
+    type: 'filesystem',
+    buildDependencies: {
+      config: [__filename],
+    },
   },
   module: {
     rules: [
       {
-        // look for .css or .scss files
-        test: /\.(css|scss)$/,
-        // in the `src` directory
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        loader: 'esbuild-loader',
+        options: {
+          loader: 'tsx',
+          target: 'esnext',
+          tsconfigRaw: require('./tsconfig.json'),
+        },
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/i,
         use: [
           {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'sass-loader',
+            loader: 'url-loader',
             options: {
-              sourceMap: true,
+              limit: 10000,
+              fallback: 'file-loader',
             },
           },
         ],
       },
+
       {
-        test: /\.html$/,
-        loader: 'html-loader',
-        exclude: /node_modules/,
-      },
-      { test: /\.(ts|tsx)$/, loader: 'ts-loader', exclude: /node_modules/ },
-      {
-        test: /\.(js|jsx)$/,
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
         use: [
           {
-            loader: 'source-map-loader',
-          },
-          {
-            loader: 'babel-loader',
-          },
-        ],
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.(png|jp(e*)g|svg|gif)$/,
-        use: [
-          {
-            loader: 'file-loader',
+            loader: 'url-loader',
             options: {
-              name: 'images/[hash]-[name].[ext]',
+              limit: 10000,
+              fallback: 'file-loader',
             },
           },
         ],
@@ -85,99 +77,39 @@ const options = {
     ],
   },
   resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.json'],
     alias: {
       '@src': getAbsolutePath('./src'),
       '@assets': getAbsolutePath('./assets'),
     },
-    extensions: fileExtensions.map((extension) => '.' + extension).concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
   },
-  plugins: [
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [
-        '**/*',
-        // build 폴더 안의 모든 것을 지우도록 설정
-        path.resolve(process.cwd(), 'build/**/*'),
-      ],
-      verbose: true,
-    }),
-    new webpack.ProgressPlugin(),
-    // expose and write the allowed env consts on the compiled bundle
-    new webpack.EnvironmentPlugin(['NODE_ENV']),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'src/manifest.json',
-          to: path.join(__dirname, 'build'),
-          force: true,
-          transform: function (content, path) {
-            // generates the manifest file using the package.json informations
-            return Buffer.from(
-              JSON.stringify({
-                description: process.env.npm_package_description,
-                version: process.env.npm_package_version,
-                ...JSON.parse(content.toString()),
-              }),
-            );
-          },
-        },
-      ],
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'src/assets/img/icon-16.png',
-          to: path.join(__dirname, 'build'),
-          force: true,
-        },
-      ],
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'src/assets/img/icon-32.png',
-          to: path.join(__dirname, 'build'),
-          force: true,
-        },
-      ],
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'src/assets/img/icon-48.png',
-          to: path.join(__dirname, 'build'),
-          force: true,
-        },
-      ],
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'pages', 'Options', 'index.html'),
-      filename: 'options.html',
-      chunks: ['options'],
-      cache: false,
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'pages', 'Popup', 'index.html'),
-      filename: 'popup.html',
-      chunks: ['popup'],
-      cache: false,
-    }),
-  ],
-  infrastructureLogging: {
-    level: 'info',
-  },
-};
-
-if (env.NODE_ENV === 'development') {
-  options.devtool = 'cheap-module-source-map';
-} else {
-  options.optimization = {
-    minimize: true,
+  optimization: {
     minimizer: [
-      new TerserPlugin({
-        extractComments: false,
+      new ESBuildMinifyPlugin({
+        target: 'es2015',
       }),
     ],
-  };
-}
-
-module.exports = options;
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
+  plugins: [
+    new Dotenv({
+      path: '.env',
+    }),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['**/*', path.resolve(process.cwd(), 'build/**/*')],
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: getAbsolutePath('src/static'),
+          to: getAbsolutePath('build'),
+        },
+      ],
+    }),
+    ...getHtmlPlugins([{ chunk: 'popup', title: 'Own-Size' }]),
+  ],
+};

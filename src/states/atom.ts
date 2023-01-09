@@ -28,7 +28,7 @@ export const productState = atom<ProductType>({
     productName: '',
     isRecommend: true,
     topOrBottom: 0,
-    favIconUrl: '',
+    faviconUrl: '',
     size: '',
     memo: null,
     isPin: null,

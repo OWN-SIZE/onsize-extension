@@ -16,8 +16,9 @@ function PopupLayout() {
   const currentView = useRecoilValue(currentViewState);
 
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    console.log(sender.tab ? 'from a content script:' + sender.tab.url : 'from the extension');
-    if (request.popup === 'popup') sendResponse({ bye: 'goodbye' });
+    console.log(sender.tab ? 'from a content script in popup:' + sender.tab.url : 'from the extension');
+    console.log('request in popup', request);
+    if (request.isSizeTableExist === 'exist') sendResponse({ farewell: 'i want to go home' });
   });
 
   const renderView = () => {
