@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
+import { postInputSize } from '../../../apis/inputSize';
 import Layout from '../../../components/common/Layout';
 import AddRowButton from '../../../components/sizewrite/AddRowButton';
 import FormHeader from '../../../components/sizewrite/FormHeader';
@@ -10,6 +11,7 @@ import RadioButton from '../../../components/sizewrite/RadioButton';
 import useForm from '../../../hooks/business/useForm';
 import { topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
+import { InputSizeInput } from '../../../types/inputSize';
 import { BottomValuesType, TopValuesType } from '../../../types/useForm';
 
 const TopInputList = [
@@ -41,8 +43,56 @@ function SizeWrite() {
   const { values, handleChange, handleBlur, addedValues, handleChangeAdded, handleBlurAdded, handleSubmit } = useForm({
     initialValues: topOrBottom === 'top' ? TopInitValues : BottomInitValues,
     onSubmit: (values) => {
-      console.log(values);
-      console.log(addedValues);
+      const inputData: InputSizeInput = {
+        size: '',
+        topLength: null,
+        shoulder: null,
+        chest: null,
+        isWidthOfTop: true,
+        bottomLength: null,
+        waist: null,
+        thigh: null,
+        rise: null,
+        hem: null,
+        isWidthOfBottom: true,
+        isManual: true,
+        manualInputNum: 0,
+        topOrBottom: 0,
+      };
+
+      if (topOrBottom === 'bottom') {
+        inputData.topOrBottom = 1;
+      }
+
+      if (measure === '둘레') {
+        inputData.isWidthOfTop = false;
+        inputData.isWidthOfBottom = false;
+      }
+
+      Object.entries(values).map(([inputKey, inputValue]) => {
+        if (inputKey === 'size') {
+          inputData.size = inputValue;
+        } else {
+          inputData[inputKey] = parseFloat(inputValue);
+        }
+      });
+
+      postInputSize(inputData);
+
+      // 두번째 사이즈 칼럼이 존재하는 경우
+      if (isAddRow) {
+        inputData.manualInputNum = 1;
+
+        Object.entries(addedValues).map(([inputKey, inputValue]) => {
+          if (inputKey === 'size') {
+            inputData.size = inputValue;
+          } else {
+            inputData[inputKey] = parseFloat(inputValue);
+          }
+        });
+
+        postInputSize(inputData);
+      }
     },
   });
 
