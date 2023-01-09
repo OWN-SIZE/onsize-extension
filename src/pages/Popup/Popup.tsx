@@ -4,8 +4,8 @@ import { RecoilRoot, useRecoilValue } from 'recoil';
 
 import { mySizeState, productState } from '../../states/atom';
 import GlobalStyle from '../../styles/global';
-import InjectContent from '../Content/injectContent';
 
+import SaveProduct from './save-product';
 import SizeOption from './size-option';
 
 function Popup() {
@@ -14,7 +14,8 @@ function Popup() {
   return (
     <>
       <GlobalStyle />
-      <SizeOption />
+      {/* <SizeOption /> */}
+      <SaveProduct />
       {/* <NoSize /> */}
       {/* <SizeWrite sizeType="상의" /> */}
       {/* {mySize ? <SizeCompare isSelfWrite={true} /> : <CannotLoadSize />} */}
