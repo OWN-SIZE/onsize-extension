@@ -6,6 +6,7 @@ import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import { LINK, MESSAGE } from '../../../contants/main';
 import { productState } from '../../../states/atom';
+import theme from '../../../styles/theme';
 
 function SaveProduct() {
   const getLink = <Styled.Link>{LINK.ANCHOR}</Styled.Link>;
@@ -23,11 +24,9 @@ export default SaveProduct;
 
 const Styled = {
   Link: styled.a`
-    font-weight: 500;
-    font-size: 1.4rem;
-    line-height: 1.9rem;
-    color: #1e2025;
-    border-bottom: 1px solid #1e2025;
+    ${theme.fonts.body3};
+    color: ${theme.colors.black};
+    border-bottom: 1px solid ${theme.colors.black};
     cursor: pointer;
   `,
 };

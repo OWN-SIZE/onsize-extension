@@ -5,6 +5,7 @@ import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import { LINK, MESSAGE } from '../../../contants/main';
+import theme from '../../../styles/theme';
 
 function NoSize() {
   const getLink = <Styled.Link>{LINK.ANCHOR}</Styled.Link>;
@@ -21,10 +22,8 @@ export default NoSize;
 
 const Styled = {
   Link: styled.a`
-    font-weight: 500;
-    font-size: 1.4rem;
-    line-height: 1.9rem;
-    color: #1e2025;
+    ${theme.fonts.body3};
+    color: ${theme.colors.black};
     border-bottom: 1px solid #1e2025;
   `,
 };

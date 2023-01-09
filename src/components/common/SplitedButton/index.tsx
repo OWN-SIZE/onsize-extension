@@ -2,6 +2,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { currentViewState, historyState, productState, topOrBottomState } from '../../../states/atom';
+import theme from '../../../styles/theme';
 
 function SplitedButton() {
   const [product, setProductState] = useRecoilState(productState);
@@ -52,20 +53,16 @@ const Styled = {
   `,
   SizeInputButton: styled.button`
     width: 26.6rem;
-    color: #1e2025;
+    color: ${theme.colors.black};
     background-color: #fbf26c;
     border-radius: 0px 33.5525px 0px 0px;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 120%;
+    ${theme.fonts.title2}
   `,
   SaveButton: styled.button`
     width: 11.4rem;
     color: #d9d9d9;
     background-color: #1e2025;
     border-radius: 33.552px 0px 0px 0px;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 120%;
+    ${theme.fonts.title2}
   `,
 };

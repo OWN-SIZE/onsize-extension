@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { postProduct } from '../../../apis/api';
 import { currentViewState, historyState, productState, topOrBottomState } from '../../../states/atom';
+import theme from '../../../styles/theme';
 import { SaveProductInput } from '../../../types/remote';
 
 interface ButtonProps {
@@ -18,12 +19,12 @@ interface ColorMapType {
 
 const contentMap = {
   저장: {
-    text: '#D9D9D9',
-    background: '#1E2025',
+    text: theme.colors.gray200,
+    background: theme.colors.black,
   },
   '사이즈 추천 받기': {
-    text: '#1E2025',
-    background: ' #FBF26C',
+    text: theme.colors.black,
+    background: theme.colors.yellow,
   },
 };
 const colorMapper = (content: ContentType): ColorMapType => {
@@ -85,9 +86,7 @@ const Root = styled.div<{ text: string; background: string }>`
   justify-content: center;
   align-items: center;
   height: 6.6rem;
-  font-weight: 600;
-  font-size: 1.6rem;
-  line-height: 120%;
+  ${theme.fonts.title2}
   color: ${({ text }) => text};
   background-color: ${({ background }) => background};
   cursor: pointer;

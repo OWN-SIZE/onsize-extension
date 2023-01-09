@@ -35,8 +35,6 @@ const Styled = {
     margin-left: 0.4rem;
     color: ${theme.colors.gray550};
     font-family: 'Noto Sans';
-    font-weight: 500;
-    font-size: 1.2rem;
-    line-height: 1.6rem;
+    ${theme.fonts.radioText};
   `,
 };

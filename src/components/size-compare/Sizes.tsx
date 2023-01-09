@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { topBottomTextConverter, topBottomTextMapper } from '../../../utils/topBottomTextMapper';
 import { mySizeState, topOrBottomState } from '../../states/atom';
+import theme from '../../styles/theme';
 
 import { BottomType, TabName, TopBottomType, TopType } from '.';
 interface SizesProps {
@@ -60,19 +61,16 @@ const Styled = {
     }
   `,
   SizeKey: styled.p`
-    font-weight: 500;
-    font-size: 1.4rem;
-    line-height: 1.9rem;
-    color: #8e8e8e;
+    ${theme.fonts.body3};
+    color: ${theme.colors.gray350};
   `,
   SizeValue: styled.p<{ isSelfWrite: boolean }>`
     display: flex;
-    font-weight: 600;
-    font-size: 1.6rem;
-    line-height: 1.9rem;
-    color: #444444;
+    ${theme.fonts.title2}
+    color: ${theme.colors.gray550};
     & > span {
       padding-left: 0.4rem;
+      ${theme.fonts.radioText};
       font-weight: ${({ isSelfWrite }) => isSelfWrite && 'normal'};
     }
   `,
@@ -82,11 +80,9 @@ const Styled = {
     height: 1.9rem;
     background: #1e2025;
     border-radius: 1rem;
-    font-weight: 600;
-    font-size: 1.6rem;
-    line-height: 1.9rem;
     padding: 0 0.4rem;
     margin: 0 1rem;
-    color: #fbf26c;
+    color: ${theme.colors.yellow};
+    ${theme.fonts.title2};
   `,
 };

@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { CAPTION } from '../../../contants/main';
+import theme from '../../../styles/theme';
 
 interface AlertProps {
   src?: string;
@@ -40,16 +41,14 @@ const Styled = {
     margin-bottom: 2.6rem;
   `,
   Content: styled.h1`
-    font-weight: 600;
-    font-size: 1.8rem;
-    line-height: 2.5rem;
-    color: #1e2025;
+    ${theme.fonts.title1};
+    color: ${theme.colors.black};
   `,
   Caption: styled.div`
     font-weight: 400;
     font-size: 1.4rem;
     line-height: 3.2rem;
-    color: #a7a7a7;
+    color: ${theme.colors.gray300};
   `,
   Link: styled.div`
     margin-top: 2.6rem;

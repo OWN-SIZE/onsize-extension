@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import icBack from '../../../assets/icons/back.svg';
 import icClose from '../../../assets/icons/close.svg';
 import { currentViewState, historyState } from '../../../states/atom';
+import theme from '../../../styles/theme';
 
 interface HeaderProps {
   back?: boolean;
@@ -55,10 +56,8 @@ const Styled = {
     }
   `,
   Title: styled.h1`
-    font-weight: 600;
-    font-size: 1.8rem;
-    line-height: 2.5rem;
-    color: #000000;
+    ${theme.fonts.title1}
+    color: ${theme.colors.black};
   `,
   Close: styled.div`
     width: 2.4rem;

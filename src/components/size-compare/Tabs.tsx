@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import theme from '../../styles/theme';
+
 import { TabName } from '.';
 
 interface TabsProps {
@@ -39,14 +41,12 @@ const Styled = {
     justify-content: center;
     align-items: center;
     width: 10rem;
-    font-weight: 600;
-    font-size: 1.8rem;
-    line-height: 2.5rem;
     padding-bottom: 0.3rem;
     cursor: pointer;
     z-index: 1;
-    color: ${({ isSelected }) => (isSelected ? '#444444' : '#DCDCDC')};
-    border-bottom: 2px solid ${({ isSelected }) => (isSelected ? '#444444' : '#DCDCDC')};
+    color: ${({ isSelected }) => (isSelected ? theme.colors.gray550 : theme.colors.gray200)};
+    border-bottom: 2px solid ${({ isSelected }) => (isSelected ? theme.colors.gray550 : theme.colors.gray200)};
+    ${theme.fonts.title1}
   `,
   Line: styled.div`
     position: absolute;
