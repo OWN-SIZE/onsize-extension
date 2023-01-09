@@ -19,15 +19,15 @@ const HtmlPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    popup: getAbsolutePath('src/pages/Popup/index.tsx'),
+    popup: getAbsolutePath('src/pages/Popup/Popup.tsx'),
     background: getAbsolutePath('src/pages/Background/index.ts'),
-    injectContent: getAbsolutePath('src/pages/Content/injectContent.tsx'),
-    productContent: getAbsolutePath('src/pages/Content/productContent.ts'),
-    sizeTableContent: getAbsolutePath('src/pages/Content/sizeTableContent.ts'),
+    injectContent: getAbsolutePath('src/pages/Content/injectContent/index.tsx'),
+    productContent: getAbsolutePath('src/pages/Content/productContent/index.ts'),
+    sizeTableContent: getAbsolutePath('src/pages/Content/sizeTableContent/index.ts'),
   },
   output: {
     filename: 'script/[name].js',
-    path: getAbsolutePath('dist'),
+    path: getAbsolutePath('build'),
   },
   cache: {
     type: 'filesystem',
@@ -52,21 +52,17 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(jpe?g|png|gif)$/i,
+        test: /\.(png|jp(e*)g|svg|gif)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: 'file-loader',
             options: {
-              limit: 10000,
-              fallback: 'file-loader',
+              name: 'images/[hash]-[name].[ext]',
             },
           },
         ],
       },
-      {
-        test: /\.svg$/i,
-        use: ['@svgr/webpack'],
-      },
+
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         use: [
@@ -110,8 +106,8 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: getAbsolutePath('src/static'),
-          to: getAbsolutePath('dist'),
+          from: getAbsolutePath('src'),
+          to: getAbsolutePath('build'),
         },
       ],
     }),
