@@ -9,7 +9,7 @@ export interface SaveProductInput {
   faviconUrl: string;
 }
 
-export interface SaveProductResponse {
+export interface SaveProductOutput {
   data: {
     id: number;
   };
