@@ -1,13 +1,11 @@
-import { useRecoilValue } from 'recoil';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { RecoilRoot, useRecoilValue } from 'recoil';
 
 import { mySizeState, productState } from '../../states/atom';
 import GlobalStyle from '../../styles/global';
+import InjectContent from '../Content/injectContent';
 
-import CannotLoadSize from './cannotloadsize';
-import NoSize from './nosize';
-import SizeCompare from './size-compare';
-import SizeOption from './sizeoption';
-import SizeWrite from './sizewrite';
 import SizeOption from './size-option';
 
 function Popup() {
@@ -16,11 +14,23 @@ function Popup() {
   return (
     <>
       <GlobalStyle />
+      <SizeOption />
       {/* <NoSize /> */}
-      <SizeWrite sizeType="상의" />
+      {/* <SizeWrite sizeType="상의" /> */}
       {/* {mySize ? <SizeCompare isSelfWrite={true} /> : <CannotLoadSize />} */}
     </>
   );
 }
 
 export default Popup;
+
+const root = document.createElement('div');
+document.body.appendChild(root);
+ReactDOM.createRoot(root as HTMLElement).render(
+  <React.StrictMode>
+    <RecoilRoot>
+      <GlobalStyle />
+      <Popup />
+    </RecoilRoot>
+  </React.StrictMode>,
+);
