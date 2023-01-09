@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
 
 import Layout from '../../../components/common/Layout';
-import { SizeType } from '../../../components/size-compare';
 import AddRowButton from '../../../components/sizewrite/AddRowButton';
 import FormHeader from '../../../components/sizewrite/FormHeader';
 import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 import useForm from '../../../hooks/business/useForm';
+import { topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
+import { BottomValuesType, TopValuesType } from '../../../types/useForm';
 
 const TopInputList = [
   { inputKey: 'size', withcm: false },
@@ -17,7 +19,7 @@ const TopInputList = [
   { inputKey: 'chest', withcm: true },
 ];
 
-const TopInitValues = { size: '', topLength: '', shoulder: '', chest: '' };
+const TopInitValues: TopValuesType = { size: '', topLength: '', shoulder: '', chest: '' };
 
 const BottomInputList = [
   { inputKey: 'size', withcm: false },
@@ -28,28 +30,22 @@ const BottomInputList = [
   { inputKey: 'hem', withcm: true },
 ];
 
-const BottomInitValues = { size: '', bottomLength: '', waist: '', thigh: '', rise: '', hem: '' };
+const BottomInitValues: BottomValuesType = { size: '', bottomLength: '', waist: '', thigh: '', rise: '', hem: '' };
 
-export type IsRowType = SizeType | null;
+export type IsRowType = 'top' | 'bottom' | null;
 
-interface WriteProps {
-  sizeType: SizeType;
-}
-
-function SizeWrite(props: WriteProps) {
-  const { sizeType } = props;
+function SizeWrite() {
+  const topOrBottom = useRecoilValue(topOrBottomState);
   const [measure, setMeasure] = useState('단면');
   const [isAddRow, setIsAddRow] = useState<IsRowType>(null);
   const { values, handleChange, handleBlur, handleSubmit } = useForm({
-    initialValues: sizeType === '상의' ? TopInitValues : BottomInitValues,
+    initialValues: topOrBottom === 'top' ? TopInitValues : BottomInitValues,
     onSubmit: (values) => console.log(values),
   });
 
   useEffect(() => {
-    document.getElementById('app-container')?.style = css`
-      width: 63.2rem;
-      min-height: 31.4rem;
-    `;
+    document.body.style.width = '63.2rem';
+    document.body.style.minHeight = '31.4rem';
   }, []);
 
   return (
@@ -60,7 +56,7 @@ function SizeWrite(props: WriteProps) {
           <RadioButton label="둘레" isClicked={measure === '둘레'} onClick={() => setMeasure('둘레')} />
         </Styled.RadioButtonContainer>
         <Styled.FormContainer>
-          {sizeType === '상의' ? (
+          {topOrBottom === 'top' ? (
             <>
               <FormHeader formHeaderList={['사이즈', '총장', `어깨 ${measure}`, `가슴 ${measure}`]} />
               <FormRow
@@ -88,7 +84,7 @@ function SizeWrite(props: WriteProps) {
 
           {isAddRow && (
             <FormRow
-              inputList={sizeType === '상의' ? TopInputList : BottomInputList}
+              inputList={topOrBottom === 'top' ? TopInputList : BottomInputList}
               values={values}
               handleBlur={handleBlur}
               handleChange={handleChange}
@@ -98,7 +94,7 @@ function SizeWrite(props: WriteProps) {
             />
           )}
         </Styled.FormContainer>
-        <AddRowButton onClick={() => setIsAddRow('하의')} isShow={!isAddRow} />
+        <AddRowButton onClick={() => setIsAddRow('bottom')} isShow={!isAddRow} />
       </Styled.Root>
       <Styled.SubmitButton type="submit" onClick={handleSubmit}>
         사이즈 추천 받기

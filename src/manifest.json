@@ -7,10 +7,12 @@
   "action": {
     "default_popup": "popup.html",
     "default_title": "온사이즈(Own-Size)",
-    "default_icon": "icon-34.png"
+    "default_icon": "icon-32.png"
   },
   "icons": {
-    "128": "icon-128.png"
+    "16": "icon-16.png",
+    "32": "icon-32.png",
+    "48": "icon-48.png"
   },
   "content_scripts": [
     {
@@ -23,7 +25,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["icon-128.png", "icon-34.png"],
+      "resources": ["icon-16.png", "icon-32.png", "icon-48.png"],
       "matches": []
     }
   ],

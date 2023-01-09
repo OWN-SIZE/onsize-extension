@@ -1,15 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import imgBottom from '../../../assets/img/bottom.svg';
 import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
-import OptionButton from '../../../components/sizeoption/OptionButton';
+import OptionButton from '../../../components/size-option/OptionButton';
+import { currentViewState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SizeOption() {
-  const [selectedOption, setSelectedOption] = useState<'상의' | '하의'>();
+  const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
+  const [topOrBottom, setTopOrBottom] = useRecoilState(topOrBottomState);
+  const [currentView, setCurrentView] = useRecoilState(currentViewState);
+
+  useEffect(() => {
+    if (selectedOption) {
+      setTopOrBottom(selectedOption);
+      setTimeout(() => {
+        setCurrentView('result');
+      }, 100);
+    }
+  }, [selectedOption]);
 
   return (
     <Layout>
@@ -17,16 +30,16 @@ function SizeOption() {
         지금 어떤 옷을 보고 있나요?
         <Styled.OptionContainer>
           <OptionButton
-            onClick={() => setSelectedOption('상의')}
+            onClick={() => setSelectedOption('top')}
             src={imgTop}
             caption={'상의'}
-            isActive={selectedOption === '상의'}
+            isActive={selectedOption === 'top'}
           />
           <OptionButton
-            onClick={() => setSelectedOption('하의')}
+            onClick={() => setSelectedOption('bottom')}
             src={imgBottom}
             caption={'하의'}
-            isActive={selectedOption === '하의'}
+            isActive={selectedOption === 'bottom'}
           />
         </Styled.OptionContainer>
       </Styled.Root>

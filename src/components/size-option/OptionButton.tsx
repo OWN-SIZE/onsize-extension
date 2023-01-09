@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction } from 'react';
 import styled, { css } from 'styled-components';
+
 import theme from '../../styles/theme';
 
 interface OptionProps {

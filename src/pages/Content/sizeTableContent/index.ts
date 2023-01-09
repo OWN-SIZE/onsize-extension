@@ -31,7 +31,5 @@ if (table) {
     });
   }
 
-  console.log(sizeInfo);
-
   table.style.border = '10px solid red';
 }

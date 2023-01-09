@@ -20,15 +20,6 @@ if (isHTMLElement(productImage)) {
   }
 }
 
-// localStorage.setItem(
-//   'product',
-//   JSON.stringify({
-//     image,
-//     productName,
-//     mallName,
-//   }),
-// );
-
 chrome.storage.sync.set({
   product: {
     image,
@@ -36,5 +27,3 @@ chrome.storage.sync.set({
     mallName,
   },
 });
-
-// console.log(localStorage.getItem('product'));

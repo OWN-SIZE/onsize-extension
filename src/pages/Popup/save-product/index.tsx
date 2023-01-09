@@ -26,5 +26,6 @@ const Styled = {
     line-height: 1.9rem;
     color: #1e2025;
     border-bottom: 1px solid #1e2025;
+    cursor: pointer;
   `,
 };

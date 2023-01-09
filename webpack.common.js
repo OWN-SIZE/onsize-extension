@@ -19,7 +19,7 @@ const HtmlPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    popup: getAbsolutePath('src/pages/Popup/Popup.tsx'),
+    popup: getAbsolutePath('src/pages/Popup/index.tsx'),
     background: getAbsolutePath('src/pages/Background/index.ts'),
     injectContent: getAbsolutePath('src/pages/Content/injectContent/index.tsx'),
     productContent: getAbsolutePath('src/pages/Content/productContent/index.ts'),
