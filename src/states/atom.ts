@@ -45,3 +45,8 @@ export const isSelfWriteState = atom<boolean>({
   key: 'isSelfWrite',
   default: false,
 });
+
+export const historyState = atom<CurrentViewType | null>({
+  key: 'history',
+  default: null,
+});

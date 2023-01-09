@@ -21,7 +21,7 @@
     }
   ],
   "externally_connectable": {
-    "matches": ["https://programmers.co.kr/"]
+    "matches": ["https://www.musinsa.com/*"]
   },
   "web_accessible_resources": [
     {
@@ -29,5 +29,6 @@
       "matches": []
     }
   ],
+  "host_permissions": ["https://www.musinsa.com/*"],
   "permissions": ["tabs", "activeTab", "storage"]
 }

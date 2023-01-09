@@ -1,7 +1,10 @@
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import icBack from '../../../assets/icons/back.svg';
 import icClose from '../../../assets/icons/close.svg';
+import { currentViewState, historyState } from '../../../states/atom';
+
 interface HeaderProps {
   back?: boolean;
   title?: string;
@@ -10,14 +13,20 @@ interface HeaderProps {
 
 function Header(props: HeaderProps) {
   const { back, title, close } = props;
+  const [currentView, setCurrentView] = useRecoilState(currentViewState);
+  const history = useRecoilValue(historyState);
 
   const closePopup = () => {
     window.close();
   };
 
+  const goBackToHistory = () => {
+    history && setCurrentView(history);
+  };
+
   return (
     <Styled.Root>
-      <Styled.Back>{back && <img src={icBack} alt="back" />}</Styled.Back>
+      <Styled.Back onClick={goBackToHistory}>{back && <img src={icBack} alt="back" />}</Styled.Back>
       <Styled.Title>{title || null}</Styled.Title>
       <Styled.Close onClick={closePopup}>{close && <img src={icClose} alt="close" />}</Styled.Close>
     </Styled.Root>

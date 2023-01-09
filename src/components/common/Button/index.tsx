@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { ProductType } from '../../../states';
-import { currentViewState, productState, topOrBottomState } from '../../../states/atom';
+import { currentViewState, historyState, productState, topOrBottomState } from '../../../states/atom';
 
 interface ButtonProps {
   content: ContentType;
@@ -36,6 +36,7 @@ function Button(props: ButtonProps) {
   const [product, setProductState] = useRecoilState(productState);
   const topOrBottom = useRecoilValue(topOrBottomState);
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
+  const [history, setHistory] = useRecoilState(historyState);
 
   const saveProduct = () => {
     const productData = chrome.storage.sync.get(['product']).then(({ product: { image, productName } }) => {
@@ -60,6 +61,7 @@ function Button(props: ButtonProps) {
           }));
         },
       );
+    setHistory(currentView);
     setCurrentView('save');
   };
 

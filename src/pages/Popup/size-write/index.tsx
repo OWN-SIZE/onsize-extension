@@ -111,6 +111,8 @@ const Styled = {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 63.2rem;
+    height: 31.4rem;
   `,
   RadioButtonContainer: styled.div`
     display: grid;
