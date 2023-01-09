@@ -50,7 +50,7 @@ function SizeWrite() {
     const root = document.getElementById('app-container');
     if (root) {
       root.style.width = '63.2rem';
-      root.style.minHeight = '31.4rem';
+      root.style.height = '31.4rem';
     }
   }, []);
 

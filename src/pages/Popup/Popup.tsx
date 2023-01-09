@@ -22,14 +22,15 @@ function Popup() {
         return <SizeCompare />;
       case 'save':
         return <SaveProduct />;
+      case 'size-write':
+        return <SizeWrite />;
     }
   };
 
   return (
     <>
       <GlobalStyle />
-      {/* {renderView()} */}
-      <SizeWrite />
+      {renderView()}
     </>
   );
 }
