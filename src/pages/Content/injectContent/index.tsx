@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import { RecoilRoot } from 'recoil';
 
 import SizeOption from '../../Popup/size-option';
 
@@ -18,6 +18,8 @@ window.addEventListener('load', () => {
 document.body.prepend(view);
 ReactDOM.createRoot(view as HTMLElement).render(
   <React.StrictMode>
-    <InjectContent />
+    <RecoilRoot>
+      <InjectContent />
+    </RecoilRoot>
   </React.StrictMode>,
 );

@@ -30,6 +30,9 @@ if (table) {
       sizeInfo[MY] = infoType;
     });
   }
+  chrome.runtime.sendMessage({ greeting: 'hello' }, function (response) {
+    console.log(response.farewell);
+  });
 
   table.style.border = '10px solid red';
 }

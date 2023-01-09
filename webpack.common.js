@@ -58,6 +58,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: 'images/[hash]-[name].[ext]',
+              publicPath: '',
             },
           },
         ],
@@ -101,7 +102,7 @@ module.exports = {
       path: '.env',
     }),
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['**/*', path.resolve(process.cwd(), 'dist/**/*')],
+      cleanOnceBeforeBuildPatterns: ['**/*', path.resolve(process.cwd(), 'build/**/*')],
     }),
     new CopyPlugin({
       patterns: [

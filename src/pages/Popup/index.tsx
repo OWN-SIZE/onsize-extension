@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { RecoilRoot, useRecoilValue } from 'recoil';
 
 import { currentViewState } from '../../states/atom';
@@ -14,6 +14,11 @@ import SizeWrite from './size-write';
 
 function PopupLayout() {
   const currentView = useRecoilValue(currentViewState);
+
+  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log(sender.tab ? 'from a content script:' + sender.tab.url : 'from the extension');
+    if (request.popup === 'popup') sendResponse({ bye: 'goodbye' });
+  });
 
   const renderView = () => {
     switch (currentView) {

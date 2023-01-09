@@ -34,6 +34,9 @@ const Styled = {
     padding-top: 4rem;
   `,
   Image: styled.img`
+    width: 11rem;
+    height: 11rem;
+    object-fit: contain;
     margin-bottom: 2.6rem;
   `,
   Content: styled.h1`

@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { ProductType } from '../../../states';
 import { currentViewState, historyState, productState, topOrBottomState } from '../../../states/atom';
 
 interface ButtonProps {
@@ -42,25 +40,23 @@ function Button(props: ButtonProps) {
     const productData = chrome.storage.sync.get(['product']).then(({ product: { image, productName } }) => {
       setProductState((prev) => ({ ...prev, image, productName }));
     });
+    chrome.tabs.query(
+      {
+        active: true,
+        currentWindow: true,
+      },
+      (tabs) => {
+        const { url, favIconUrl } = tabs[0];
+        if (!url || !favIconUrl) return;
 
-    chrome.tabs &&
-      chrome.tabs.query(
-        {
-          active: true,
-          currentWindow: true,
-        },
-        (tabs) => {
-          const { url, favIconUrl } = tabs[0];
-          if (!url || !favIconUrl) return;
-
-          setProductState((prev) => ({
-            ...prev,
-            favIconUrl,
-            productUrl: url,
-            topOrBottom: topOrBottom === 'top' ? 0 : 1,
-          }));
-        },
-      );
+        setProductState((prev) => ({
+          ...prev,
+          favIconUrl,
+          productUrl: url,
+          topOrBottom: topOrBottom === 'top' ? 0 : 1,
+        }));
+      },
+    );
     setHistory(currentView);
     setCurrentView('save');
   };

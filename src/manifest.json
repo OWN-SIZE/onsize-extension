@@ -1,18 +1,18 @@
 {
   "manifest_version": 3,
+  "version": "1.0",
   "name": "Ownsize Chrome Extension",
   "description": "온사이즈 크롬 익스텐션",
-  "options_page": "options.html",
   "background": { "service_worker": "script/background.js" },
   "action": {
     "default_popup": "popup.html",
     "default_title": "온사이즈(Own-Size)",
-    "default_icon": "icon-32.png"
+    "default_icon": "assets/img/icon32.png"
   },
   "icons": {
-    "16": "icon-16.png",
-    "32": "icon-32.png",
-    "48": "icon-48.png"
+    "16": "assets/img/icon16.png",
+    "32": "assets/img/icon32.png",
+    "48": "assets/img/icon48.png"
   },
   "content_scripts": [
     {
@@ -25,7 +25,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["icon-16.png", "icon-32.png", "icon-48.png"],
+      "resources": ["icon16.png", "icon32.png", "icon48.png"],
       "matches": []
     }
   ],
