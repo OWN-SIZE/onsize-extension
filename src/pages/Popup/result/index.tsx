@@ -1,8 +1,13 @@
-import React from 'react';
+import { useRecoilValue } from 'recoil';
+
+import { mySizeState } from '../../../states/atom';
+import CannotLoadSize from '../cannotloadsize';
+import SizeCompare from '../size-compare';
 
 function Result() {
-  // TODO: nosize, cannotloadsize, recomment 뷰가 여기에 해당
-  return <div>Result</div>;
+  const mySize = useRecoilValue(mySizeState);
+
+  return mySize ? <SizeCompare /> : <CannotLoadSize />;
 }
 
 export default Result;

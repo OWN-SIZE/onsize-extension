@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 import icDelete from '../../assets/icons/delete.svg';
-import { IsRowType } from '../../pages/Popup/sizewrite';
+import { IsRowType } from '../../pages/Popup/size-write';
 import theme from '../../styles/theme';
+import { ValuesType } from '../../types/useForm';
 
 interface RowProps {
   inputList: { inputKey: string; withcm: boolean }[];
-  values: object;
+  values: ValuesType;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   handleSubmit: React.FormEventHandler<HTMLFormElement>;
@@ -30,7 +31,7 @@ function FormRow(props: RowProps) {
           <Styled.Input
             type={withcm ? 'number' : 'text'}
             name={inputKey}
-            value={values.inputKey}
+            value={values[inputKey]}
             onChange={handleChange}
             onBlur={handleBlur}
           />
@@ -77,6 +78,6 @@ const Styled = {
     height: 3rem;
     background: transparent;
     left: 5.9rem;
-    left: ${({ isAddRow }) => (isAddRow === '상의' ? '5.9rem' : '2.1rem')};
+    left: ${({ isAddRow }) => (isAddRow === 'top' ? '5.9rem' : '2.1rem')};
   `,
 };

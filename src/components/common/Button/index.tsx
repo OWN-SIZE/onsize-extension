@@ -60,7 +60,6 @@ function Button(props: ButtonProps) {
         },
       );
   };
-  console.log('product > ', product);
 
   return (
     <Root text={text} background={background} onClick={saveProduct}>

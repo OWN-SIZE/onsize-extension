@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+
+import { ValuesType } from '../../types/useForm';
 
 interface FormProps {
-  initialValues: object;
+  initialValues: ValuesType;
   onSubmit: (values: object) => void;
 }
 
 function useForm({ initialValues, onSubmit }: FormProps) {
-  const [values, setValues] = useState(initialValues);
+  const [values, setValues] = useState<ValuesType>(initialValues);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

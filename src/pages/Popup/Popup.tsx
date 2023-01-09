@@ -1,24 +1,35 @@
 import { useRecoilValue } from 'recoil';
 
-import { mySizeState, productState } from '../../states/atom';
+import { currentViewState } from '../../states/atom';
 import GlobalStyle from '../../styles/global';
+import SaveProduct from '../save-product';
 
-import CannotLoadSize from './cannotloadsize';
-import NoSize from './nosize';
+import Result from './result';
 import SizeCompare from './size-compare';
-import SizeOption from './sizeoption';
-import SizeWrite from './sizewrite';
 import SizeOption from './size-option';
+import SizeWrite from './size-write';
 
 function Popup() {
-  const mySize = useRecoilValue(mySizeState);
+  const currentView = useRecoilValue(currentViewState);
+
+  const renderView = () => {
+    switch (currentView) {
+      case 'size-option':
+        return <SizeOption />;
+      case 'result':
+        return <Result />;
+      case 'compare':
+        return <SizeCompare />;
+      case 'save':
+        return <SaveProduct />;
+    }
+  };
 
   return (
     <>
       <GlobalStyle />
-      {/* <NoSize /> */}
-      <SizeWrite sizeType="상의" />
-      {/* {mySize ? <SizeCompare isSelfWrite={true} /> : <CannotLoadSize />} */}
+      {renderView()}
+      {/* <SizeWrite /> */}
     </>
   );
 }
