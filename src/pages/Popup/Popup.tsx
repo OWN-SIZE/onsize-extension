@@ -28,8 +28,8 @@ function Popup() {
   return (
     <>
       <GlobalStyle />
-      {renderView()}
-      {/* <SizeWrite /> */}
+      {/* {renderView()} */}
+      <SizeWrite />
     </>
   );
 }
