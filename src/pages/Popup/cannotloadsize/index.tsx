@@ -15,7 +15,7 @@ function CannotLoadSize() {
 
   return (
     <Layout close>
-      <Main src={icAlert} content={MESSAGE.CANNOT_LOAD_SIZE} link={getLink} />
+      <Main image={<Styled.Image src={icAlert} />} content={MESSAGE.CANNOT_LOAD_SIZE} link={getLink} />
       <SplitedButton />
     </Layout>
   );
@@ -29,5 +29,11 @@ const Styled = {
     border-bottom: 1px solid #1e2025;
     ${theme.fonts.body3};
     margin-top: 2.6rem;
+  `,
+  Image: styled.img`
+    width: 7.2rem;
+    height: 7.2rem;
+    object-fit: contain;
+    margin-bottom: 2.6rem;
   `,
 };

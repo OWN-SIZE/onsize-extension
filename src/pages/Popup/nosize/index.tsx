@@ -16,7 +16,7 @@ function NoSize() {
 
   return (
     <Layout close>
-      <Main src={icAlert} content={MESSAGE.NO_PROPER_SIZE} link={getLink} />
+      <Main image={<Styled.Image src={icAlert} />} content={MESSAGE.NO_PROPER_SIZE} link={getLink} />
       <Button content="저장" />
     </Layout>
   );
@@ -29,5 +29,11 @@ const Styled = {
     ${theme.fonts.body3};
     color: ${theme.colors.black};
     border-bottom: 1px solid #1e2025;
+  `,
+  Image: styled.img`
+    width: 7.2rem;
+    height: 7.2rem;
+    object-fit: contain;
+    margin-bottom: 2.6rem;
   `,
 };

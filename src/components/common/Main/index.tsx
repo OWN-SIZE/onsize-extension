@@ -5,18 +5,19 @@ import { CAPTION } from '../../../contants/main';
 import theme from '../../../styles/theme';
 
 interface AlertProps {
-  src?: string;
+  image?: ReactNode;
   content?: string;
   caption?: boolean;
   link?: ReactNode;
+  noPadding?: boolean;
 }
 
 function Main(props: AlertProps) {
-  const { src, content, caption, link } = props;
+  const { image, content, caption, link, noPadding } = props;
 
   return (
-    <Styled.Root>
-      <Styled.Image src={src} alt="main icon" />
+    <Styled.Root noPadding={noPadding ? true : false}>
+      {image}
       <Styled.Content>{content}</Styled.Content>
       {caption && <Styled.Caption>{CAPTION}</Styled.Caption>}
       {link && <Styled.Link>{link}</Styled.Link>}
@@ -27,18 +28,12 @@ function Main(props: AlertProps) {
 export default Main;
 
 const Styled = {
-  Root: styled.div`
+  Root: styled.div<{ noPadding: boolean }>`
     height: 27.1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 4rem;
-  `,
-  Image: styled.img`
-    width: 7.2rem;
-    height: 7.2rem;
-    object-fit: contain;
-    margin-bottom: 2.6rem;
+    padding-top: ${({ noPadding }) => (noPadding ? '1.4rem' : '3.5rem')};
   `,
   Content: styled.h1`
     ${theme.fonts.title1};

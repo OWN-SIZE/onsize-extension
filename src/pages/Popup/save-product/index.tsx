@@ -11,12 +11,12 @@ import theme from '../../../styles/theme';
 function SaveProduct() {
   const [, setCurrentView] = useRecoilState(currentViewState);
 
-  const getLink = <Styled.Link onClick={() => setCurrentView('compare')}>{LINK.ANCHOR}</Styled.Link>;
+  const getLink = <Styled.Link onClick={() => setCurrentView('compare')}>{LINK.SAVE}</Styled.Link>;
   const { image } = useRecoilValue(productState);
 
   return (
     <Layout close>
-      <Main src={image} content={MESSAGE.SAVE_MY_CLOSET} link={getLink} />
+      <Main image={<Styled.Image src={image} />} content={MESSAGE.SAVE_MY_CLOSET} link={getLink} noPadding />
       <Button content="사이즈 추천 받기" />
     </Layout>
   );
@@ -29,5 +29,11 @@ const Styled = {
     ${theme.fonts.body3};
     color: ${theme.colors.black};
     border-bottom: 1px solid ${theme.colors.black};
+  `,
+  Image: styled.img`
+    width: 11rem;
+    height: 11rem;
+    object-fit: contain;
+    margin-bottom: 2.6rem;
   `,
 };

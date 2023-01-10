@@ -91,7 +91,12 @@ function SizeCompare() {
       {currentTab === 'top' ? (
         !myTop ? (
           <>
-            <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} caption={noSize} link={!noSize && getLink} />
+            <Main
+              image={<Styled.Image src={icAlert} />}
+              content={MESSAGE.NO_SIZE_COMPARE}
+              caption={noSize}
+              link={!noSize && getLink}
+            />
             {noSize && <SplitedButton />}
           </>
         ) : (
@@ -99,7 +104,12 @@ function SizeCompare() {
         )
       ) : !myBottom ? (
         <>
-          <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} caption={noSize} link={!noSize && getLink} />
+          <Main
+            image={<Styled.Image src={icAlert} />}
+            content={MESSAGE.NO_SIZE_COMPARE}
+            caption={noSize}
+            link={!noSize && getLink}
+          />
           {noSize && <SplitedButton />}
         </>
       ) : (
@@ -120,5 +130,11 @@ const Styled = {
 
     ${theme.fonts.body2};
     color: ${theme.colors.black};
+  `,
+  Image: styled.img`
+    width: 7.2rem;
+    height: 7.2rem;
+    object-fit: contain;
+    margin-bottom: 2.6rem;
   `,
 };
