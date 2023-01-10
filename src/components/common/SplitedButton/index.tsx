@@ -1,16 +1,45 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { currentViewState } from '../../../states/atom';
+import { currentViewState, historyState, productState, topOrBottomState } from '../../../states/atom';
+import theme from '../../../styles/theme';
 
 function SplitedButton() {
+  const [product, setProductState] = useRecoilState(productState);
+  const topOrBottom = useRecoilValue(topOrBottomState);
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
+  const [history, setHistory] = useRecoilState(historyState);
 
+  const saveProduct = () => {
+    const productData = chrome.storage.sync.get(['product']).then(({ product: { image, productName } }) => {
+      setProductState((prev) => ({ ...prev, image, productName }));
+    });
+
+    chrome.tabs.query(
+      {
+        active: true,
+        currentWindow: true,
+      },
+      (tabs) => {
+        const { url, favIconUrl } = tabs[0];
+        if (!url || !favIconUrl) return;
+
+        setProductState((prev) => ({
+          ...prev,
+          favIconUrl,
+          productUrl: url,
+          topOrBottom: topOrBottom === 'top' ? 0 : 1,
+        }));
+      },
+    );
+    setHistory(currentView);
+    setCurrentView('save');
+  };
   return (
     <Styled.Root>
       <Styled.SizeInputButton onClick={() => setCurrentView('size-write')}>사이즈 직접 입력하기</Styled.SizeInputButton>
 
-      <Styled.SaveButton>저장</Styled.SaveButton>
+      <Styled.SaveButton onClick={saveProduct}>저장</Styled.SaveButton>
     </Styled.Root>
   );
 }
@@ -24,20 +53,16 @@ const Styled = {
   `,
   SizeInputButton: styled.button`
     width: 26.6rem;
-    color: #1e2025;
+    color: ${theme.colors.black};
     background-color: #fbf26c;
     border-radius: 0px 33.5525px 0px 0px;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 120%;
+    ${theme.fonts.title2}
   `,
   SaveButton: styled.button`
     width: 11.4rem;
     color: #d9d9d9;
     background-color: #1e2025;
     border-radius: 33.552px 0px 0px 0px;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 120%;
+    ${theme.fonts.title2}
   `,
 };

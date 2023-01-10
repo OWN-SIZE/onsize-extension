@@ -13,6 +13,7 @@ import Tabs from '../../../components/size-compare/Tabs';
 import { LINK, MESSAGE } from '../../../contants/main';
 import useTabs from '../../../hooks/ui/useTabs';
 import { isSelfWriteState, mySizeState, topOrBottomState } from '../../../states/atom';
+import theme from '../../../styles/theme';
 
 function SizeCompare() {
   // 서버에서 받아오는 사용자 실측 사이즈 데이터
@@ -106,12 +107,11 @@ const Styled = {
   Link: styled.button`
     padding: 1.2rem 5.8rem;
     margin-top: 2.6rem;
-    background: #fffaad;
+    background: ${theme.colors.yellow01};
     box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.05);
     border-radius: 2.15rem;
 
-    font-weight: 600;
-    font-size: 1.4rem;
-    color: #1e2025;
+    ${theme.fonts.body2};
+    color: ${theme.colors.black};
   `,
 };

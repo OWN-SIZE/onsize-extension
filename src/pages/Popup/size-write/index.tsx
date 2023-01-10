@@ -73,7 +73,7 @@ function SizeWrite() {
         if (inputKey === 'size') {
           inputData.size = inputValue;
         } else {
-          inputData[inputKey] = parseFloat(inputValue);
+          // inputData[inputKey] = parseFloat(inputValue);
         }
       });
 
@@ -87,7 +87,7 @@ function SizeWrite() {
           if (inputKey === 'size') {
             inputData.size = inputValue;
           } else {
-            inputData[inputKey] = parseFloat(inputValue);
+            // inputData[inputKey] = parseFloat(inputValue);
           }
         });
 
@@ -99,6 +99,8 @@ function SizeWrite() {
   useEffect(() => {
     const root = document.getElementById('app-container');
     if (root) {
+      document.body.style.width = '63.2rem';
+      document.body.style.height = '31.4rem';
       root.style.width = '63.2rem';
       root.style.height = '31.4rem';
     }
@@ -167,6 +169,7 @@ const Styled = {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 63.2rem;
   `,
   RadioButtonContainer: styled.div`
     display: grid;

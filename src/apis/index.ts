@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-// TODO : login token 및 base url 설정
 const token = '';
-export const BASE_URL = '';
+export const BASE_URL = `${process.env.REACT_APP_SERVER}`;
 
 export const client = axios.create({
-  baseURL: BASE_URL,
+  baseURL: `${BASE_URL}/extension`,
   headers: {
     Authorization: `Bearer ${token}`,
   },

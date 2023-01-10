@@ -8,16 +8,14 @@
     "url": "https://github.com/lxieyang/chrome-extension-boilerplate-react.git"
   },
   "scripts": {
-    "build": "node utils/build.js",
-    "start": "node utils/webserver.js"
+    "build": "webpack --progress --config webpack.prod.js",
+    "start": "webpack --watch --progress --config webpack.dev.js"
   },
   "dependencies": {
-    "@hot-loader/react-dom": "^17.0.2",
     "@types/styled-components": "^5.1.26",
     "axios": "^1.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hot-loader": "^4.13.1",
     "recoil": "^0.7.6",
     "styled-components": "^5.3.6"
   },
@@ -27,6 +25,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@types/chrome": "^0.0.202",
+    "@types/node": "^18.11.18",
     "@types/react": "^17.0.52",
     "@types/react-dom": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
@@ -38,6 +37,8 @@
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^6.7.2",
+    "dotenv-webpack": "^8.0.1",
+    "esbuild-loader": "^2.20.0",
     "eslint": "^8.31.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-import": "^2.26.0",

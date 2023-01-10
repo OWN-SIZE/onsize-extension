@@ -28,7 +28,7 @@ export const productState = atom<ProductType>({
     productName: '',
     isRecommend: true,
     topOrBottom: 0,
-    favIconUrl: '',
+    faviconUrl: '',
     size: '',
     memo: null,
     isPin: null,
@@ -44,4 +44,9 @@ export const currentViewState = atom<CurrentViewType>({
 export const isSelfWriteState = atom<boolean>({
   key: 'isSelfWrite',
   default: false,
+});
+
+export const historyState = atom<CurrentViewType | null>({
+  key: 'history',
+  default: null,
 });

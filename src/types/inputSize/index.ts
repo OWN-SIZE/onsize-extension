@@ -15,6 +15,22 @@ export interface InputSizeInput {
   topOrBottom: 0 | 1;
 }
 
+// export type InputSizeInputKeyType =
+//   | 'size'
+//   | 'topLength'
+//   | 'shoulder'
+//   | 'chest'
+//   | 'isWidthOfTop'
+//   | 'bottomLength'
+//   | 'waist'
+//   | 'thigh'
+//   | 'rise'
+//   | 'hem'
+//   | 'isWidthOfBottom'
+//   | 'isManual'
+//   | 'manualInputNum'
+//   | 'topOrBottom';
+
 export interface InputSizeOutput {
   status: number;
   success: boolean;

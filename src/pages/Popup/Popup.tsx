@@ -2,15 +2,21 @@ import { useRecoilValue } from 'recoil';
 
 import { currentViewState } from '../../states/atom';
 import GlobalStyle from '../../styles/global';
-import SaveProduct from '../save-product';
 
 import Result from './result';
+import SaveProduct from './save-product';
 import SizeCompare from './size-compare';
 import SizeOption from './size-option';
 import SizeWrite from './size-write';
 
 function Popup() {
   const currentView = useRecoilValue(currentViewState);
+
+  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log(sender.tab ? 'from a content script in popup:' + sender.tab.url : 'from the extension');
+    console.log('request in popup', request);
+    if (request.isSizeTableExist === 'exist') sendResponse({ farewell: 'i want to go home' });
+  });
 
   const renderView = () => {
     switch (currentView) {

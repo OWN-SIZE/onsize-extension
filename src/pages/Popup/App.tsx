@@ -1,5 +1,7 @@
-import GlobalStyle from '../../styles/global';
 import { RecoilRoot } from 'recoil';
+
+import GlobalStyle from '../../styles/global';
+
 import Popup from './Popup';
 
 function App() {
