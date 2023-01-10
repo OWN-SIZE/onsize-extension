@@ -35,8 +35,8 @@ const Styled = {
     padding-top: 4rem;
   `,
   Image: styled.img`
-    width: 11rem;
-    height: 11rem;
+    width: 7.2rem;
+    height: 7.2rem;
     object-fit: contain;
     margin-bottom: 2.6rem;
   `,
@@ -51,6 +51,5 @@ const Styled = {
     color: ${theme.colors.gray300};
   `,
   Link: styled.div`
-    margin-top: 2.6rem;
   `,
 };
