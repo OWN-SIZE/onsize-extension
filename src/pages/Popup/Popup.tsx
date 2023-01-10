@@ -22,6 +22,8 @@ function Popup() {
         return <SizeCompare />;
       case 'save':
         return <SaveProduct />;
+      case 'size-write':
+        return <SizeWrite />;
     }
   };
 
@@ -29,7 +31,6 @@ function Popup() {
     <>
       <GlobalStyle />
       {renderView()}
-      {/* <SizeWrite /> */}
     </>
   );
 }
