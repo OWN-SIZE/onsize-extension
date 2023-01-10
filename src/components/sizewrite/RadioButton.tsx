@@ -30,6 +30,7 @@ export default RadioButton;
 const Styled = {
   Root: styled.div`
     display: flex;
+    cursor: pointer;
   `,
   Label: styled.label`
     margin-left: 0.4rem;
