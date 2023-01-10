@@ -97,8 +97,13 @@ function SizeWrite() {
   });
 
   useEffect(() => {
-    document.body.style.width = '63.2rem';
-    document.body.style.minHeight = '31.4rem';
+    const root = document.getElementById('app-container');
+    if (root) {
+      document.body.style.width = '63.2rem';
+      document.body.style.height = '31.4rem';
+      root.style.width = '63.2rem';
+      root.style.height = '31.4rem';
+    }
   }, []);
 
   return (
@@ -165,7 +170,6 @@ const Styled = {
     align-items: center;
     flex-direction: column;
     width: 63.2rem;
-    height: 31.4rem;
   `,
   RadioButtonContainer: styled.div`
     display: grid;

@@ -1,17 +1,44 @@
-import { PropsWithChildren, ReactNode } from 'react';
-import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 
-interface PopupProps {
-  children: ReactNode;
-}
+import { currentViewState } from '../../states/atom';
+import GlobalStyle from '../../styles/global';
 
-function Popup({ children }: PropsWithChildren<PopupProps>) {
-  return <Root>{children}</Root>;
+import Result from './result';
+import SaveProduct from './save-product';
+import SizeCompare from './size-compare';
+import SizeOption from './size-option';
+import SizeWrite from './size-write';
+
+function Popup() {
+  const currentView = useRecoilValue(currentViewState);
+
+  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log(sender.tab ? 'from a content script in popup:' + sender.tab.url : 'from the extension');
+    console.log('request in popup', request);
+    if (request.isSizeTableExist === 'exist') sendResponse({ farewell: 'i want to go home' });
+  });
+
+  const renderView = () => {
+    switch (currentView) {
+      case 'size-option':
+        return <SizeOption />;
+      case 'result':
+        return <Result />;
+      case 'compare':
+        return <SizeCompare />;
+      case 'save':
+        return <SaveProduct />;
+      case 'size-write':
+        return <SizeWrite />;
+    }
+  };
+
+  return (
+    <>
+      <GlobalStyle />
+      {renderView()}
+    </>
+  );
 }
 
 export default Popup;
-
-const Root = styled.div`
-  width: 38rem;
-  height: 37.5rem;
-`;

@@ -33,7 +33,7 @@ const colorMapper = (content: ContentType): ColorMapType => {
 
 function Button(props: ButtonProps) {
   const { content } = props;
-  const { background, text } = colorMapper(content);
+  const { text, background } = colorMapper(content);
   const [product, setProductState] = useRecoilState(productState);
   const topOrBottom = useRecoilValue(topOrBottomState);
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
@@ -86,8 +86,8 @@ const Root = styled.div<{ text: string; background: string }>`
   justify-content: center;
   align-items: center;
   height: 6.6rem;
-  ${theme.fonts.title2}
   color: ${({ text }) => text};
   background-color: ${({ background }) => background};
   cursor: pointer;
+  ${theme.fonts.title2}
 `;

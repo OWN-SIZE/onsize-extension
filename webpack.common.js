@@ -4,6 +4,7 @@ const getHtmlPlugins = (chunks) => {
   return chunks.map(
     ({ chunk, title }) =>
       new HtmlPlugin({
+        template: getAbsolutePath('src/pages/Popup/index.html'),
         title: `${title}`,
         filename: `${chunk}.html`,
         chunks: [chunk],
@@ -21,7 +22,6 @@ module.exports = {
   entry: {
     popup: getAbsolutePath('src/pages/Popup/index.tsx'),
     background: getAbsolutePath('src/pages/Background/index.ts'),
-    injectContent: getAbsolutePath('src/pages/Content/injectContent/index.tsx'),
     productContent: getAbsolutePath('src/pages/Content/productContent/index.ts'),
     sizeTableContent: getAbsolutePath('src/pages/Content/sizeTableContent/index.ts'),
   },

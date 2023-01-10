@@ -8,8 +8,13 @@ const GlobalStyle: any = createGlobalStyle`
     font-size:62.5%;
     margin: 0 auto;
     background-color: #F6F6F6;
-    /* width:38rem;
-    height:37.5rem; */
+  }
+
+  #app-container{
+    width:38rem;
+    height:37.5rem;
+    margin:0;
+    padding:0;
   }
   
   * {
