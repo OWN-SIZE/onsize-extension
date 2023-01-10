@@ -97,16 +97,8 @@ function SizeWrite() {
   });
 
   useEffect(() => {
-<<<<<<< HEAD
     document.body.style.width = '63.2rem';
     document.body.style.minHeight = '31.4rem';
-=======
-    const root = document.getElementById('app-container');
-    if (root) {
-      root.style.width = '63.2rem';
-      root.style.height = '31.4rem';
-    }
->>>>>>> main
   }, []);
 
   return (

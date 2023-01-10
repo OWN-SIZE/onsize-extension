@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -36,16 +35,6 @@ function SplitedButton() {
     setHistory(currentView);
     setCurrentView('save');
   };
-=======
-import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
-
-import { currentViewState } from '../../../states/atom';
-
-function SplitedButton() {
-  const [currentView, setCurrentView] = useRecoilState(currentViewState);
-
->>>>>>> main
   return (
     <Styled.Root>
       <Styled.SizeInputButton onClick={() => setCurrentView('size-write')}>사이즈 직접 입력하기</Styled.SizeInputButton>
