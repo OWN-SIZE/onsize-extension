@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import imgBottom from '../../../assets/img/bottom.svg';
@@ -7,24 +7,33 @@ import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import OptionButton from '../../../components/size-option/OptionButton';
-import { currentViewState, historyState, topOrBottomState } from '../../../states/atom';
+import { currentViewState, historyState, mySizeState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SizeOption() {
   const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
   const [topOrBottom, setTopOrBottom] = useRecoilState(topOrBottomState);
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
+  const mySize = useRecoilValue(mySizeState);
   const [history, setHistory] = useRecoilState(historyState);
 
   useEffect(() => {
-    if (selectedOption) {
-      setTopOrBottom(selectedOption);
-      setTimeout(() => {
-        setHistory(currentView);
-        setCurrentView('result');
-      }, 100);
-    }
+    onClickOption();
   }, [selectedOption]);
+
+  const onClickOption = () => {
+    if (!selectedOption) return;
+
+    setTopOrBottom(selectedOption);
+    setTimeout(() => {
+      setHistory(currentView);
+      renderNextView();
+    }, 100);
+  };
+
+  const renderNextView = () => {
+    mySize ? setCurrentView('compare') : setCurrentView('cannotload');
+  };
 
   return (
     <Layout>
