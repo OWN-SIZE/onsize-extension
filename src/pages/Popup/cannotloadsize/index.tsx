@@ -28,5 +28,6 @@ const Styled = {
     color: ${theme.colors.black};
     border-bottom: 1px solid #1e2025;
     ${theme.fonts.body3};
+    margin-top: 2.6rem;
   `,
 };

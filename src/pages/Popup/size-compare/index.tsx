@@ -114,7 +114,6 @@ export default SizeCompare;
 const Styled = {
   Link: styled.button`
     padding: 1.2rem 5.8rem;
-    margin-top: 2.6rem;
     background: ${theme.colors.yellow01};
     box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.05);
     border-radius: 2.15rem;

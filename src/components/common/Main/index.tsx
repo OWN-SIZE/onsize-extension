@@ -51,5 +51,7 @@ const Styled = {
     color: ${theme.colors.gray300};
     margin-top: 0.815rem;
   `,
-  Link: styled.div``,
+  Link: styled.div`
+    margin-top: 2.6rem;
+  `,
 };

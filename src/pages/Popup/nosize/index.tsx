@@ -29,6 +29,5 @@ const Styled = {
     ${theme.fonts.body3};
     color: ${theme.colors.black};
     border-bottom: 1px solid #1e2025;
-    margin-top: 0.815rem;
   `,
 };

@@ -7,12 +7,13 @@ import { CurrentViewType, ProductType, TopOrBottom } from '.';
 export const mySizeState = atom<SizeType>({
   key: 'mySize',
   default: {
-    top: {
-      topLength: 50,
-      shoulder: 60,
-      chest: 40,
-      isWidthOfTop: false,
-    },
+    // top: {
+    //   topLength: 50,
+    //   shoulder: 60,
+    //   chest: 40,
+    //   isWidthOfTop: false,
+    // },
+    top: null,
     bottom: {
       bottomLength: 90,
       waist: 28,

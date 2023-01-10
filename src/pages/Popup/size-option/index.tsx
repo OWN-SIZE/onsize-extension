@@ -32,7 +32,10 @@ function SizeOption() {
   };
 
   const renderNextView = () => {
-    mySize ? setCurrentView('compare') : setCurrentView('cannotload');
+    if (mySize) {
+      /** TODO : 추천받은 사이즈가 없으면 nosize 있으면 size-recommend */
+    }
+    mySize ? setCurrentView('nosize') : setCurrentView('cannotload');
   };
 
   return (
