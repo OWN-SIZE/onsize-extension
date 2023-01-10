@@ -13,7 +13,6 @@ export const mySizeState = atom<SizeType>({
       chest: 40,
       isWidthOfTop: false,
     },
-    // bottom: null,
     bottom: {
       bottomLength: 90,
       waist: 28,
@@ -23,13 +22,11 @@ export const mySizeState = atom<SizeType>({
       isWidthOfBottom: false,
     },
   },
-  // effects_UNSTABLE: [persistAtom],
 });
 
 export const topOrBottomState = atom<TopOrBottom>({
   key: 'topOrBottom',
   default: 'top',
-  // effects_UNSTABLE: [persistAtom],
 });
 
 export const productState = atom<ProductType>({
@@ -46,7 +43,6 @@ export const productState = atom<ProductType>({
     memo: null,
     isPin: null,
   },
-  // effects_UNSTABLE: [persistAtom],
 });
 
 export const currentViewState = atom<CurrentViewType>({

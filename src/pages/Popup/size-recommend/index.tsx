@@ -9,7 +9,13 @@ function SizeRecommend() {
       <Styled.Root>
         <Styled.Title>나와 가장 잘 맞는 사이즈는</Styled.Title>
         <Styled.Size></Styled.Size>
-        <Styled.Link>나의 옷장으로 이동</Styled.Link>
+        <Styled.Link
+          onClick={() => {
+            /** TODO : userId와 함께 웹 도메인 window.open */
+          }}
+        >
+          나의 옷장으로 이동
+        </Styled.Link>
       </Styled.Root>
       <Button content="저장" />
     </Layout>

@@ -1,3 +1,4 @@
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import icAlert from '../../../assets/icons/alert.svg';
@@ -5,10 +6,12 @@ import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import SplitedButton from '../../../components/common/SplitedButton';
 import { LINK, MESSAGE } from '../../../contants/main';
+import { currentViewState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function CannotLoadSize() {
-  const getLink = <Styled.Link>{LINK.ANCHOR}</Styled.Link>;
+  const [, setCurrentView] = useRecoilState(currentViewState);
+  const getLink = <Styled.Link onClick={() => setCurrentView('compare')}>{LINK.ANCHOR}</Styled.Link>;
 
   return (
     <Layout close>

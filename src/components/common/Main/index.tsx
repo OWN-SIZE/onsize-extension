@@ -49,7 +49,7 @@ const Styled = {
     font-size: 1.4rem;
     line-height: 3.2rem;
     color: ${theme.colors.gray300};
+    margin-top: 0.815rem;
   `,
-  Link: styled.div`
-  `,
+  Link: styled.div``,
 };

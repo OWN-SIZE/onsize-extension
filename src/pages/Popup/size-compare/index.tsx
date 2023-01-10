@@ -70,7 +70,15 @@ function SizeCompare() {
       }
     : null;
 
-  const getLink = <Styled.Link>{LINK.BUTTON}</Styled.Link>;
+  const getLink = (
+    <Styled.Link
+      onClick={() => {
+        /** TODO : 웹 도메인 window.open */
+      }}
+    >
+      {LINK.BUTTON}
+    </Styled.Link>
+  );
   const noSize = !myTop && !myBottom;
 
   return isSelfWrite ? (
