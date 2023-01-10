@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { postInputSize } from '../../../apis/inputSize';
+import { postSelfWrite } from '../../../apis/api';
 import Layout from '../../../components/common/Layout';
 import AddRowButton from '../../../components/sizewrite/AddRowButton';
 import FormHeader from '../../../components/sizewrite/FormHeader';
@@ -77,7 +77,7 @@ function SizeWrite() {
         }
       });
 
-      postInputSize(inputData);
+      postSelfWrite(inputData);
 
       // 두번째 사이즈 칼럼이 존재하는 경우
       if (isAddRow) {
@@ -91,7 +91,7 @@ function SizeWrite() {
           }
         });
 
-        postInputSize(inputData);
+        postSelfWrite(inputData);
       }
     },
   });

@@ -1,8 +1,8 @@
-import { SaveProductInput, SaveProductOutput } from '../types/remote';
+import { InputSizeInput, InputSizeOutput } from '../types/inputSize';
 
-import { client } from '.';
+import { client } from './index';
 
-export const postProduct = async (payload: SaveProductInput) => {
-  const { data } = await client.post<SaveProductOutput>('/toAllCloset', payload);
+export const postSelfWrite = async (inputSize: InputSizeInput) => {
+  const { data } = await client.post<InputSizeOutput>(`/extension/inputSize`, inputSize);
   return data;
 };
