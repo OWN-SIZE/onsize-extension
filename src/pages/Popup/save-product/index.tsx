@@ -27,6 +27,5 @@ const Styled = {
     ${theme.fonts.body3};
     color: ${theme.colors.black};
     border-bottom: 1px solid ${theme.colors.black};
-    cursor: pointer;
   `,
 };

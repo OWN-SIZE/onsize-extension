@@ -7,6 +7,7 @@ import Result from './result';
 import SaveProduct from './save-product';
 import SizeCompare from './size-compare';
 import SizeOption from './size-option';
+import SizeRecommend from './size-recommend';
 import SizeWrite from './size-write';
 
 function Popup() {
@@ -36,7 +37,8 @@ function Popup() {
   return (
     <>
       <GlobalStyle />
-      {renderView()}
+      {/* {renderView()} */}
+      <SizeRecommend />
     </>
   );
 }
