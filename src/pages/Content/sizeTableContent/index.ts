@@ -1,3 +1,6 @@
+import { useRecoilState } from 'recoil';
+
+import { currentViewState } from '../../../states/atom';
 import { InfoType, SizeInfoType } from '../../../types/content';
 
 const table = document.querySelector('table');
@@ -30,11 +33,12 @@ if (table) {
       sizeInfo[MY] = infoType;
     });
 
-    console.log(sizeInfo);
-
-    chrome.runtime.sendMessage({ isSizeTableExist: sizeInfo ? 'exist' : 'none' }, function (response) {
-      console.log(response.farewell);
+    chrome.runtime.sendMessage({ isSizeTableExist: sizeInfo ? 'exist' : 'none' }, (response) => {
+      response.status === 'success'
+        ? localStorage.setItem('currentView', 'cannotload')
+        : localStorage.setItem('currentView', 'cannotload');
     });
+    console.log(localStorage.getItem('currentView'));
   }
 
   table.style.border = '10px solid red';

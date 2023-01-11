@@ -21,13 +21,8 @@ function SizeCompare() {
   const isSelfWrite = useRecoilValue(isSelfWriteState);
   const topOrBottom = useRecoilValue(topOrBottomState);
   const currentView = useRecoilValue(currentViewState);
-  const [history, setHistory] = useRecoilState(historyState);
 
   const { currentTab, handleTab } = useTabs();
-
-  useEffect(() => {
-    setHistory(currentView);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem('currentTab', currentTab);

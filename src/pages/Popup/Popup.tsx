@@ -8,17 +8,11 @@ import NoSize from './nosize';
 import SaveProduct from './save-product';
 import SizeCompare from './size-compare';
 import SizeOption from './size-option';
+import SizeRecommend from './size-recommend';
 import SizeWrite from './size-write';
 
 function Popup() {
   const currentView = useRecoilValue(currentViewState);
-  console.log(currentView);
-
-  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    console.log(sender.tab ? 'from a content script in popup:' + sender.tab.url : 'from the extension');
-    console.log('request in popup', request);
-    if (request.isSizeTableExist === 'exist') sendResponse({ farewell: 'i want to go home' });
-  });
 
   const renderView = () => {
     switch (currentView) {
@@ -34,6 +28,8 @@ function Popup() {
         return <SizeWrite />;
       case 'nosize':
         return <NoSize />;
+      default:
+        return <SizeRecommend />;
     }
   };
 

@@ -51,6 +51,7 @@ function Button(props: ButtonProps) {
     const productData = chrome.storage.sync.get(['product']).then(({ product: { image, productName } }) => {
       setProductState((prev) => ({ ...prev, image, productName }));
     });
+
     chrome.tabs.query(
       {
         active: true,

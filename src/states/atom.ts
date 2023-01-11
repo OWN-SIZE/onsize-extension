@@ -14,15 +14,14 @@ export const mySizeState = atom<SizeType>({
     //   isWidthOfTop: false,
     // },
     top: null,
-    // bottom: {
-    //   bottomLength: 90,
-    //   waist: 28,
-    //   rise: 15,
-    //   hem: 10,
-    //   thigh: 28,
-    //   isWidthOfBottom: false,
-    // },
-    bottom: null,
+    bottom: {
+      bottomLength: 90,
+      waist: 28,
+      rise: 15,
+      hem: 10,
+      thigh: 28,
+      isWidthOfBottom: false,
+    },
   },
 });
 
@@ -49,7 +48,7 @@ export const productState = atom<ProductType>({
 
 export const currentViewState = atom<CurrentViewType>({
   key: 'currentView',
-  default: (localStorage.getItem('currentView') as CurrentViewType) || 'size-option',
+  default: (localStorage.getItem('currentView') as CurrentViewType) || 'cannotload',
 });
 
 export const isSelfWriteState = atom<boolean>({

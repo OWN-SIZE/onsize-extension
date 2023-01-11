@@ -6,7 +6,6 @@ import { topOrBottomState } from '../../states/atom';
 
 const useTabs = () => {
   const storageTabName: TabName = localStorage.getItem('currentTab') as TabName;
-  console.log(storageTabName);
   const topOrBottom = useRecoilValue(topOrBottomState);
   const [currentTab, setCurrentTab] = useState<TabName>(storageTabName || topOrBottom);
 

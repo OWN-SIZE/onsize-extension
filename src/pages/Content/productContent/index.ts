@@ -6,14 +6,14 @@ let productName;
 const mallName = '무신사( MUSINSA )';
 
 function isHTMLElement(arg: any): arg is HTMLElement {
-  return 'innerText' in arg;
+  return arg.innerText;
 }
 
-if (isHTMLElement(productTitle)) {
+if (productTitle && isHTMLElement(productTitle)) {
   productName = productTitle.innerText;
 }
 
-if (isHTMLElement(productImage)) {
+if (productImage && isHTMLElement(productImage)) {
   const imageElement = productImage.querySelector('img');
   if (imageElement) {
     image = imageElement?.src;
@@ -27,3 +27,14 @@ chrome.storage.sync.set({
     mallName,
   },
 });
+
+// localStorage.setItem(
+//   'product',
+//   JSON.stringify({
+//     product: {
+//       image,
+//       productName,
+//       mallName,
+//     },
+//   }),
+// );

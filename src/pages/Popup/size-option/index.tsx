@@ -14,17 +14,14 @@ function SizeOption() {
   const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
   const [topOrBottom, setTopOrBottom] = useRecoilState(topOrBottomState);
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
-  const mySize = useRecoilValue(mySizeState);
   const [history, setHistory] = useRecoilState(historyState);
+  const mySize = useRecoilValue(mySizeState);
 
-  useEffect(() => {
-    onClickOption();
-  }, [selectedOption]);
-
-  const onClickOption = () => {
+  const onClickOption = (selectedOption: 'top' | 'bottom') => {
     if (!selectedOption) return;
-
     setTopOrBottom(selectedOption);
+    setSelectedOption(selectedOption);
+
     setTimeout(() => {
       setHistory(currentView);
       renderNextView();
@@ -32,25 +29,22 @@ function SizeOption() {
   };
 
   const renderNextView = () => {
-    if (mySize) {
-      /** TODO : 추천받은 사이즈가 없으면 nosize 있으면 size-recommend */
-    }
-    mySize ? setCurrentView('nosize') : setCurrentView('cannotload');
+    mySize ? setCurrentView('nosize') : setCurrentView('size-recommend');
   };
 
   return (
-    <Layout>
+    <Layout close>
       <Styled.Root>
         지금 어떤 옷을 보고 있나요?
         <Styled.OptionContainer>
           <OptionButton
-            onClick={() => setSelectedOption('top')}
+            onClick={() => onClickOption('top')}
             src={imgTop}
             caption={'상의'}
             isActive={selectedOption === 'top'}
           />
           <OptionButton
-            onClick={() => setSelectedOption('bottom')}
+            onClick={() => onClickOption('bottom')}
             src={imgBottom}
             caption={'하의'}
             isActive={selectedOption === 'bottom'}

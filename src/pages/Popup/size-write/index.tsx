@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { postSelfWrite } from '../../../apis/api';
@@ -9,7 +9,7 @@ import FormHeader from '../../../components/sizewrite/FormHeader';
 import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 import useForm from '../../../hooks/business/useForm';
-import { topOrBottomState } from '../../../states/atom';
+import { currentViewState, historyState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { InputSizeInput } from '../../../types/inputSize';
 import { BottomValuesType, TopValuesType } from '../../../types/useForm';
@@ -40,6 +40,8 @@ function SizeWrite() {
   const topOrBottom = useRecoilValue(topOrBottomState);
   const [measure, setMeasure] = useState('단면');
   const [isAddRow, setIsAddRow] = useState<IsRowType>(null);
+  const [, setCurrentView] = useRecoilState(currentViewState);
+
   const { values, handleChange, handleBlur, addedValues, handleChangeAdded, handleBlurAdded, handleSubmit } = useForm({
     initialValues: topOrBottom === 'top' ? TopInitValues : BottomInitValues,
     onSubmit: (values) => {
@@ -93,6 +95,8 @@ function SizeWrite() {
 
         postSelfWrite(inputData);
       }
+      /** TODO : 사이즈 추천 결과 있으면 size-recommend 없으면 nosize */
+      setCurrentView('size-recommend');
     },
   });
 
