@@ -1,9 +1,14 @@
 import { InputSizeInput, InputSizeOutput } from '../types/inputSize';
-import { SaveProductInput, SaveProductOutput } from '../types/remote';
+import {
+  PostSizeTableInput,
+  PostSizeTableOutput,
+  SaveProductInput,
+  SaveProductOutput,
+  SaveResultInput,
+  SaveResultOutput,
+} from '../types/remote';
 
 import { client } from './index';
-
-/** POST */
 
 // 비교 사이즈 수동 입력
 export const postSelfWrite = async (inputSize: InputSizeInput) => {
@@ -19,21 +24,13 @@ export const saveProductToAllCloset = async (body: SaveProductInput) => {
 };
 
 // 사이즈 추천 결과 저장
-export const saveRecommendedSizeResult = async () => {
-  const { data } = await client.post('/saveBest');
+export const saveResult = async (body: SaveResultInput) => {
+  const { data } = await client.post<SaveResultOutput>('/saveBest', body);
   return data;
 };
 
 // 크롤링한 사이즈표 저장
-export const postSizeTable = async () => {
-  const { data } = await client.post('/toAllSize');
-  return data;
-};
-
-/** GET */
-
-// 사이즈 추천 결과 조회
-export const fetchRecommendedSizeResult = async () => {
-  const { data } = await client.get('/bestSize');
+export const postSizeTable = async (body: PostSizeTableInput) => {
+  const { data } = await client.post<PostSizeTableOutput>('/toAllSize', body);
   return data;
 };
