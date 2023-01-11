@@ -35,7 +35,7 @@ if (table) {
 
     chrome.runtime.sendMessage({ isSizeTableExist: sizeInfo ? 'exist' : 'none' }, (response) => {
       response.status === 'success'
-        ? localStorage.setItem('currentView', 'cannotload')
+        ? localStorage.setItem('currentView', 'size-option')
         : localStorage.setItem('currentView', 'cannotload');
     });
     console.log(localStorage.getItem('currentView'));
