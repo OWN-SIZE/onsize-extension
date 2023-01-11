@@ -6,13 +6,19 @@ import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import { LINK, MESSAGE } from '../../../contants/main';
-import { currentViewState } from '../../../states/atom';
+import { currentViewState, historyState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function NoSize() {
-  const [, setCurrentView] = useRecoilState(currentViewState);
+  const [currentView, setCurrentView] = useRecoilState(currentViewState);
+  const [history, setHistory] = useRecoilState(historyState);
 
-  const getLink = <Styled.Link onClick={() => setCurrentView('compare')}>{LINK.ANCHOR}</Styled.Link>;
+  const updateView = () => {
+    setHistory(currentView);
+    setCurrentView('compare');
+  };
+
+  const getLink = <Styled.Link onClick={updateView}>{LINK.ANCHOR}</Styled.Link>;
 
   return (
     <Layout close>

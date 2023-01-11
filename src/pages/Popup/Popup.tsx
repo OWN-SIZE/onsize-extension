@@ -12,6 +12,7 @@ import SizeWrite from './size-write';
 
 function Popup() {
   const currentView = useRecoilValue(currentViewState);
+  console.log(currentView);
 
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log(sender.tab ? 'from a content script in popup:' + sender.tab.url : 'from the extension');

@@ -29,10 +29,13 @@ if (table) {
 
       sizeInfo[MY] = infoType;
     });
+
+    console.log(sizeInfo);
+
+    chrome.runtime.sendMessage({ isSizeTableExist: sizeInfo ? 'exist' : 'none' }, function (response) {
+      console.log(response.farewell);
+    });
   }
-  chrome.runtime.sendMessage({ isSizeTableExist: sizeInfo ? 'exist' : 'none' }, function (response) {
-    console.log(response.farewell);
-  });
 
   table.style.border = '10px solid red';
 }

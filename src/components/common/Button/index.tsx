@@ -1,7 +1,6 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { postProduct } from '../../../apis/api';
 import { currentViewState, historyState, productState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { SaveProductInput } from '../../../types/remote';
@@ -40,7 +39,8 @@ function Button(props: ButtonProps) {
   const [history, setHistory] = useRecoilState(historyState);
 
   const postProductData = async (body: SaveProductInput) => {
-    await postProduct(body);
+    /** TODO : 옷장 저장 api */
+    // await postProduct(body);
   };
   const updateView = () => {
     setHistory(currentView);

@@ -35,7 +35,13 @@ function SizeOption() {
     if (mySize) {
       /** TODO : 추천받은 사이즈가 없으면 nosize 있으면 size-recommend */
     }
-    mySize ? setCurrentView('nosize') : setCurrentView('cannotload');
+    if (mySize) {
+      setCurrentView('nosize');
+      localStorage.setItem('currentView', 'nosize');
+    } else {
+      setCurrentView('cannotload');
+      localStorage.setItem('currentView', 'cannotload');
+    }
   };
 
   return (

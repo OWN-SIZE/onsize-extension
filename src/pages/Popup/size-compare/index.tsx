@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -12,7 +12,7 @@ import SelfWriteCompare from '../../../components/size-compare/SelfWriteCompare'
 import Tabs from '../../../components/size-compare/Tabs';
 import { LINK, MESSAGE } from '../../../contants/main';
 import useTabs from '../../../hooks/ui/useTabs';
-import { isSelfWriteState, mySizeState, topOrBottomState } from '../../../states/atom';
+import { currentViewState, historyState, isSelfWriteState, mySizeState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SizeCompare() {
@@ -20,7 +20,19 @@ function SizeCompare() {
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const isSelfWrite = useRecoilValue(isSelfWriteState);
   const topOrBottom = useRecoilValue(topOrBottomState);
+  const currentView = useRecoilValue(currentViewState);
+  const [history, setHistory] = useRecoilState(historyState);
+
   const { currentTab, handleTab } = useTabs();
+
+  useEffect(() => {
+    setHistory(currentView);
+    localStorage.setItem('currentView', 'compare');
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('currentTab', currentTab);
+  }, [currentTab]);
 
   const [productSize, setProductSize] = useState<SizeType>({
     top: {

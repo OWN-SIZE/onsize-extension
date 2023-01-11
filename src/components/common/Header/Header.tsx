@@ -18,6 +18,7 @@ function Header(props: HeaderProps) {
   const history = useRecoilValue(historyState);
 
   const closePopup = () => {
+    localStorage.setItem('currentView', 'size-option');
     window.close();
   };
 
