@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 import { SizeType } from '../components/size-compare';
 
-import { CurrentViewType, ProductType, TopOrBottom } from '.';
+import { CurrentViewType, ProductType, TopOrBottom, UserDataType } from '.';
 
 export const mySizeState = atom<SizeType>({
   key: 'mySize',
@@ -59,4 +59,14 @@ export const isSelfWriteState = atom<boolean>({
 export const historyState = atom<CurrentViewType | null>({
   key: 'history',
   default: null,
+});
+
+export const userDataState = atom<UserDataType>({
+  key: 'userData',
+  default: {
+    isRegister: false,
+    userId: '',
+    token:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkpvQGdtYWlsLmNvbSIsImlhdCI6MTY3MzMzMjk4NX0.2IT_r2vURBDJUV6FfcIUX3V2lhIIFWgAsK5cYzIq4kg',
+  },
 });

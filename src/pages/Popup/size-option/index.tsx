@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
+import { client } from '../../../apis';
 import imgBottom from '../../../assets/img/bottom.svg';
 import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import OptionButton from '../../../components/size-option/OptionButton';
-import { currentViewState, historyState, mySizeState, topOrBottomState } from '../../../states/atom';
+import { currentViewState, historyState, mySizeState, topOrBottomState, userDataState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SizeOption() {
@@ -16,6 +17,11 @@ function SizeOption() {
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
   const [history, setHistory] = useRecoilState(historyState);
   const mySize = useRecoilValue(mySizeState);
+  const token = useRecoilValue(userDataState);
+
+  useEffect(() => {
+    client.defaults.headers.Authorization = `Bearer ${token}`;
+  }, []);
 
   const onClickOption = (selectedOption: 'top' | 'bottom') => {
     if (!selectedOption) return;

@@ -21,3 +21,9 @@ export type CurrentViewType =
   | 'cannotload'
   | 'nosize'
   | 'size-recommend';
+
+export interface UserDataType {
+  isRegister: boolean;
+  userId: string;
+  token: string;
+}
