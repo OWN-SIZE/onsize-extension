@@ -22,8 +22,10 @@ export type CurrentViewType =
   | 'nosize'
   | 'size-recommend';
 
+export type IsRegisterType = 'null' | 'true' | 'false';
+
 export interface UserDataType {
-  isRegister: boolean;
+  isRegister: IsRegisterType;
   userId: string;
   token: string;
 }

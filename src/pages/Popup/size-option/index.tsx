@@ -8,6 +8,7 @@ import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import OptionButton from '../../../components/size-option/OptionButton';
+import { IsRegisterType } from '../../../states';
 import { currentViewState, historyState, mySizeState, topOrBottomState, userDataState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
@@ -17,9 +18,31 @@ function SizeOption() {
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
   const [history, setHistory] = useRecoilState(historyState);
   const mySize = useRecoilValue(mySizeState);
-  const token = useRecoilValue(userDataState);
+  const [, setUserData] = useRecoilState(userDataState);
 
   useEffect(() => {
+    const isRegister = localStorage.getItem('isRegister') as IsRegisterType;
+    const userId = localStorage.getItem('userId') as string;
+    const token = localStorage.getItem('token') as string;
+
+    /** isRegister
+     * null : 초기 뷰
+     * false : 로그인만 하고 실측치 입력 X
+     * true : 실측치 입력 완료
+     */
+
+    if (isRegister === 'null') {
+      /** TODO : 초기 뷰 띄우기 */
+      return;
+    }
+
+    if (isRegister === 'false') {
+      setCurrentView('nosize');
+      return;
+    }
+
+    setUserData({ isRegister, userId, token });
+
     client.defaults.headers.Authorization = `Bearer ${token}`;
   }, []);
 
