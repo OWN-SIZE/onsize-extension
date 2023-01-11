@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 
 import { currentViewState } from '../../states/atom';
@@ -13,6 +14,24 @@ import SizeWrite from './size-write';
 
 function Popup() {
   const currentView = useRecoilValue(currentViewState);
+
+  const getUrl = async () => {
+    await chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const url = tabs[0].url;
+      if (!url) return;
+
+      const forwardUrlIndex = url.match('goods/')?.index;
+      const questionMarkIndex = url.split('').indexOf('?');
+
+      if (!forwardUrlIndex) return;
+      const productId = url?.slice(forwardUrlIndex + 6, questionMarkIndex);
+      console.log(productId);
+    });
+  };
+
+  useEffect(() => {
+    getUrl();
+  }, []);
 
   const renderView = () => {
     switch (currentView) {
