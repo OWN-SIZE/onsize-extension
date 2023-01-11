@@ -14,14 +14,15 @@ export const mySizeState = atom<SizeType>({
     //   isWidthOfTop: false,
     // },
     top: null,
-    bottom: {
-      bottomLength: 90,
-      waist: 28,
-      rise: 15,
-      hem: 10,
-      thigh: 28,
-      isWidthOfBottom: false,
-    },
+    // bottom: {
+    //   bottomLength: 90,
+    //   waist: 28,
+    //   rise: 15,
+    //   hem: 10,
+    //   thigh: 28,
+    //   isWidthOfBottom: false,
+    // },
+    bottom: null,
   },
 });
 

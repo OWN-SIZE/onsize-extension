@@ -27,7 +27,6 @@ function SizeCompare() {
 
   useEffect(() => {
     setHistory(currentView);
-    localStorage.setItem('currentView', 'compare');
   }, []);
 
   useEffect(() => {

@@ -11,6 +11,7 @@ import theme from '../../../styles/theme';
 
 function CannotLoadSize() {
   const [, setCurrentView] = useRecoilState(currentViewState);
+
   const getLink = <Styled.Link onClick={() => setCurrentView('compare')}>{LINK.ANCHOR}</Styled.Link>;
 
   return (
