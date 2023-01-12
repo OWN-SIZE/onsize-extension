@@ -39,7 +39,10 @@ if (table) {
       // 실측 측정방식 객체로 저장
       [...columns].forEach((column) => {
         // 한글 key값 영어로 변환
-        const innerText = column.innerText.slice(0, column.innerText.indexOf('단면')) as keyof typeof textMapper;
+        let innerText = column.innerText as keyof typeof textMapper;
+        if (innerText.includes('단면')) {
+          innerText = innerText.slice(0, column.innerText.indexOf('단면')) as keyof typeof textMapper;
+        }
 
         const key = textMapper[innerText];
         if (!key) return;
