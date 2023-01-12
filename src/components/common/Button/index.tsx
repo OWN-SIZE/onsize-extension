@@ -68,9 +68,6 @@ function Button(props: ButtonProps) {
 
   // 저장하기 버튼 클릭
   const onClickSaveProduct = async () => {
-    // await chrome.storage.sync.get(['product']).then(({ product: { image, productName } }) => {
-    //   setProductState((prev) => ({ ...prev, image, productName }));
-    // });
     const product = await getProductData(); // 상품 이미지 및 상품명
     const url = await getUrlData();
 

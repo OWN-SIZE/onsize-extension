@@ -70,6 +70,6 @@ export const userDataState = atom<UserDataType>({
     isRegister: 'null',
     userId: '',
     token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkpvQGdtYWlsLmNvbSIsImlhdCI6MTY3MzMzMjk4NX0.2IT_r2vURBDJUV6FfcIUX3V2lhIIFWgAsK5cYzIq4kg',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlZXNlb29vQHNvb2tteXVuZy5hYy5rciIsImlhdCI6MTY3MzQzOTg5OH0.L0RlpbVZnMucTVVmA8tVhh6F2eQzgKV0lFJm4SQM-q4',
   },
 });
