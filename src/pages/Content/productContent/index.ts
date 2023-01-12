@@ -27,14 +27,3 @@ chrome.storage.sync.set({
     mallName,
   },
 });
-
-// localStorage.setItem(
-//   'product',
-//   JSON.stringify({
-//     product: {
-//       image,
-//       productName,
-//       mallName,
-//     },
-//   }),
-// );

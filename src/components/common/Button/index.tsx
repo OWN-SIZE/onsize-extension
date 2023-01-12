@@ -50,9 +50,15 @@ function Button(props: ButtonProps) {
     setCurrentView('save');
   };
 
+  // save-product 뷰에서 익스텐션 껐다 켰을 때 상품 이미지 보관을 위해 작성함
+  const storeProductImage = (image: string) => {
+    localStorage.setItem('productImage', image);
+  };
+
   // image, productName, mallName명 가져오기
   const getProductData = async () => {
     const { product } = await chrome.storage.sync.get(['product']);
+    storeProductImage(product.image);
     return product;
   };
 

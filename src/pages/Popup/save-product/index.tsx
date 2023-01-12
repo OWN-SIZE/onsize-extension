@@ -18,7 +18,7 @@ function SaveProduct() {
       {LINK.SAVE}
     </Styled.Link>
   );
-  const { image } = useRecoilValue(productState);
+  const { image } = useRecoilValue(productState) || localStorage.getItem('productImage');
 
   return (
     <Layout close>
