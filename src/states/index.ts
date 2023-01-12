@@ -25,7 +25,7 @@ export type CurrentViewType =
 export type IsRegisterType = 'null' | 'true' | 'false';
 
 export interface UserDataType {
-  isRegister: IsRegisterType;
+  isRegister: IsRegisterType | string;
   userId: string;
   token: string;
 }

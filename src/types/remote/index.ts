@@ -1,3 +1,22 @@
+export interface MySizeOutput {
+  data: {
+    top: {
+      topLength: number;
+      shoulder: number;
+      chest: number;
+      isWidthOfTop: boolean;
+    };
+    bottom: {
+      bottomLength: number;
+      waist: number;
+      thigh: number;
+      rise: number;
+      hem: number;
+      isWidthOfBottom: boolean;
+    };
+  };
+}
+
 export interface SaveProductInput {
   productUrl: string;
   image: string;
