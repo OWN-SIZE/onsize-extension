@@ -4,8 +4,8 @@ const token = '';
 export const BASE_URL = process.env.REACT_APP_SERVER;
 
 export const client = axios.create({
-  baseURL: `${BASE_URL}/extension`,
+  baseURL: `${BASE_URL}`,
   headers: {
-    Authorization: `Bearer ${token}`,
+    token,
   },
 });
