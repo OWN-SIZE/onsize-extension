@@ -40,7 +40,6 @@ function Button(props: ButtonProps) {
 
   const postProductData = async (body: SaveProductInput) => {
     /** TODO : 옷장 저장 api */
-    // await postProduct(body);
   };
   const updateView = () => {
     setHistory(currentView);

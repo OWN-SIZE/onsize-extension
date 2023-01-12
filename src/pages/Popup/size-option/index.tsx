@@ -11,6 +11,8 @@ import OptionButton from '../../../components/size-option/OptionButton';
 import { IsRegisterType } from '../../../states';
 import { currentViewState, historyState, mySizeState, topOrBottomState, userDataState } from '../../../states/atom';
 import theme from '../../../styles/theme';
+import { InfoType, SizeInfoType } from '../../../types/content';
+import { PostSizeTableInput } from '../../../types/remote';
 
 function SizeOption() {
   const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
@@ -46,15 +48,32 @@ function SizeOption() {
     client.defaults.headers.Authorization = `Bearer ${token}`;
   }, []);
 
-  const onClickOption = (selectedOption: 'top' | 'bottom') => {
+  const onClickOption = async (selectedOption: 'top' | 'bottom') => {
     if (!selectedOption) return;
     setTopOrBottom(selectedOption);
     setSelectedOption(selectedOption);
+
+    const sizeTable = await getSizeTable(); // 사이즈 테이블 받아오기 함수 호출
+    sizeTable.forEach((row: PostSizeTableInput) => {
+      row['isManual'] = false;
+      row['manualInputNum'] = null;
+      row['isWidthOfTop'] = true;
+      row['isWidthOfBottom'] = true;
+    });
+
+    /** TODO : 사이즈표 저장하기 post api 연결 */
+    console.log('body', sizeTable);
 
     setTimeout(() => {
       setHistory(currentView);
       renderNextView();
     }, 100);
+  };
+
+  // sync에 저장한 사이즈표 데이터 가져오기
+  const getSizeTable = async () => {
+    const { sizeTable } = await chrome.storage.sync.get(['sizeTable']);
+    return sizeTable as PostSizeTableInput[];
   };
 
   const renderNextView = () => {

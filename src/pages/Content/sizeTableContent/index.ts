@@ -26,7 +26,7 @@ const table = document.querySelector('table');
 
 if (table) {
   const columns = table.querySelectorAll('.item_val') as NodeListOf<HTMLElement>;
-  let sizeInfo: SizeInfoType = []; // 사이즈별 실측치 저장 배열
+  let sizeTable: SizeInfoType = []; // 사이즈별 실측치 저장 배열
 
   const tbody = table.querySelector('tbody');
   if (tbody) {
@@ -59,15 +59,21 @@ if (table) {
       const MY = th.innerText; // 사이즈
       infoType['size'] = MY;
 
-      sizeInfo = [...sizeInfo, infoType];
+      sizeTable = [...sizeTable, infoType];
     });
 
-    console.log('사이즈표 가공 데이터', sizeInfo);
+    console.log('사이즈표 가공 데이터', sizeTable);
 
-    chrome.runtime.sendMessage({ isSizeTableExist: sizeInfo }, (response) => {
-      response.status === 'success'
-        ? localStorage.setItem('currentView', 'size-option')
-        : localStorage.setItem('currentView', 'cannotload');
+    chrome.runtime.sendMessage({ sizeTable }, (response) => {
+      if (response.status === 'success') {
+        localStorage.setItem('currentView', 'size-option');
+        chrome.storage.sync.set({
+          sizeTable,
+        });
+      } else {
+        localStorage.setItem('currentView', 'cannotload');
+        chrome.storage.sync.clear();
+      }
     });
 
     console.log('content script에서의 현재 뷰', localStorage.getItem('currentView'));

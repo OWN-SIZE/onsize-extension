@@ -1,17 +1,23 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import { LINK, MESSAGE } from '../../../contants/main';
-import { currentViewState, productState } from '../../../states/atom';
+import { productState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SaveProduct() {
-  const [, setCurrentView] = useRecoilState(currentViewState);
-
-  const getLink = <Styled.Link onClick={() => setCurrentView('compare')}>{LINK.SAVE}</Styled.Link>;
+  const getLink = (
+    <Styled.Link
+      onClick={() => {
+        /** TODO : 웹 배포 시 나의 옷장으로 이동 */
+      }}
+    >
+      {LINK.SAVE}
+    </Styled.Link>
+  );
   const { image } = useRecoilValue(productState);
 
   return (

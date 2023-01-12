@@ -32,7 +32,7 @@ export interface SaveResultOutput {
 export interface PostSizeTableInput {
   size: string;
   isManual?: boolean; // 수동입력한 사이즈: true / 크롤링사이즈면 : false
-  manualInputNum?: number; // 첫번째컬럼: 0, 두번째컬럼: 1 (수동입력 사이즈 아닐 경우에는 null값)
+  manualInputNum?: number | null; // 첫번째컬럼: 0, 두번째컬럼: 1 (수동입력 사이즈 아닐 경우에는 null값)
 
   topItemId?: number;
   topOrBottom?: number;
@@ -43,10 +43,10 @@ export interface PostSizeTableInput {
 
   bottomItemId?: number;
   bottomLength: number;
-  waist?: number;
-  thigh?: number;
-  rise?: number;
-  hem?: number;
+  waist?: number; // 허리
+  thigh?: number; // 허벅지
+  rise?: number; // 밑위
+  hem?: number; //밑단
   isWidthOfBottom?: boolean; // 하의 측정 길이가 단면인지(T:단면, F:둘레)
 }
 export interface PostSizeTableOutput {
