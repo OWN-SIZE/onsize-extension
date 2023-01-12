@@ -48,10 +48,7 @@ export const productState = atom<ProductType>({
 
 export const currentViewState = atom<CurrentViewType>({
   key: 'currentView',
-  default:
-    (localStorage.getItem('currentView') as CurrentViewType) || localStorage.getItem('sizeTable')
-      ? 'size-option'
-      : 'cannotload',
+  default: 'size-option',
 });
 
 export const isSelfWriteState = atom<boolean>({

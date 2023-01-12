@@ -87,7 +87,28 @@ function SizeOption() {
 
     console.log('body', body);
     // 사이즈표 저장하기 POST 호출
-    await postSizeTable(body);
+
+    const dummy = [
+      {
+        isManual: false,
+        manualInputNum: null,
+        topOrBottom: 0,
+        size: 'S',
+        topItemId: 111111,
+        topLength: 55,
+        shoulder: 60,
+        chest: 58,
+        isWidthOfTop: true,
+        bottomItemId: null,
+        bottomLength: null,
+        waist: null,
+        thigh: null,
+        rise: null,
+        hem: null,
+        isWidthOfBottom: null,
+      },
+    ];
+    await postSizeTable(dummy);
 
     setTimeout(() => {
       setHistory(currentView);

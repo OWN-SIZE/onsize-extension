@@ -5,7 +5,7 @@ export interface SaveProductInput {
   productName: string;
   size: string | null;
   isRecommend: boolean;
-  topOrBottom: 0 | 1;
+  topOrBottom: number;
   faviconUrl: string;
 }
 

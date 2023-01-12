@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { currentViewState } from '../../states/atom';
 import GlobalStyle from '../../styles/global';
@@ -13,7 +13,7 @@ import SizeRecommend from './size-recommend';
 import SizeWrite from './size-write';
 
 function Popup() {
-  const currentView = useRecoilValue(currentViewState);
+  const [currentView, setCurrentView] = useRecoilState(currentViewState);
 
   const getUrl = async () => {
     await chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -29,8 +29,15 @@ function Popup() {
     });
   };
 
+  // currentView를 체크해서 사이즈표 존재 여부에 따라 라우팅
+  const checkCurrentView = async () => {
+    const { currentView } = await chrome.storage.local.get(['currentView']);
+    setCurrentView(currentView);
+  };
+
   useEffect(() => {
     getUrl();
+    checkCurrentView();
   }, []);
 
   const renderView = () => {

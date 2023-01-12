@@ -72,10 +72,20 @@ function Button(props: ButtonProps) {
     const url = await getUrlData();
 
     await getUrlData(); // 각종 이미지 정보 및 상하의 정보
-    const body = { ...product, ...url };
+    const body = { ...product, ...url, userId: '1' };
+    const dummy = {
+      productUrl: '상품url',
+      image: '이미지',
+      mallName: '나이키',
+      productName: '차콜 맨투맨',
+      size: 'XL',
+      isRecommend: true,
+      topOrBottom: 0,
+      faviconUrl: '브랜드로고url',
+    };
 
     // 옷장 저장 api 호출
-    await postProductData(body);
+    await postProductData(dummy);
     updateView();
   };
 

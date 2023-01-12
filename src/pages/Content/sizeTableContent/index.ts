@@ -22,11 +22,13 @@ const textMapper = {
   밑단: 'hem',
 };
 
+// 사이즈별 실측치 저장 배열
+let sizeTable: SizeInfoType = [];
+
 const table = document.querySelector('table');
 
 if (table) {
   const columns = table.querySelectorAll('.item_val') as NodeListOf<HTMLElement>;
-  let sizeTable: SizeInfoType = []; // 사이즈별 실측치 저장 배열
 
   const tbody = table.querySelector('tbody');
   if (tbody) {
@@ -75,9 +77,18 @@ if (table) {
         chrome.storage.sync.clear();
       }
     });
-
-    console.log('content script에서의 현재 뷰', localStorage.getItem('currentView'));
   }
 
   table.style.border = '10px solid red';
+}
+
+// 사이즈표가 존재하는 경우
+if (sizeTable.length) {
+  chrome.storage.local.set({ currentView: 'size-option' });
+  chrome.storage.sync.set({
+    sizeTable,
+  });
+} else {
+  chrome.storage.local.set({ currentView: 'cannotload' });
+  chrome.storage.sync.clear();
 }
