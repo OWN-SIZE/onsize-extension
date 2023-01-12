@@ -3,6 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { client } from '../../../apis';
+import { postSizeTable } from '../../../apis/api';
 import imgBottom from '../../../assets/img/bottom.svg';
 import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
@@ -16,16 +17,16 @@ import { PostSizeTableInput } from '../../../types/remote';
 
 function SizeOption() {
   const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
-  const [topOrBottom, setTopOrBottom] = useRecoilState(topOrBottomState);
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
   const [history, setHistory] = useRecoilState(historyState);
   const mySize = useRecoilValue(mySizeState);
-  const [, setUserData] = useRecoilState(userDataState);
+  const [userData, setUserData] = useRecoilState(userDataState);
 
   useEffect(() => {
     const isRegister = localStorage.getItem('isRegister') as IsRegisterType;
     const userId = localStorage.getItem('userId') as string;
-    const token = localStorage.getItem('token') as string;
+    // const token = localStorage.getItem('token') as string;
+    const token = userData.token;
 
     /** isRegister
      * null : 초기 뷰
@@ -48,17 +49,14 @@ function SizeOption() {
     client.defaults.headers.Authorization = `Bearer ${token}`;
   }, []);
 
-  const onClickOption = async (selectedOption: 'top' | 'bottom') => {
-    if (!selectedOption) return;
-    setTopOrBottom(selectedOption);
-    setSelectedOption(selectedOption);
-
+  const getBody = async () => {
     const sizeTable = await getSizeTable(); // 사이즈 테이블 받아오기 함수 호출
+
     sizeTable.forEach((row: PostSizeTableInput) => {
       row['isManual'] = false;
       row['manualInputNum'] = null;
       row['isWidthOfTop'] = true;
-      row['topOrBottom'] = topOrBottom === 'top' ? 0 : 1;
+      row['topOrBottom'] = selectedOption === 'top' ? 0 : 1;
 
       // top
       row['topItemId'] = row.topItemId || null;
@@ -77,8 +75,19 @@ function SizeOption() {
       row['isWidthOfBottom'] = row.isWidthOfBottom || null;
     });
 
-    /** TODO : 사이즈표 저장하기 post api 연결 */
-    console.log('body', sizeTable);
+    return sizeTable;
+  };
+
+  const onClickOption = async (selectedOption: 'top' | 'bottom') => {
+    if (!selectedOption) return;
+    setSelectedOption(selectedOption);
+
+    // 사이즈 테이블을 바탕으로 body 구성
+    const body = await getBody();
+
+    console.log('body', body);
+    // 사이즈표 저장하기 POST 호출
+    await postSizeTable(body);
 
     setTimeout(() => {
       setHistory(currentView);

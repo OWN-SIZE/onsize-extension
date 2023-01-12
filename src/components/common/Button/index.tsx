@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
+import { saveProductToAllCloset } from '../../../apis/api';
 import { currentViewState, historyState, productState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { SaveProductInput } from '../../../types/remote';
@@ -33,47 +35,55 @@ const colorMapper = (content: ContentType): ColorMapType => {
 function Button(props: ButtonProps) {
   const { content } = props;
   const { text, background } = colorMapper(content);
-  const [product, setProductState] = useRecoilState(productState);
   const topOrBottom = useRecoilValue(topOrBottomState);
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
   const [history, setHistory] = useRecoilState(historyState);
 
+  // 옷장 저장 api 호출
   const postProductData = async (body: SaveProductInput) => {
-    /** TODO : 옷장 저장 api */
+    await saveProductToAllCloset(body);
   };
+
+  // 뷰 라우팅
   const updateView = () => {
     setHistory(currentView);
     setCurrentView('save');
   };
 
-  const saveProduct = () => {
-    const productData = chrome.storage.sync.get(['product']).then(({ product: { image, productName } }) => {
-      setProductState((prev) => ({ ...prev, image, productName }));
+  // image, productName, mallName명 가져오기
+  const getProductData = async () => {
+    const { product } = await chrome.storage.sync.get(['product']);
+    return product;
+  };
+
+  // favIconUrl, productUrl,topOrBottom 가져오기
+  const getUrlData = async () => {
+    const tabs = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
     });
+    const { favIconUrl, url } = tabs[0];
+    return { faviconUrl: favIconUrl, productUrl: url, topOrBottom: topOrBottom === 'top' ? 0 : 1 };
+  };
 
-    chrome.tabs.query(
-      {
-        active: true,
-        currentWindow: true,
-      },
-      (tabs) => {
-        const { url, favIconUrl } = tabs[0];
-        if (!url || !favIconUrl) return;
+  // 저장하기 버튼 클릭
+  const onClickSaveProduct = async () => {
+    // await chrome.storage.sync.get(['product']).then(({ product: { image, productName } }) => {
+    //   setProductState((prev) => ({ ...prev, image, productName }));
+    // });
+    const product = await getProductData(); // 상품 이미지 및 상품명
+    const url = await getUrlData();
 
-        setProductState((prev) => ({
-          ...prev,
-          favIconUrl,
-          productUrl: url,
-          topOrBottom: topOrBottom === 'top' ? 0 : 1,
-        }));
-      },
-    );
-    postProductData(product);
+    await getUrlData(); // 각종 이미지 정보 및 상하의 정보
+    const body = { ...product, ...url };
+
+    // 옷장 저장 api 호출
+    await postProductData(body);
     updateView();
   };
 
   return (
-    <Root text={text} background={background} onClick={saveProduct}>
+    <Root text={text} background={background} onClick={onClickSaveProduct}>
       {content}
     </Root>
   );
