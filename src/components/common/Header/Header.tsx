@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import icBack from '../../../assets/icons/back.svg';
 import icClose from '../../../assets/icons/close.svg';
-import { currentViewState, historyState } from '../../../states/atom';
+import useGoBackToHistory from '../../../hooks/ui/useGoBackToHistory';
 import theme from '../../../styles/theme';
 
 interface HeaderProps {
@@ -14,29 +14,20 @@ interface HeaderProps {
 
 function Header(props: HeaderProps) {
   const { back, title, close } = props;
-  const [currentView, setCurrentView] = useRecoilState(currentViewState);
-  const history = useRecoilValue(historyState);
+  const goBackToHistory = useGoBackToHistory();
 
   const closePopup = () => {
+    // 초기화
+    localStorage.setItem('currentView', 'size-option');
+    localStorage.setItem('currentTab', 'bottom');
     window.close();
-  };
-
-  const goBackToHistory = () => {
-    document.body.style.width = '38rem';
-    document.body.style.height = '37.5rem';
-    const container = document.getElementById('app-container') as HTMLElement;
-    if (container) {
-      container.style.width = '38rem';
-      container.style.height = '37.5rem';
-    }
-    history && setCurrentView(history);
   };
 
   return (
     <Styled.Root>
-      <Styled.Back onClick={goBackToHistory}>{back && <img src={icBack} alt="back" />}</Styled.Back>
+      <Styled.Back>{back && <img src={icBack} alt="back" onClick={goBackToHistory} />}</Styled.Back>
       <Styled.Title>{title || null}</Styled.Title>
-      <Styled.Close onClick={closePopup}>{close && <img src={icClose} alt="close" />}</Styled.Close>
+      <Styled.Close>{close && <img src={icClose} alt="close" onClick={closePopup} />}</Styled.Close>
     </Styled.Root>
   );
 }
@@ -55,11 +46,11 @@ const Styled = {
   Back: styled.div`
     width: 2.4rem;
     height: 2.4rem;
-    cursor: pointer;
 
     & > img {
       width: 2.4rem;
       height: 2.4rem;
+      cursor: pointer;
     }
   `,
   Title: styled.h1`
@@ -69,11 +60,11 @@ const Styled = {
   Close: styled.div`
     width: 2.4rem;
     height: 2.4rem;
-    cursor: pointer;
 
     & > img {
       width: 2.4rem;
       height: 2.4rem;
+      cursor: pointer;
     }
   `,
 };

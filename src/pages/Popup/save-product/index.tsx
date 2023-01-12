@@ -9,12 +9,20 @@ import { productState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SaveProduct() {
-  const getLink = <Styled.Link>{LINK.ANCHOR}</Styled.Link>;
+  const getLink = (
+    <Styled.Link
+      onClick={() => {
+        /** TODO : 웹 배포 시 나의 옷장으로 이동 */
+      }}
+    >
+      {LINK.SAVE}
+    </Styled.Link>
+  );
   const { image } = useRecoilValue(productState);
 
   return (
     <Layout close>
-      <Main src={image} content={MESSAGE.SAVE_MY_CLOSET} link={getLink} />
+      <Main image={<Styled.Image src={image} />} content={MESSAGE.SAVE_MY_CLOSET} link={getLink} noPadding />
       <Button content="사이즈 추천 받기" />
     </Layout>
   );
@@ -27,6 +35,11 @@ const Styled = {
     ${theme.fonts.body3};
     color: ${theme.colors.black};
     border-bottom: 1px solid ${theme.colors.black};
-    cursor: pointer;
+  `,
+  Image: styled.img`
+    width: 11rem;
+    height: 11rem;
+    object-fit: contain;
+    margin-bottom: 2.6rem;
   `,
 };

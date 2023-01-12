@@ -5,8 +5,9 @@ import { TabName } from '../../components/size-compare';
 import { topOrBottomState } from '../../states/atom';
 
 const useTabs = () => {
+  const storageTabName: TabName = localStorage.getItem('currentTab') as TabName;
   const topOrBottom = useRecoilValue(topOrBottomState);
-  const [currentTab, setCurrentTab] = useState<TabName>(topOrBottom);
+  const [currentTab, setCurrentTab] = useState<TabName>(storageTabName || topOrBottom);
 
   const handleTab = (tabName: TabName) => {
     setCurrentTab(tabName);

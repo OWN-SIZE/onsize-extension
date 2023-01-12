@@ -13,4 +13,19 @@ export interface ProductType {
   isPin: boolean | null;
 }
 
-export type CurrentViewType = 'size-option' | 'result' | 'compare' | 'save' | 'size-write' | 'cannotload' | 'nosize';
+export type CurrentViewType =
+  | 'size-option'
+  | 'compare'
+  | 'save'
+  | 'size-write'
+  | 'cannotload'
+  | 'nosize'
+  | 'size-recommend';
+
+export type IsRegisterType = 'null' | 'true' | 'false';
+
+export interface UserDataType {
+  isRegister: IsRegisterType;
+  userId: string;
+  token: string;
+}
