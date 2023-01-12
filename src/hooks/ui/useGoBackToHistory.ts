@@ -5,7 +5,6 @@ import { currentViewState, historyState } from '../../states/atom';
 const useGoBackToHistory = () => {
   const [, setCurrentView] = useRecoilState(currentViewState);
   const history = useRecoilValue(historyState);
-  console.log(history);
 
   const goBacktoHistory = () => {
     document.body.style.width = '38rem';

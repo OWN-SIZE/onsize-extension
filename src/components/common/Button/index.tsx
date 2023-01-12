@@ -45,7 +45,7 @@ function Button(props: ButtonProps) {
   };
 
   // 뷰 라우팅
-  const updateView = () => {
+  const renderNextView = () => {
     setHistory(currentView);
     setCurrentView('save');
   };
@@ -92,7 +92,7 @@ function Button(props: ButtonProps) {
 
     // 옷장 저장 api 호출
     await postProductData(dummy);
-    updateView();
+    renderNextView();
   };
 
   return (

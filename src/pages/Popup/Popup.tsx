@@ -25,7 +25,6 @@ function Popup() {
 
       if (!forwardUrlIndex) return;
       const productId = url?.slice(forwardUrlIndex + 6, questionMarkIndex);
-      console.log(productId);
     });
   };
 

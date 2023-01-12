@@ -24,6 +24,7 @@ module.exports = {
     background: getAbsolutePath('src/pages/Background/index.ts'),
     productContent: getAbsolutePath('src/pages/Content/productContent/index.ts'),
     sizeTableContent: getAbsolutePath('src/pages/Content/sizeTableContent/index.ts'),
+    getUserData: getAbsolutePath('src/pages/Content/getUserData/index.ts'),
   },
   output: {
     filename: 'script/[name].js',

@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { client } from '../../../apis';
-import { postSizeTable } from '../../../apis/api';
+import { fetchMySize, postSizeTable } from '../../../apis/api';
 import imgBottom from '../../../assets/img/bottom.svg';
 import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
@@ -19,35 +19,26 @@ function SizeOption() {
   const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
   const [history, setHistory] = useRecoilState(historyState);
-  const mySize = useRecoilValue(mySizeState);
+  const [mySize, setMySize] = useRecoilState(mySizeState);
+  // const { isRegister, token, userId } = useRecoilValue(userDataState);
   const [userData, setUserData] = useRecoilState(userDataState);
 
   useEffect(() => {
-    const isRegister = localStorage.getItem('isRegister') as IsRegisterType;
-    const userId = localStorage.getItem('userId') as string;
-    // const token = localStorage.getItem('token') as string;
-    const token = userData.token;
+    (async () => {
+      const { token } = await chrome.storage.local.get(['token']);
+      const { userId } = await chrome.storage.local.get(['userId']);
+      const { isRegister } = await chrome.storage.local.get(['isRegister']);
+      console.log(token, userId, isRegister);
 
-    /** isRegister
-     * null : 초기 뷰
-     * false : 로그인만 하고 실측치 입력 X
-     * true : 실측치 입력 완료
-     */
-
-    if (isRegister === 'null') {
-      /** TODO : 초기 뷰 띄우기 */
-      return;
-    }
-
-    if (isRegister === 'false') {
-      setCurrentView('nosize');
-      return;
-    }
-
-    setUserData({ isRegister, userId, token });
-
-    client.defaults.headers.Authorization = `Bearer ${token}`;
+      setUserData({ isRegister, userId, token });
+    })();
   }, []);
+
+  // 마이사이즈 조회
+  const getMySize = async () => {
+    const { data } = await fetchMySize();
+    setMySize(data);
+  };
 
   const getBody = async () => {
     const sizeTable = await getSizeTable(); // 사이즈 테이블 받아오기 함수 호출
@@ -78,37 +69,35 @@ function SizeOption() {
     return sizeTable;
   };
 
+  useEffect(() => {
+    const { token, userId, isRegister } = userData;
+
+    // 회원이 아닌 경우
+    if (isRegister === 'false' && userId === 'null') {
+      /** TODO : 초기 뷰 띄우기 */
+      return;
+    }
+
+    // 로그인만 하고 실측치 입력을 안 한 경우
+    if (isRegister === 'false' && userId === 'false') {
+      setCurrentView('nosize');
+      return;
+    }
+
+    // api 요청 헤더에 token 추가
+    client.defaults.headers.token = token;
+  }, [userData]);
+
   const onClickOption = async (selectedOption: 'top' | 'bottom') => {
     if (!selectedOption) return;
     setSelectedOption(selectedOption);
 
     // 사이즈 테이블을 바탕으로 body 구성
     const body = await getBody();
+    console.log(body);
 
-    console.log('body', body);
     // 사이즈표 저장하기 POST 호출
-
-    const dummy = [
-      {
-        isManual: false,
-        manualInputNum: null,
-        topOrBottom: 0,
-        size: 'S',
-        topItemId: 111111,
-        topLength: 55,
-        shoulder: 60,
-        chest: 58,
-        isWidthOfTop: true,
-        bottomItemId: null,
-        bottomLength: null,
-        waist: null,
-        thigh: null,
-        rise: null,
-        hem: null,
-        isWidthOfBottom: null,
-      },
-    ];
-    await postSizeTable(dummy);
+    await postSizeTable(body);
 
     setTimeout(() => {
       setHistory(currentView);
@@ -122,7 +111,9 @@ function SizeOption() {
     return sizeTable as PostSizeTableInput[];
   };
 
-  const renderNextView = () => {
+  const renderNextView = async () => {
+    // 내 사이즈 조회
+    await getMySize();
     mySize ? setCurrentView('nosize') : setCurrentView('size-recommend');
   };
 

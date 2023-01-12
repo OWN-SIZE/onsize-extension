@@ -18,6 +18,10 @@
     {
       "matches": ["https://www.musinsa.com/*"],
       "js": ["script/sizeTableContent.js", "script/productContent.js"]
+    },
+    {
+      "matches": ["http://localhost:3000/register"],
+      "js": ["script/getUserData.js"]
     }
   ],
   "externally_connectable": {

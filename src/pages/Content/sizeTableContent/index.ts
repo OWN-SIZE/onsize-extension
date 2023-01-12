@@ -63,20 +63,6 @@ if (table) {
 
       sizeTable = [...sizeTable, infoType];
     });
-
-    console.log('사이즈표 가공 데이터', sizeTable);
-
-    chrome.runtime.sendMessage({ sizeTable }, (response) => {
-      if (response.status === 'success') {
-        localStorage.setItem('currentView', 'size-option');
-        chrome.storage.sync.set({
-          sizeTable,
-        });
-      } else {
-        localStorage.setItem('currentView', 'cannotload');
-        chrome.storage.sync.clear();
-      }
-    });
   }
 
   table.style.border = '10px solid red';
