@@ -58,7 +58,23 @@ function SizeOption() {
       row['isManual'] = false;
       row['manualInputNum'] = null;
       row['isWidthOfTop'] = true;
-      row['isWidthOfBottom'] = true;
+      row['topOrBottom'] = topOrBottom === 'top' ? 0 : 1;
+
+      // top
+      row['topItemId'] = row.topItemId || null;
+      row['topLength'] = row.topLength || null;
+      row['shoulder'] = row.shoulder || null;
+      row['chest'] = row.chest || null;
+      row['isWidthOfTop'] = row.isWidthOfTop || null;
+
+      // bottom
+      row['bottomItemId'] = row.bottomItemId || null;
+      row['bottomLength'] = row.bottomLength || null;
+      row['waist'] = row.waist || null;
+      row['thigh'] = row.thigh || null;
+      row['rise'] = row.rise || null;
+      row['hem'] = row.hem || null;
+      row['isWidthOfBottom'] = row.isWidthOfBottom || null;
     });
 
     /** TODO : 사이즈표 저장하기 post api 연결 */
