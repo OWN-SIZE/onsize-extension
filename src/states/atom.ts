@@ -68,3 +68,8 @@ export const userDataState = atom<UserDataType>({
     token: '',
   },
 });
+
+export const sizeRecommendState = atom<string | null>({
+  key: 'size-recommend',
+  default: null,
+});

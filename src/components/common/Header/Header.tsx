@@ -18,8 +18,8 @@ function Header(props: HeaderProps) {
 
   const closePopup = () => {
     // 초기화
-    localStorage.setItem('currentView', 'size-option');
-    localStorage.setItem('currentTab', 'bottom');
+    localStorage.removeItem('currentView');
+    localStorage.removeItem('currentTab');
     window.close();
   };
 

@@ -35,18 +35,19 @@ export interface SaveProductOutput {
 }
 
 export interface SaveResultInput {
-  userId: number;
   topOrBottom: number;
   url: string;
   topItemId: number | null;
   bottomItemId: number | null;
 }
 export interface SaveResultOutput {
-  userId: number;
-  url: string;
-  recommendSize: string;
-  topItemId: number | null;
-  bottomItemId: number | null;
+  data: {
+    userId: number;
+    url: string;
+    recommendSize: string;
+    topItemId: number | null;
+    bottomItemId: number | null;
+  };
 }
 
 export interface SizeTableType {

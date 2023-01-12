@@ -28,6 +28,7 @@ function SizeCompare() {
   // 마이사이즈 조회
   const getMySize = async () => {
     const { data } = await fetchMySize();
+    console.log(data);
     setMySize(data);
   };
 
@@ -72,6 +73,8 @@ function SizeCompare() {
     rise: productSize.bottom?.rise,
     hem: productSize.bottom?.hem,
   };
+
+  console.log(mySize);
 
   const myTop = mySize.top
     ? {

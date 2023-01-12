@@ -5,10 +5,12 @@ import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import { LINK, MESSAGE } from '../../../contants/main';
-import { productState } from '../../../states/atom';
+import { productState, sizeRecommendState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SaveProduct() {
+  const size = useRecoilValue(sizeRecommendState);
+
   const getLink = (
     <Styled.Link
       onClick={() => {
@@ -29,7 +31,7 @@ function SaveProduct() {
         link={getLink}
         noPadding
       />
-      <Button content="사이즈 추천 받기" />
+      {!size && <Button content="사이즈 추천 받기" />}
     </Layout>
   );
 }

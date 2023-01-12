@@ -10,28 +10,25 @@ function SplitedButton() {
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
   const [history, setHistory] = useRecoilState(historyState);
 
-  const saveProduct = () => {
+  const saveProduct = async () => {
     const productData = chrome.storage.sync.get(['product']).then(({ product: { image, productName } }) => {
       setProductState((prev) => ({ ...prev, image, productName }));
     });
 
-    chrome.tabs.query(
-      {
-        active: true,
-        currentWindow: true,
-      },
-      (tabs) => {
-        const { url, favIconUrl } = tabs[0];
-        if (!url || !favIconUrl) return;
+    const tabs = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+    const { url, favIconUrl } = tabs[0];
+    console.log(url);
+    if (!url || !favIconUrl) return;
 
-        setProductState((prev) => ({
-          ...prev,
-          favIconUrl,
-          productUrl: url,
-          topOrBottom: topOrBottom === 'top' ? 0 : 1,
-        }));
-      },
-    );
+    setProductState((prev) => ({
+      ...prev,
+      favIconUrl,
+      productUrl: url,
+      topOrBottom: topOrBottom === 'top' ? 0 : 1,
+    }));
     setHistory(currentView);
     setCurrentView('save');
   };

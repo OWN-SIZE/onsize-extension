@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { client } from '../../../apis';
-import { fetchMySize, postSizeTable } from '../../../apis/api';
+import { fetchMySize, postSizeTable, saveResult } from '../../../apis/api';
 import imgBottom from '../../../assets/img/bottom.svg';
 import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import OptionButton from '../../../components/size-option/OptionButton';
-import { currentViewState, historyState, mySizeState, userDataState } from '../../../states/atom';
+import { currentViewState, historyState, mySizeState, productState, userDataState } from '../../../states/atom';
 import theme from '../../../styles/theme';
-import { PostSizeTableInput, SizeTableType } from '../../../types/remote';
+import { PostSizeTableInput, SaveResultInput, SizeTableType } from '../../../types/remote';
 
 function SizeOption() {
   const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
@@ -19,6 +19,7 @@ function SizeOption() {
   const [history, setHistory] = useRecoilState(historyState);
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const [userData, setUserData] = useRecoilState(userDataState);
+  const productData = useRecoilValue(productState);
 
   // 상품 Id 조회
   const getProductId = async () => {
@@ -78,13 +79,13 @@ function SizeOption() {
       const { token } = await chrome.storage.local.get(['token']);
       const { userId } = await chrome.storage.local.get(['userId']);
       const { isRegister } = await chrome.storage.local.get(['isRegister']);
-      console.log(token, userId, isRegister);
 
       // api 요청 헤더에 token 추가
       client.defaults.headers.token = token;
 
       setUserData({ isRegister, userId, token });
     })();
+    setHistory(currentView);
   }, []);
 
   useEffect(() => {
@@ -114,20 +115,32 @@ function SizeOption() {
     console.log(body);
 
     // 사이즈표 저장하기 POST 호출
-    await postSizeTable(body);
+    // await postSizeTable(body);
 
-    setTimeout(() => {
-      setHistory(currentView);
+    setTimeout(async () => {
+      await getSizeRecommendResult(selectedOption);
       renderNextView();
     }, 100);
   };
 
-  const renderNextView = async () => {
-    if (currentView) {
-      setCurrentView(currentView);
-    } else {
-      mySize ? setCurrentView('nosize') : setCurrentView('size-recommend');
-    }
+  const getSizeRecommendResult = async (selectedOption: 'top' | 'bottom') => {
+    const productId = (await getProductId()) || null;
+
+    console.log(productData);
+
+    const body: SaveResultInput = {
+      topOrBottom: selectedOption === 'top' ? 0 : 1,
+      url: productData.productUrl,
+      topItemId: selectedOption === 'top' ? productId : null,
+      bottomItemId: selectedOption === 'bottom' ? productId : null,
+    };
+    // const { data } = await saveResult(body);
+    // console.log(data);
+  };
+
+  const renderNextView = () => {
+    console.log('mySize', mySize);
+    mySize ? setCurrentView('nosize') : setCurrentView('size-recommend');
   };
 
   return (
