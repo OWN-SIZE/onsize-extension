@@ -13,4 +13,12 @@ export interface ProductType {
   isPin: boolean | null;
 }
 
-export type CurrentViewType = 'size-option' | 'result' | 'compare' | 'save' | 'size-write' | 'cannotload' | 'nosize';
+export type CurrentViewType =
+  | 'first'
+  | 'size-option'
+  | 'result'
+  | 'compare'
+  | 'save'
+  | 'size-write'
+  | 'cannotload'
+  | 'nosize';

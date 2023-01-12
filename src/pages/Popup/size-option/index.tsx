@@ -27,7 +27,7 @@ function SizeOption() {
   }, [selectedOption]);
 
   return (
-    <Layout>
+    <Layout close>
       <Styled.Root>
         지금 어떤 옷을 보고 있나요?
         <Styled.OptionContainer>

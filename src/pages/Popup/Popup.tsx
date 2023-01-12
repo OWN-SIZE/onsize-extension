@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { currentViewState } from '../../states/atom';
 import GlobalStyle from '../../styles/global';
 
+import First from './first';
 import Result from './result';
 import SaveProduct from './save-product';
 import SizeCompare from './size-compare';
@@ -20,6 +21,8 @@ function Popup() {
 
   const renderView = () => {
     switch (currentView) {
+      case 'first':
+        return <First />;
       case 'size-option':
         return <SizeOption />;
       case 'result':

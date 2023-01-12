@@ -38,7 +38,7 @@ export const productState = atom<ProductType>({
 
 export const currentViewState = atom<CurrentViewType>({
   key: 'currentView',
-  default: 'size-option',
+  default: 'first',
 });
 
 export const isSelfWriteState = atom<boolean>({
