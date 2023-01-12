@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
+import { fetchMySize } from '../../../apis/api';
 import icAlert from '../../../assets/icons/alert.svg';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
@@ -24,10 +25,24 @@ function SizeCompare() {
 
   const { currentTab, handleTab } = useTabs();
 
+  // 마이사이즈 조회
+  const getMySize = async () => {
+    const { data } = await fetchMySize();
+    setMySize(data);
+  };
+
+  useEffect(() => {
+    (async () => {
+      // 내 사이즈 조회
+      await getMySize();
+    })();
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('currentTab', currentTab);
   }, [currentTab]);
 
+  /** TODO : 수동입력 시 그 입력한 값을 여기에 저장 */
   const [productSize, setProductSize] = useState<SizeType>({
     top: {
       topLength: 13.4,

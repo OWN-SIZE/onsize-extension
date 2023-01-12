@@ -18,12 +18,17 @@ function SaveProduct() {
       {LINK.SAVE}
     </Styled.Link>
   );
-  const { image } = useRecoilValue(productState) || localStorage.getItem('productImage');
-  console.log('image', image === '');
+  const { image } = useRecoilValue(productState);
+  const storageItem = localStorage.getItem('productImage');
 
   return (
     <Layout close>
-      <Main image={<Styled.Image src={image} />} content={MESSAGE.SAVE_MY_CLOSET} link={getLink} noPadding />
+      <Main
+        image={<Styled.Image src={storageItem || image} />}
+        content={MESSAGE.SAVE_MY_CLOSET}
+        link={getLink}
+        noPadding
+      />
       <Button content="사이즈 추천 받기" />
     </Layout>
   );

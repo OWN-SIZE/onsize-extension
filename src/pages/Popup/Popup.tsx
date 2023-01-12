@@ -15,19 +15,6 @@ import SizeWrite from './size-write';
 function Popup() {
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
 
-  const getUrl = async () => {
-    await chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const url = tabs[0].url;
-      if (!url) return;
-
-      const forwardUrlIndex = url.match('goods/')?.index;
-      const questionMarkIndex = url.split('').indexOf('?');
-
-      if (!forwardUrlIndex) return;
-      const productId = url?.slice(forwardUrlIndex + 6, questionMarkIndex);
-    });
-  };
-
   // currentView를 체크해서 사이즈표 존재 여부에 따라 라우팅
   const checkCurrentView = async () => {
     const { currentView } = await chrome.storage.local.get(['currentView']);
@@ -35,7 +22,6 @@ function Popup() {
   };
 
   useEffect(() => {
-    getUrl();
     checkCurrentView();
   }, []);
 

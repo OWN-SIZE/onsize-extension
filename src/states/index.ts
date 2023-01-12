@@ -26,6 +26,6 @@ export type IsRegisterType = 'null' | 'true' | 'false';
 
 export interface UserDataType {
   isRegister: IsRegisterType | string;
-  userId: string;
+  userId: number;
   token: string;
 }

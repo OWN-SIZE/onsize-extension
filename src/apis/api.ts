@@ -37,7 +37,7 @@ export const saveResult = async (body: SaveResultInput) => {
 };
 
 // 크롤링한 사이즈표 저장
-export const postSizeTable = async (body: PostSizeTableInput[]) => {
+export const postSizeTable = async (body: PostSizeTableInput) => {
   const { data } = await client.post<PostSizeTableOutput>('/extension/saveCrawling', body);
   return data;
 };
