@@ -3,23 +3,32 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { client } from '../../../apis';
-import { fetchMySize, postSizeTable, saveResult } from '../../../apis/api';
+import { postSizeTable, saveResult } from '../../../apis/api';
 import imgBottom from '../../../assets/img/bottom.svg';
 import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import OptionButton from '../../../components/size-option/OptionButton';
-import { currentViewState, historyState, mySizeState, productState, userDataState } from '../../../states/atom';
+import SaveButton from '../../../components/size-option/SaveButton';
+import {
+  currentViewState,
+  historyState,
+  mySizeState,
+  productState,
+  sizeRecommendState,
+  userDataState,
+} from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { PostSizeTableInput, SaveResultInput, SizeTableType } from '../../../types/remote';
 
 function SizeOption() {
   const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
-  const [history, setHistory] = useRecoilState(historyState);
+  const [, setHistory] = useRecoilState(historyState);
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const [userData, setUserData] = useRecoilState(userDataState);
   const productData = useRecoilValue(productState);
+  const [recommendSize, setSizeRecommend] = useRecoilState(sizeRecommendState);
 
   // 상품 Id 조회
   const getProductId = async () => {
@@ -29,48 +38,56 @@ function SizeOption() {
 
     const forwardUrlIndex = url.match('goods/')?.index;
     const questionMarkIndex = url.split('').indexOf('?');
+    console.log(questionMarkIndex);
 
     if (!forwardUrlIndex) return;
-    const productId = Number(url?.slice(forwardUrlIndex + 6, questionMarkIndex));
+    const productId =
+      questionMarkIndex >= 0
+        ? Number(url?.slice(forwardUrlIndex + 6, questionMarkIndex))
+        : Number(url?.slice(forwardUrlIndex + 6));
     return productId;
   };
 
   // sync에 저장한 사이즈표 데이터 가져오기
   const getSizeTable = async () => {
-    const { sizeTable } = await chrome.storage.sync.get(['sizeTable']);
+    const { sizeTable } = await chrome.storage.local.get(['sizeTable']);
     return sizeTable as SizeTableType[];
   };
 
-  const getBody = async () => {
+  const getBody = async (option: 'top' | 'bottom') => {
     const sizeTable = await getSizeTable(); // 사이즈 테이블 받아오기 함수 호출
     const productId = (await getProductId()) || null;
 
-    sizeTable.forEach((row: SizeTableType) => {
-      row['isManual'] = false;
-      row['manualInputNum'] = null;
-      row['isWidthOfTop'] = true;
-      row['topOrBottom'] = selectedOption === 'top' ? 0 : 1;
+    let sizeList: SizeTableType[] = [];
+    sizeTable.forEach((table) => {
+      const { size, topLength, shoulder, chest, bottomLength, hem, rise, thigh, waist } = table;
+      const data: SizeTableType = {
+        isManual: false,
+        manualInputNum: null,
+        topOrBottom: option === 'top' ? 0 : 1,
+        userId: Number(localStorage.getItem('userId')) || null,
+        size: size,
 
-      // productId
-      selectedOption === 'top' ? (row['topItemId'] = productId) : (row['bottomItemId'] = productId);
-      row['userId'] = Number(userData.userId) || null;
-      // top
-      row['topLength'] = row.topLength || null;
-      row['shoulder'] = row.shoulder || null;
-      row['chest'] = row.chest || null;
-      row['isWidthOfTop'] = row.isWidthOfTop || null;
+        topItemId: option === 'top' ? productId : null,
+        topLength: topLength || null,
+        shoulder: shoulder || null,
+        chest: chest || null,
+        isWidthOfTop: option === 'top' ? true : null,
 
-      // bottom
-      row['bottomLength'] = row.bottomLength || null;
-      row['waist'] = row.waist || null;
-      row['thigh'] = row.thigh || null;
-      row['rise'] = row.rise || null;
-      row['hem'] = row.hem || null;
-      row['isWidthOfBottom'] = row.isWidthOfBottom || null;
+        bottomItemId: option === 'bottom' ? productId : null,
+        bottomLength: bottomLength || null,
+        hem: hem || null,
+        rise: rise || null,
+        thigh: thigh || null,
+        waist: waist || null,
+        isWidthOfBottom: option === 'bottom' ? true : null,
+      };
+      sizeList = [...sizeList, data];
     });
     const body: PostSizeTableInput = {
-      sizes: sizeTable,
+      sizes: sizeList,
     };
+    console.log(body);
     return body;
   };
 
@@ -79,46 +96,45 @@ function SizeOption() {
       const { token } = await chrome.storage.local.get(['token']);
       const { userId } = await chrome.storage.local.get(['userId']);
       const { isRegister } = await chrome.storage.local.get(['isRegister']);
+      localStorage.setItem('token', token);
+      localStorage.setItem('userId', userId);
+      localStorage.setItem('isRegister', isRegister);
+
+      console.log('hello ... token:', token, 'userId:', userId, 'iR:', isRegister);
+
+      // 회원이 아닌 경우
+      if (isRegister === 'false' && !userId) {
+        setCurrentView('first');
+        return;
+      }
+
+      // 로그인만 하고 실측치 입력을 안 한 경우
+      if (isRegister === 'false' && userId) {
+        setMySize({ top: null, bottom: null });
+        return;
+      }
 
       // api 요청 헤더에 token 추가
       client.defaults.headers.token = token;
 
-      setUserData({ isRegister, userId, token });
+      setUserData({ isRegister, userId: +userId, token });
     })();
+
     setHistory(currentView);
   }, []);
 
-  useEffect(() => {
-    const { token, userId, isRegister } = userData;
-
-    // 회원이 아닌 경우
-    if (isRegister === 'false' && !userId) {
-      setCurrentView('first');
-      return;
-    }
-
-    // 로그인만 하고 실측치 입력을 안 한 경우
-    if (isRegister === 'false' && userId) {
-      setMySize({ top: null, bottom: null });
-      return;
-    }
-
-    console.log(token, userId, isRegister);
-  }, [userData]);
-
-  const onClickOption = async (selectedOption: 'top' | 'bottom') => {
-    if (!selectedOption) return;
-    setSelectedOption(selectedOption);
+  const onClickOption = async (option: 'top' | 'bottom') => {
+    if (!option) return;
+    setSelectedOption(option);
 
     // 사이즈 테이블을 바탕으로 body 구성
-    const body = await getBody();
-    console.log(body);
+    const body = await getBody(option);
 
     // 사이즈표 저장하기 POST 호출
     await postSizeTable(body);
 
     setTimeout(async () => {
-      await getSizeRecommendResult(selectedOption);
+      await getSizeRecommendResult(option);
       renderNextView();
     }, 100);
   };
@@ -134,12 +150,16 @@ function SizeOption() {
       bottomItemId: selectedOption === 'bottom' ? productId : null,
     };
     // 사이즈 추천 결과 조회
-    const { data } = await saveResult(body);
-    console.log(data);
+    const {
+      data: { recommendSize },
+    } = await saveResult(body);
+    setSizeRecommend(recommendSize);
+    localStorage.setItem('recommend-size', recommendSize);
+    console.log(recommendSize);
   };
 
   const renderNextView = () => {
-    mySize ? setCurrentView('nosize') : setCurrentView('size-recommend');
+    recommendSize ? setCurrentView('nosize') : setCurrentView('size-recommend');
   };
 
   return (
@@ -161,7 +181,7 @@ function SizeOption() {
           />
         </Styled.OptionContainer>
       </Styled.Root>
-      <Button content="저장" />
+      <SaveButton />
     </Layout>
   );
 }

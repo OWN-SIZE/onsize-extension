@@ -1,5 +1,5 @@
-import { useEffect, useLayoutEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useLayoutEffect } from 'react';
+import { useRecoilState } from 'recoil';
 
 import { CurrentViewType } from '../../states';
 import { currentViewState } from '../../states/atom';

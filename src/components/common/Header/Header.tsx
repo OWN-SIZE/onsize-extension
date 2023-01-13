@@ -20,6 +20,8 @@ function Header(props: HeaderProps) {
     // 초기화
     localStorage.removeItem('currentView');
     localStorage.removeItem('currentTab');
+    localStorage.removeItem('recommend-size');
+
     window.close();
   };
 

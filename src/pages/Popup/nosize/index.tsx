@@ -5,13 +5,14 @@ import icAlert from '../../../assets/icons/alert.svg';
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
+import SaveButton from '../../../components/size-option/SaveButton';
 import { LINK, MESSAGE } from '../../../contants/main';
 import { currentViewState, historyState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function NoSize() {
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
-  const [history, setHistory] = useRecoilState(historyState);
+  const [, setHistory] = useRecoilState(historyState);
 
   const updateView = () => {
     setHistory(currentView);
@@ -23,7 +24,7 @@ function NoSize() {
   return (
     <Layout close>
       <Main image={<Styled.Image src={icAlert} />} content={MESSAGE.NO_PROPER_SIZE} link={getLink} />
-      <Button content="저장" />
+      <SaveButton />
     </Layout>
   );
 }

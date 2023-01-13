@@ -13,7 +13,7 @@ import SelfWriteCompare from '../../../components/size-compare/SelfWriteCompare'
 import Tabs from '../../../components/size-compare/Tabs';
 import { LINK, MESSAGE } from '../../../contants/main';
 import useTabs from '../../../hooks/ui/useTabs';
-import { currentViewState, historyState, isSelfWriteState, mySizeState, topOrBottomState } from '../../../states/atom';
+import { isSelfWriteState, mySizeState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SizeCompare() {
@@ -21,7 +21,6 @@ function SizeCompare() {
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const isSelfWrite = useRecoilValue(isSelfWriteState);
   const topOrBottom = useRecoilValue(topOrBottomState);
-  const currentView = useRecoilValue(currentViewState);
 
   const { top, bottom } = mySize;
 
@@ -30,6 +29,9 @@ function SizeCompare() {
   // 마이사이즈 조회
   const getMySize = async () => {
     const { top, bottom } = await fetchMySize();
+
+    localStorage.setItem('topSize', JSON.stringify(top));
+    localStorage.setItem('bottomSize', JSON.stringify(bottom));
     setMySize({
       top,
       bottom,
@@ -39,7 +41,8 @@ function SizeCompare() {
   useEffect(() => {
     (async () => {
       // 내 사이즈 조회
-      await getMySize();
+      const data = await getMySize();
+      console.log('getMySize', data, top, bottom);
     })();
   }, []);
 
@@ -98,10 +101,7 @@ function SizeCompare() {
 
   const getLink = (
     <Styled.Link
-      onClick={() => {
-        /** TODO : 웹 도메인 window.open */
-        window.open('https://ownsize.me/register', '_blank')?.focus();
-      }}
+      onClick={() => window.open('https://ownsize.me/register', '_blank')?.focus() }
     >
       {LINK.BUTTON}
     </Styled.Link>
@@ -115,6 +115,7 @@ function SizeCompare() {
   ) : (
     <Layout back close>
       {!noSize && <Tabs currentTab={currentTab} handler={handleTab} />}
+
       {currentTab === 'top' ? (
         !myTop ? (
           <>

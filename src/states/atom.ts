@@ -7,13 +7,31 @@ import { CurrentViewType, ProductType, TopOrBottom, UserDataType } from '.';
 export const mySizeState = atom<SizeType>({
   key: 'mySize',
   default: {
-    top: {
+    top: JSON.parse(
+      localStorage.getItem('top') ||
+        JSON.stringify({
+          topLength: 0,
+          shoulder: 0,
+          chest: 0,
+          isWidthOfTop: false,
+        }),
+    ) || {
       topLength: 0,
       shoulder: 0,
       chest: 0,
       isWidthOfTop: false,
     },
-    bottom: {
+    bottom: JSON.parse(
+      localStorage.getItem('bottom') ||
+        JSON.stringify({
+          bottomLength: 0,
+          waist: 0,
+          rise: 0,
+          hem: 0,
+          thigh: 0,
+          isWidthOfBottom: false,
+        }),
+    ) || {
       bottomLength: 0,
       waist: 0,
       rise: 0,
@@ -71,5 +89,5 @@ export const userDataState = atom<UserDataType>({
 
 export const sizeRecommendState = atom<string | null>({
   key: 'size-recommend',
-  default: null,
+  default: localStorage.getItem('recommend-size') || null,
 });

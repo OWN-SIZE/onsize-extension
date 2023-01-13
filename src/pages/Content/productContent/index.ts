@@ -3,11 +3,7 @@ const productTitle = document.querySelector('.product_title') as HTMLElement;
 
 let image;
 let productName;
-const mallName = '무신사( MUSINSA )';
-
-// function isHTMLElement(arg: any): arg is HTMLElement {
-//   return arg.innerText;
-// }
+const mallName = '무신사';
 
 if (productTitle) {
   productName = productTitle.innerText;
@@ -20,7 +16,7 @@ if (productImage) {
   }
 }
 
-chrome.storage.sync.set({
+chrome.storage.local.set({
   product: {
     image,
     productName,

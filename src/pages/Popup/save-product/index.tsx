@@ -1,9 +1,9 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
+import SizeRecommendButton from '../../../components/save-product/SizeRecommendButton';
 import { LINK, MESSAGE } from '../../../contants/main';
 import { productState, sizeRecommendState } from '../../../states/atom';
 import theme from '../../../styles/theme';
@@ -13,10 +13,7 @@ function SaveProduct() {
 
   const getLink = (
     <Styled.Link
-      onClick={() => {
-        /** TODO : 웹 배포 시 나의 옷장으로 이동 */
-        window.open('https://ownsize.me/home', '_blank')?.focus();
-      }}
+      onClick={() => window.open('https://ownsize.me/home', '_blank')?.focus()}
     >
       {LINK.SAVE}
     </Styled.Link>
@@ -32,7 +29,7 @@ function SaveProduct() {
         link={getLink}
         noPadding
       />
-      {!size && <Button content="사이즈 추천 받기" />}
+      {!size && <SizeRecommendButton />}
     </Layout>
   );
 }
@@ -49,6 +46,6 @@ const Styled = {
     width: 11rem;
     height: 11rem;
     object-fit: contain;
-    margin-bottom: 2.6rem;
+    /* margin-bottom: 2.6rem; */
   `,
 };
