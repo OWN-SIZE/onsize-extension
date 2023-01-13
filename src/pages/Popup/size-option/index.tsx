@@ -9,6 +9,7 @@ import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import OptionButton from '../../../components/size-option/OptionButton';
+import SaveButton from '../../../components/size-option/SaveButton';
 import {
   currentViewState,
   historyState,
@@ -180,7 +181,7 @@ function SizeOption() {
           />
         </Styled.OptionContainer>
       </Styled.Root>
-      <Button content="저장" />
+      <SaveButton />
     </Layout>
   );
 }
