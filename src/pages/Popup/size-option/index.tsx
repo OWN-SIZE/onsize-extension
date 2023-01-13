@@ -93,7 +93,7 @@ function SizeOption() {
 
     // 회원이 아닌 경우
     if (isRegister === 'false' && !userId) {
-      /** TODO : 초기 뷰 띄우기 */
+      setCurrentView('first');
       return;
     }
 
@@ -115,7 +115,7 @@ function SizeOption() {
     console.log(body);
 
     // 사이즈표 저장하기 POST 호출
-    // await postSizeTable(body);
+    await postSizeTable(body);
 
     setTimeout(async () => {
       await getSizeRecommendResult(selectedOption);
@@ -124,9 +124,8 @@ function SizeOption() {
   };
 
   const getSizeRecommendResult = async (selectedOption: 'top' | 'bottom') => {
+    // 상품 정보
     const productId = (await getProductId()) || null;
-
-    console.log(productData);
 
     const body: SaveResultInput = {
       topOrBottom: selectedOption === 'top' ? 0 : 1,
@@ -134,12 +133,12 @@ function SizeOption() {
       topItemId: selectedOption === 'top' ? productId : null,
       bottomItemId: selectedOption === 'bottom' ? productId : null,
     };
-    // const { data } = await saveResult(body);
-    // console.log(data);
+    // 사이즈 추천 결과 조회
+    const { data } = await saveResult(body);
+    console.log(data);
   };
 
   const renderNextView = () => {
-    console.log('mySize', mySize);
     mySize ? setCurrentView('nosize') : setCurrentView('size-recommend');
   };
 

@@ -14,6 +14,7 @@ export interface ProductType {
 }
 
 export type CurrentViewType =
+  | 'first'
   | 'size-option'
   | 'compare'
   | 'save'
