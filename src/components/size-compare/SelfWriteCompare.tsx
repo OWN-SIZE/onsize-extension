@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { topOrBottomState } from '../../states/atom';
 import Button from '../common/Button';
+import SaveButton from '../size-option/SaveButton';
 
 import Sizes from './Sizes';
 import { BottomType, TopType } from '.';
@@ -20,7 +21,7 @@ function SelfWriteCompare(props: SelfWriteCompareProps) {
       <Styled.Root isTop={topOrBottom === 'top'}>
         <Sizes sizes={sizes} currentTab={topOrBottom} isSelfWrite />
       </Styled.Root>
-      <Button content="저장" />
+      <SaveButton />
     </>
   );
 }

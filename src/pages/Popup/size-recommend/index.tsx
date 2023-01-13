@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
+import SaveButton from '../../../components/size-option/SaveButton';
 import { sizeRecommendState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
@@ -22,7 +23,8 @@ function SizeRecommend() {
           나의 옷장으로 이동
         </Styled.Link>
       </Styled.Root>
-      <Button content="저장" />
+
+      <SaveButton />
     </Layout>
   );
 }

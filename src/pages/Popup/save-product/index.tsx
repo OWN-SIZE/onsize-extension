@@ -1,9 +1,9 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
+import SizeRecommendButton from '../../../components/save-product/SizeRecommendButton';
 import { LINK, MESSAGE } from '../../../contants/main';
 import { productState, sizeRecommendState } from '../../../states/atom';
 import theme from '../../../styles/theme';
@@ -31,7 +31,7 @@ function SaveProduct() {
         link={getLink}
         noPadding
       />
-      {!size && <Button content="사이즈 추천 받기" />}
+      {!size && <SizeRecommendButton />}
     </Layout>
   );
 }

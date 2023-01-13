@@ -4,7 +4,7 @@ import theme from '../../../styles/theme';
 
 interface ButtonProps {
   content: ContentType;
-  onClick?: () => void;
+  onClick?: (payload?: any) => void;
 }
 
 type ContentType = '저장' | '사이즈 추천 받기';
