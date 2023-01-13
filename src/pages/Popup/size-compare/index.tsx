@@ -23,13 +23,17 @@ function SizeCompare() {
   const topOrBottom = useRecoilValue(topOrBottomState);
   const currentView = useRecoilValue(currentViewState);
 
+  const { top, bottom } = mySize;
+
   const { currentTab, handleTab } = useTabs();
 
   // 마이사이즈 조회
   const getMySize = async () => {
-    const { data } = await fetchMySize();
-    console.log(data);
-    setMySize(data);
+    const { top, bottom } = await fetchMySize();
+    setMySize({
+      top,
+      bottom,
+    });
   };
 
   useEffect(() => {
@@ -74,23 +78,21 @@ function SizeCompare() {
     hem: productSize.bottom?.hem,
   };
 
-  console.log(mySize);
-
-  const myTop = mySize.top
+  const myTop = top
     ? {
-        topLength: mySize.top?.topLength,
-        shoulder: mySize.top?.shoulder,
-        chest: mySize.top?.chest,
+        topLength: top.topLength,
+        shoulder: top.shoulder,
+        chest: top.chest,
       }
     : null;
 
-  const myBottom = mySize.bottom
+  const myBottom = bottom
     ? {
-        bottomLength: mySize.bottom?.bottomLength,
-        waist: mySize.bottom?.waist,
-        thigh: mySize.bottom?.thigh,
-        rise: mySize.bottom?.rise,
-        hem: mySize.bottom?.hem,
+        bottomLength: bottom.bottomLength,
+        waist: bottom.waist,
+        thigh: bottom.thigh,
+        rise: bottom.rise,
+        hem: bottom.hem,
       }
     : null;
 
