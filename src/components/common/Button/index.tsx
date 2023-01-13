@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { saveProductToAllCloset } from '../../../apis/api';
-import { currentViewState, historyState, productState, topOrBottomState } from '../../../states/atom';
+import { currentViewState, historyState, productState, topOrBottomState, userDataState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { SaveProductInput } from '../../../types/remote';
 
@@ -38,21 +38,22 @@ function Button(props: ButtonProps) {
   const topOrBottom = useRecoilValue(topOrBottomState);
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
   const [history, setHistory] = useRecoilState(historyState);
+  const { userId } = useRecoilValue(userDataState);
 
   // 옷장 저장 api 호출
   const postProductData = async (body: SaveProductInput) => {
     await saveProductToAllCloset(body);
   };
 
-  // 뷰 라우팅
-  const updateView = () => {
-    setHistory(currentView);
-    setCurrentView('save');
+  // save-product 뷰에서 익스텐션 껐다 켰을 때 상품 이미지 보관을 위해 작성함
+  const storeProductImage = (image: string) => {
+    localStorage.setItem('productImage', image);
   };
 
   // image, productName, mallName명 가져오기
   const getProductData = async () => {
     const { product } = await chrome.storage.sync.get(['product']);
+    storeProductImage(product.image);
     return product;
   };
 
@@ -72,21 +73,18 @@ function Button(props: ButtonProps) {
     const url = await getUrlData();
 
     await getUrlData(); // 각종 이미지 정보 및 상하의 정보
-    const body = { ...product, ...url, userId: '1' };
-    const dummy = {
-      productUrl: '상품url',
-      image: '이미지',
-      mallName: '나이키',
-      productName: '차콜 맨투맨',
-      size: 'XL',
-      isRecommend: true,
-      topOrBottom: 0,
-      faviconUrl: '브랜드로고url',
-    };
+    const body = { ...product, ...url, userId };
+    console.log(body);
 
     // 옷장 저장 api 호출
-    await postProductData(dummy);
-    updateView();
+    await postProductData(body);
+    renderNextView();
+  };
+
+  // 뷰 라우팅
+  const renderNextView = () => {
+    setHistory(currentView);
+    setCurrentView('save');
   };
 
   return (

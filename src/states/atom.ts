@@ -7,19 +7,18 @@ import { CurrentViewType, ProductType, TopOrBottom, UserDataType } from '.';
 export const mySizeState = atom<SizeType>({
   key: 'mySize',
   default: {
-    // top: {
-    //   topLength: 50,
-    //   shoulder: 60,
-    //   chest: 40,
-    //   isWidthOfTop: false,
-    // },
-    top: null,
+    top: {
+      topLength: 0,
+      shoulder: 0,
+      chest: 0,
+      isWidthOfTop: false,
+    },
     bottom: {
-      bottomLength: 90,
-      waist: 28,
-      rise: 15,
-      hem: 10,
-      thigh: 28,
+      bottomLength: 0,
+      waist: 0,
+      rise: 0,
+      hem: 0,
+      thigh: 0,
       isWidthOfBottom: false,
     },
   },
@@ -48,7 +47,7 @@ export const productState = atom<ProductType>({
 
 export const currentViewState = atom<CurrentViewType>({
   key: 'currentView',
-  default: 'first',
+  default: (localStorage.getItem('currentView') as CurrentViewType) || 'size-option',
 });
 
 export const isSelfWriteState = atom<boolean>({
@@ -64,9 +63,13 @@ export const historyState = atom<CurrentViewType | null>({
 export const userDataState = atom<UserDataType>({
   key: 'userData',
   default: {
-    isRegister: 'null',
-    userId: '',
-    token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlZXNlb29vQHNvb2tteXVuZy5hYy5rciIsImlhdCI6MTY3MzQzOTg5OH0.L0RlpbVZnMucTVVmA8tVhh6F2eQzgKV0lFJm4SQM-q4',
+    isRegister: '',
+    userId: 0,
+    token: '',
   },
+});
+
+export const sizeRecommendState = atom<string | null>({
+  key: 'size-recommend',
+  default: null,
 });

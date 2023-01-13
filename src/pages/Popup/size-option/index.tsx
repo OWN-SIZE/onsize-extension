@@ -3,70 +3,64 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { client } from '../../../apis';
-import { postSizeTable } from '../../../apis/api';
+import { fetchMySize, postSizeTable, saveResult } from '../../../apis/api';
 import imgBottom from '../../../assets/img/bottom.svg';
 import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import OptionButton from '../../../components/size-option/OptionButton';
-import { IsRegisterType } from '../../../states';
-import { currentViewState, historyState, mySizeState, topOrBottomState, userDataState } from '../../../states/atom';
+import { currentViewState, historyState, mySizeState, productState, userDataState } from '../../../states/atom';
 import theme from '../../../styles/theme';
-import { InfoType, SizeInfoType } from '../../../types/content';
-import { PostSizeTableInput } from '../../../types/remote';
+import { PostSizeTableInput, SaveResultInput, SizeTableType } from '../../../types/remote';
 
 function SizeOption() {
   const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
   const [history, setHistory] = useRecoilState(historyState);
-  const mySize = useRecoilValue(mySizeState);
+  const [mySize, setMySize] = useRecoilState(mySizeState);
   const [userData, setUserData] = useRecoilState(userDataState);
+  const productData = useRecoilValue(productState);
 
-  useEffect(() => {
-    const isRegister = localStorage.getItem('isRegister') as IsRegisterType;
-    const userId = localStorage.getItem('userId') as string;
-    // const token = localStorage.getItem('token') as string;
-    const token = userData.token;
+  // 상품 Id 조회
+  const getProductId = async () => {
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+    const url = tabs[0].url;
+    if (!url) return;
 
-    /** isRegister
-     * null : 초기 뷰
-     * false : 로그인만 하고 실측치 입력 X
-     * true : 실측치 입력 완료
-     */
+    const forwardUrlIndex = url.match('goods/')?.index;
+    const questionMarkIndex = url.split('').indexOf('?');
 
-    if (isRegister === 'null') {
-      /** TODO : 초기 뷰 띄우기 */
-      return;
-    }
+    if (!forwardUrlIndex) return;
+    const productId = Number(url?.slice(forwardUrlIndex + 6, questionMarkIndex));
+    return productId;
+  };
 
-    if (isRegister === 'false') {
-      setCurrentView('nosize');
-      return;
-    }
-
-    setUserData({ isRegister, userId, token });
-
-    client.defaults.headers.Authorization = `Bearer ${token}`;
-  }, []);
+  // sync에 저장한 사이즈표 데이터 가져오기
+  const getSizeTable = async () => {
+    const { sizeTable } = await chrome.storage.sync.get(['sizeTable']);
+    return sizeTable as SizeTableType[];
+  };
 
   const getBody = async () => {
     const sizeTable = await getSizeTable(); // 사이즈 테이블 받아오기 함수 호출
+    const productId = (await getProductId()) || null;
 
-    sizeTable.forEach((row: PostSizeTableInput) => {
+    sizeTable.forEach((row: SizeTableType) => {
       row['isManual'] = false;
       row['manualInputNum'] = null;
       row['isWidthOfTop'] = true;
       row['topOrBottom'] = selectedOption === 'top' ? 0 : 1;
 
+      // productId
+      selectedOption === 'top' ? (row['topItemId'] = productId) : (row['bottomItemId'] = productId);
+      row['userId'] = Number(userData.userId) || null;
       // top
-      row['topItemId'] = row.topItemId || null;
       row['topLength'] = row.topLength || null;
       row['shoulder'] = row.shoulder || null;
       row['chest'] = row.chest || null;
       row['isWidthOfTop'] = row.isWidthOfTop || null;
 
       // bottom
-      row['bottomItemId'] = row.bottomItemId || null;
       row['bottomLength'] = row.bottomLength || null;
       row['waist'] = row.waist || null;
       row['thigh'] = row.thigh || null;
@@ -74,9 +68,43 @@ function SizeOption() {
       row['hem'] = row.hem || null;
       row['isWidthOfBottom'] = row.isWidthOfBottom || null;
     });
-
-    return sizeTable;
+    const body: PostSizeTableInput = {
+      sizes: sizeTable,
+    };
+    return body;
   };
+
+  useEffect(() => {
+    (async () => {
+      const { token } = await chrome.storage.local.get(['token']);
+      const { userId } = await chrome.storage.local.get(['userId']);
+      const { isRegister } = await chrome.storage.local.get(['isRegister']);
+
+      // api 요청 헤더에 token 추가
+      client.defaults.headers.token = token;
+
+      setUserData({ isRegister, userId, token });
+    })();
+    setHistory(currentView);
+  }, []);
+
+  useEffect(() => {
+    const { token, userId, isRegister } = userData;
+
+    // 회원이 아닌 경우
+    if (isRegister === 'false' && !userId) {
+      setCurrentView('first');
+      return;
+    }
+
+    // 로그인만 하고 실측치 입력을 안 한 경우
+    if (isRegister === 'false' && userId) {
+      setMySize({ top: null, bottom: null });
+      return;
+    }
+
+    console.log(token, userId, isRegister);
+  }, [userData]);
 
   const onClickOption = async (selectedOption: 'top' | 'bottom') => {
     if (!selectedOption) return;
@@ -84,42 +112,30 @@ function SizeOption() {
 
     // 사이즈 테이블을 바탕으로 body 구성
     const body = await getBody();
+    console.log(body);
 
-    console.log('body', body);
     // 사이즈표 저장하기 POST 호출
+    await postSizeTable(body);
 
-    const dummy = [
-      {
-        isManual: false,
-        manualInputNum: null,
-        topOrBottom: 0,
-        size: 'S',
-        topItemId: 111111,
-        topLength: 55,
-        shoulder: 60,
-        chest: 58,
-        isWidthOfTop: true,
-        bottomItemId: null,
-        bottomLength: null,
-        waist: null,
-        thigh: null,
-        rise: null,
-        hem: null,
-        isWidthOfBottom: null,
-      },
-    ];
-    await postSizeTable(dummy);
-
-    setTimeout(() => {
-      setHistory(currentView);
+    setTimeout(async () => {
+      await getSizeRecommendResult(selectedOption);
       renderNextView();
     }, 100);
   };
 
-  // sync에 저장한 사이즈표 데이터 가져오기
-  const getSizeTable = async () => {
-    const { sizeTable } = await chrome.storage.sync.get(['sizeTable']);
-    return sizeTable as PostSizeTableInput[];
+  const getSizeRecommendResult = async (selectedOption: 'top' | 'bottom') => {
+    // 상품 정보
+    const productId = (await getProductId()) || null;
+
+    const body: SaveResultInput = {
+      topOrBottom: selectedOption === 'top' ? 0 : 1,
+      url: productData.productUrl,
+      topItemId: selectedOption === 'top' ? productId : null,
+      bottomItemId: selectedOption === 'bottom' ? productId : null,
+    };
+    // 사이즈 추천 결과 조회
+    const { data } = await saveResult(body);
+    console.log(data);
   };
 
   const renderNextView = () => {

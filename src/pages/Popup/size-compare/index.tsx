@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
+import { fetchMySize } from '../../../apis/api';
 import icAlert from '../../../assets/icons/alert.svg';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
@@ -22,12 +23,31 @@ function SizeCompare() {
   const topOrBottom = useRecoilValue(topOrBottomState);
   const currentView = useRecoilValue(currentViewState);
 
+  const { top, bottom } = mySize;
+
   const { currentTab, handleTab } = useTabs();
+
+  // 마이사이즈 조회
+  const getMySize = async () => {
+    const { top, bottom } = await fetchMySize();
+    setMySize({
+      top,
+      bottom,
+    });
+  };
+
+  useEffect(() => {
+    (async () => {
+      // 내 사이즈 조회
+      await getMySize();
+    })();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('currentTab', currentTab);
   }, [currentTab]);
 
+  /** TODO : 수동입력 시 그 입력한 값을 여기에 저장 */
   const [productSize, setProductSize] = useState<SizeType>({
     top: {
       topLength: 13.4,
@@ -58,21 +78,21 @@ function SizeCompare() {
     hem: productSize.bottom?.hem,
   };
 
-  const myTop = mySize.top
+  const myTop = top
     ? {
-        topLength: mySize.top?.topLength,
-        shoulder: mySize.top?.shoulder,
-        chest: mySize.top?.chest,
+        topLength: top.topLength,
+        shoulder: top.shoulder,
+        chest: top.chest,
       }
     : null;
 
-  const myBottom = mySize.bottom
+  const myBottom = bottom
     ? {
-        bottomLength: mySize.bottom?.bottomLength,
-        waist: mySize.bottom?.waist,
-        thigh: mySize.bottom?.thigh,
-        rise: mySize.bottom?.rise,
-        hem: mySize.bottom?.hem,
+        bottomLength: bottom.bottomLength,
+        waist: bottom.waist,
+        thigh: bottom.thigh,
+        rise: bottom.rise,
+        hem: bottom.hem,
       }
     : null;
 
