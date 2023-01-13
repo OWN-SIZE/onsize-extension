@@ -20,6 +20,10 @@
       "js": ["script/sizeTableContent.js", "script/productContent.js"]
     },
     {
+      "matches": ["https://ownsize.me/register"],
+      "js": ["script/getUserData.js"]
+    },
+    {
       "matches": ["http://localhost:3000/register"],
       "js": ["script/getUserData.js"]
     }

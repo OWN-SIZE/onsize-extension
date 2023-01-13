@@ -11,7 +11,7 @@ function SplitedButton() {
   const [history, setHistory] = useRecoilState(historyState);
 
   const saveProduct = async () => {
-    const productData = chrome.storage.sync.get(['product']).then(({ product: { image, productName } }) => {
+    const productData = chrome.storage.local.get(['product']).then(({ product: { image, productName } }) => {
       setProductState((prev) => ({ ...prev, image, productName }));
     });
 

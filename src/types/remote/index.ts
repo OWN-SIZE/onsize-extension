@@ -25,8 +25,8 @@ export interface SaveProductInput {
   productName: string;
   size: string | null;
   isRecommend: boolean;
-  topOrBottom: number;
   faviconUrl: string;
+  userId: number;
 }
 
 export interface SaveProductOutput {

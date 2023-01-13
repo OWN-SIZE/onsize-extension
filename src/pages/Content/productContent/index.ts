@@ -20,7 +20,7 @@ if (productImage) {
   }
 }
 
-chrome.storage.sync.set({
+chrome.storage.local.set({
   product: {
     image,
     productName,

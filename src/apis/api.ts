@@ -26,8 +26,7 @@ export const postSelfWrite = async (inputSize: InputSizeInput) => {
 // 전체 옷장에 저장
 export const saveProductToAllCloset = async (body: SaveProductInput) => {
   const { data } = await client.post<SaveProductOutput>('/extension/toAllCloset', body);
-  return;
-  data;
+  return data;
 };
 
 // 사이즈 추천 결과 저장
