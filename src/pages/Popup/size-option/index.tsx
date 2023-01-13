@@ -48,7 +48,6 @@ function SizeOption() {
   const getBody = async (option: 'top' | 'bottom') => {
     const sizeTable = await getSizeTable(); // 사이즈 테이블 받아오기 함수 호출
     const productId = (await getProductId()) || null;
-    console.log('상의?하의?', option);
 
     let sizeList: SizeTableType[] = [];
     sizeTable.forEach((table) => {

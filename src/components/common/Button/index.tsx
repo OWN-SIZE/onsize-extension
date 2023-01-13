@@ -25,26 +25,17 @@ interface ColorMapType {
 }
 
 interface ProductType {
-  image: string;
-  mallName: string;
-  productName: string;
+  product: {
+    image: string;
+    mallName: string;
+    productName: string;
+  };
 }
 
 interface UrlType {
   faviconUrl: string;
   productUrl: string;
 }
-
-// interface BodyType {
-//   image: string;
-//   mallName: string;
-//   productName: string;
-//   userId: number;
-//   faviconUrl: string;
-//   productUrl: string;
-//   isRecommend: boolean;
-//   size: string | null;
-// }
 
 const contentMap = {
   저장: {
@@ -83,9 +74,10 @@ function Button(props: ButtonProps) {
 
   // image, productName, mallName명 가져오기
   const getProductData = async () => {
-    const { image, mallName, productName } = (await chrome.storage.local.get(['product'])) as ProductType;
+    const {
+      product: { image, mallName, productName },
+    } = (await chrome.storage.local.get(['product'])) as ProductType;
     storeProductImage(image);
-    console.log('getProductData', image, mallName, productName);
     return { image, mallName, productName };
   };
 
@@ -103,21 +95,18 @@ function Button(props: ButtonProps) {
   const onClickSaveProduct = async () => {
     const { image, mallName, productName } = await getProductData(); // 상품 이미지 및 상품명
     const { productUrl, faviconUrl } = await getUrlData();
-
-    const body: SaveProductInput = {
+    const body = {
+      productUrl,
       image,
       mallName,
-      productName,
-      productUrl,
-      faviconUrl,
-      userId: +userId,
+      productName: productName.replace(/ /g, '').slice(0, 36),
+      size: sizeRecommended || null,
       isRecommend: sizeRecommended ? true : false,
-      size: sizeRecommended,
+      faviconUrl,
+      userId: Number(userId),
     };
-
     // 옷장 저장 api 호출
-    const data = await saveProductToAllCloset(body);
-    console.log('postData', data);
+    await saveProductToAllCloset(body);
     renderNextView();
   };
 

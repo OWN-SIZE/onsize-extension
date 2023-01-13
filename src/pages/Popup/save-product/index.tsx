@@ -14,7 +14,7 @@ function SaveProduct() {
   const getLink = (
     <Styled.Link
       onClick={() => {
-        /** TODO : 웹 배포 시 나의 옷장으로 이동 */
+        window.open('https://ownsize.me/home');
       }}
     >
       {LINK.SAVE}
@@ -22,6 +22,7 @@ function SaveProduct() {
   );
   const { image } = useRecoilValue(productState);
   const storageItem = localStorage.getItem('productImage');
+  console.log(storageItem);
 
   return (
     <Layout close>

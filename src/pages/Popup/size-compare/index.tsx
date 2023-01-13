@@ -102,7 +102,7 @@ function SizeCompare() {
   const getLink = (
     <Styled.Link
       onClick={() => {
-        /** TODO : 웹 도메인 window.open */
+        window.open('https://ownsize.me');
       }}
     >
       {LINK.BUTTON}
@@ -117,15 +117,6 @@ function SizeCompare() {
   ) : (
     <Layout back close>
       {!noSize && <Tabs currentTab={currentTab} handler={handleTab} />}
-
-      <div
-        onClick={async () => {
-          const data = await getMySize();
-          console.log('클릭', data);
-        }}
-      >
-        clikc
-      </div>
 
       {currentTab === 'top' ? (
         !myTop ? (
