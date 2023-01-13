@@ -100,6 +100,7 @@ function SizeCompare() {
     <Styled.Link
       onClick={() => {
         /** TODO : 웹 도메인 window.open */
+        window.open('https://ownsize.me/register', '_blank')?.focus();
       }}
     >
       {LINK.BUTTON}
