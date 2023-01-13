@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -12,7 +12,7 @@ import SelfWriteCompare from '../../../components/size-compare/SelfWriteCompare'
 import Tabs from '../../../components/size-compare/Tabs';
 import { LINK, MESSAGE } from '../../../contants/main';
 import useTabs from '../../../hooks/ui/useTabs';
-import { isSelfWriteState, mySizeState, topOrBottomState } from '../../../states/atom';
+import { currentViewState, historyState, isSelfWriteState, mySizeState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SizeCompare() {
@@ -20,7 +20,13 @@ function SizeCompare() {
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const isSelfWrite = useRecoilValue(isSelfWriteState);
   const topOrBottom = useRecoilValue(topOrBottomState);
+  const currentView = useRecoilValue(currentViewState);
+
   const { currentTab, handleTab } = useTabs();
+
+  useEffect(() => {
+    localStorage.setItem('currentTab', currentTab);
+  }, [currentTab]);
 
   const [productSize, setProductSize] = useState<SizeType>({
     top: {
@@ -70,7 +76,15 @@ function SizeCompare() {
       }
     : null;
 
-  const getLink = <Styled.Link>{LINK.BUTTON}</Styled.Link>;
+  const getLink = (
+    <Styled.Link
+      onClick={() => {
+        /** TODO : 웹 도메인 window.open */
+      }}
+    >
+      {LINK.BUTTON}
+    </Styled.Link>
+  );
   const noSize = !myTop && !myBottom;
 
   return isSelfWrite ? (
@@ -83,7 +97,12 @@ function SizeCompare() {
       {currentTab === 'top' ? (
         !myTop ? (
           <>
-            <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} caption={noSize} link={!noSize && getLink} />
+            <Main
+              image={<Styled.Image src={icAlert} />}
+              content={MESSAGE.NO_SIZE_COMPARE}
+              caption={noSize}
+              link={!noSize && getLink}
+            />
             {noSize && <SplitedButton />}
           </>
         ) : (
@@ -91,7 +110,12 @@ function SizeCompare() {
         )
       ) : !myBottom ? (
         <>
-          <Main src={icAlert} content={MESSAGE.NO_SIZE_COMPARE} caption={noSize} link={!noSize && getLink} />
+          <Main
+            image={<Styled.Image src={icAlert} />}
+            content={MESSAGE.NO_SIZE_COMPARE}
+            caption={noSize}
+            link={!noSize && getLink}
+          />
           {noSize && <SplitedButton />}
         </>
       ) : (
@@ -106,12 +130,17 @@ export default SizeCompare;
 const Styled = {
   Link: styled.button`
     padding: 1.2rem 5.8rem;
-    margin-top: 2.6rem;
     background: ${theme.colors.yellow01};
     box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.05);
     border-radius: 2.15rem;
 
     ${theme.fonts.body2};
     color: ${theme.colors.black};
+  `,
+  Image: styled.img`
+    width: 7.2rem;
+    height: 7.2rem;
+    object-fit: contain;
+    margin-bottom: 2.6rem;
   `,
 };

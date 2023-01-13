@@ -3,16 +3,16 @@ import styled, { css } from 'styled-components';
 import theme from '../../styles/theme';
 
 interface OptionProps {
-  src?: string;
-  caption?: '상의' | '하의';
-  isActive?: boolean;
-  onClick?: () => void;
+  src: string;
+  caption: '상의' | '하의';
+  isActive: boolean;
+  onClick: (selectedOption: 'top' | 'bottom') => void;
 }
 
 function OptionButton(props: OptionProps) {
   const { src, caption, isActive, onClick } = props;
   return (
-    <Styled.Root isActive={isActive} onClick={onClick}>
+    <Styled.Root isActive={isActive} onClick={() => onClick(caption === '상의' ? 'top' : 'bottom')}>
       <img src={src} alt={`${caption} 버튼이미지`} />
       <Styled.Caption>{caption}</Styled.Caption>
     </Styled.Root>

@@ -45,6 +45,7 @@ const GlobalStyle: any = createGlobalStyle`
   }
   a {
     text-decoration:none;
+    cursor: pointer;
   }
   input[disabled] {
     background-color: white;

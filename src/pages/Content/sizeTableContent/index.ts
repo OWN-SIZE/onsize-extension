@@ -1,10 +1,34 @@
 import { InfoType, SizeInfoType } from '../../../types/content';
 
+const itemCategory = document.querySelector('.item_categories') as HTMLElement;
+let topOrBottom = ''; // 상의 또는 하의
+
+// 상하의 구분
+if (itemCategory) {
+  if (itemCategory.innerText.includes('바지')) {
+    topOrBottom = 'bottom';
+  } else {
+    topOrBottom = 'top';
+  }
+}
+
+const textMapper = {
+  총장: topOrBottom === 'top' ? 'topLength' : 'bottomLength',
+  어깨: 'shoulder',
+  가슴: 'chest',
+  허리: 'waist',
+  허벅지: 'thigh',
+  밑위: 'rise',
+  밑단: 'hem',
+};
+
+// 사이즈별 실측치 저장 배열
+let sizeTable: SizeInfoType = [];
+
 const table = document.querySelector('table');
 
 if (table) {
   const columns = table.querySelectorAll('.item_val') as NodeListOf<HTMLElement>;
-  const sizeInfo: SizeInfoType = {};
 
   const tbody = table.querySelector('tbody');
   if (tbody) {
@@ -16,23 +40,55 @@ if (table) {
 
       // 실측 측정방식 객체로 저장
       [...columns].forEach((column) => {
-        infoType[column.innerText] = 0;
+        // 한글 key값 영어로 변환
+        let innerText = column.innerText as keyof typeof textMapper;
+        if (innerText.includes('단면')) {
+          innerText = innerText.slice(0, column.innerText.indexOf('단면')) as keyof typeof textMapper;
+        }
+
+        const key = textMapper[innerText];
+        if (!key) return;
+        infoType[key] = 0;
       });
 
       const values = [...size.children].filter((element) => element.nodeName === 'TD') as HTMLElement[];
-      const th = size.children[0] as HTMLElement;
-      const MY = th.innerText;
 
       Object.keys(infoType).forEach((key, index) => {
-        infoType[key] = Number(values[index].innerText);
+        if (values[index]) infoType[key] = Number(values[index].innerText);
       });
 
-      sizeInfo[MY] = infoType;
+      const th = size.children[0] as HTMLElement;
+      const MY = th.innerText; // 사이즈
+      infoType['size'] = MY;
+
+      sizeTable = [...sizeTable, infoType];
+    });
+
+    console.log('사이즈표 가공 데이터', sizeTable);
+
+    chrome.runtime.sendMessage({ sizeTable }, (response) => {
+      if (response.status === 'success') {
+        localStorage.setItem('currentView', 'size-option');
+        chrome.storage.sync.set({
+          sizeTable,
+        });
+      } else {
+        localStorage.setItem('currentView', 'cannotload');
+        chrome.storage.sync.clear();
+      }
     });
   }
-  chrome.runtime.sendMessage({ isSizeTableExist: sizeInfo ? 'exist' : 'none' }, function (response) {
-    console.log(response.farewell);
-  });
 
   table.style.border = '10px solid red';
+}
+
+// 사이즈표가 존재하는 경우
+if (sizeTable.length) {
+  chrome.storage.local.set({ currentView: 'size-option' });
+  chrome.storage.sync.set({
+    sizeTable,
+  });
+} else {
+  chrome.storage.local.set({ currentView: 'cannotload' });
+  chrome.storage.sync.clear();
 }

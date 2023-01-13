@@ -16,9 +16,17 @@ export interface ProductType {
 export type CurrentViewType =
   | 'first'
   | 'size-option'
-  | 'result'
   | 'compare'
   | 'save'
   | 'size-write'
   | 'cannotload'
-  | 'nosize';
+  | 'nosize'
+  | 'size-recommend';
+
+export type IsRegisterType = 'null' | 'true' | 'false';
+
+export interface UserDataType {
+  isRegister: IsRegisterType;
+  userId: string;
+  token: string;
+}

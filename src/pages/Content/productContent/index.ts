@@ -1,22 +1,22 @@
-const productImage = document.querySelector('.product-img');
-const productTitle = document.querySelector('.product_title');
+const productImage = document.querySelector('.product-img') as HTMLElement;
+const productTitle = document.querySelector('.product_title') as HTMLElement;
 
 let image;
 let productName;
 const mallName = '무신사( MUSINSA )';
 
-function isHTMLElement(arg: any): arg is HTMLElement {
-  return 'innerText' in arg;
-}
+// function isHTMLElement(arg: any): arg is HTMLElement {
+//   return arg.innerText;
+// }
 
-if (isHTMLElement(productTitle)) {
+if (productTitle) {
   productName = productTitle.innerText;
 }
 
-if (isHTMLElement(productImage)) {
+if (productImage) {
   const imageElement = productImage.querySelector('img');
   if (imageElement) {
-    image = imageElement?.src;
+    image = imageElement.src;
   }
 }
 
@@ -27,3 +27,14 @@ chrome.storage.sync.set({
     mallName,
   },
 });
+
+// localStorage.setItem(
+//   'product',
+//   JSON.stringify({
+//     product: {
+//       image,
+//       productName,
+//       mallName,
+//     },
+//   }),
+// );
