@@ -6,15 +6,18 @@ import Layout from '../../../components/common/Layout';
 import theme from '../../../styles/theme';
 
 function First() {
-  const onClickButton = () => {
-    // TODO
-  };
   return (
     <Layout close>
       <Styled.Root>
         <Styled.Image src={icCharacter} alt="캐릭터 이미지" />
         <Styled.Message>환영합니다!</Styled.Message>
-        <Styled.Button onClick={onClickButton}>사이즈 추천받으러 가기</Styled.Button>
+        <Styled.Button
+          onClick={() => {
+            window.open('https://ownsize.me', '_blank')?.focus();
+          }}
+        >
+          사이즈 추천받으러 가기
+        </Styled.Button>
       </Styled.Root>
     </Layout>
   );
