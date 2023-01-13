@@ -15,6 +15,7 @@ function SaveProduct() {
     <Styled.Link
       onClick={() => {
         /** TODO : 웹 배포 시 나의 옷장으로 이동 */
+        window.open('https://ownsize.me/home', '_blank')?.focus();
       }}
     >
       {LINK.SAVE}

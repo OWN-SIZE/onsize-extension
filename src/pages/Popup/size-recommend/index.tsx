@@ -13,6 +13,7 @@ function SizeRecommend() {
         <Styled.Link
           onClick={() => {
             /** TODO : userId와 함께 웹 도메인 window.open */
+            window.open('https://ownsize.me/home', '_blank')?.focus();
           }}
         >
           나의 옷장으로 이동
