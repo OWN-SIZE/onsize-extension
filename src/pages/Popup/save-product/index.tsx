@@ -13,9 +13,7 @@ function SaveProduct() {
 
   const getLink = (
     <Styled.Link
-      onClick={() => {
-        window.open('https://ownsize.me/home');
-      }}
+      onClick={() => window.open('https://ownsize.me/home', '_blank')?.focus()}
     >
       {LINK.SAVE}
     </Styled.Link>

@@ -101,9 +101,7 @@ function SizeCompare() {
 
   const getLink = (
     <Styled.Link
-      onClick={() => {
-        window.open('https://ownsize.me');
-      }}
+      onClick={() => window.open('https://ownsize.me/register', '_blank')?.focus() }
     >
       {LINK.BUTTON}
     </Styled.Link>
