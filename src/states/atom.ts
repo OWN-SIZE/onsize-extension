@@ -89,5 +89,5 @@ export const userDataState = atom<UserDataType>({
 
 export const sizeRecommendState = atom<string | null>({
   key: 'size-recommend',
-  default: null,
+  default: localStorage.getItem('recommend-size') || null,
 });

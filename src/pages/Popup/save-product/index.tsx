@@ -22,7 +22,6 @@ function SaveProduct() {
   );
   const { image } = useRecoilValue(productState);
   const storageItem = localStorage.getItem('productImage');
-  console.log(storageItem);
 
   return (
     <Layout close>
@@ -49,6 +48,6 @@ const Styled = {
     width: 11rem;
     height: 11rem;
     object-fit: contain;
-    margin-bottom: 2.6rem;
+    /* margin-bottom: 2.6rem; */
   `,
 };

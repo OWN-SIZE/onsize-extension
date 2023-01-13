@@ -9,7 +9,14 @@ import imgTop from '../../../assets/img/top.svg';
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import OptionButton from '../../../components/size-option/OptionButton';
-import { currentViewState, historyState, mySizeState, productState, userDataState } from '../../../states/atom';
+import {
+  currentViewState,
+  historyState,
+  mySizeState,
+  productState,
+  sizeRecommendState,
+  userDataState,
+} from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { PostSizeTableInput, SaveResultInput, SizeTableType } from '../../../types/remote';
 
@@ -20,6 +27,7 @@ function SizeOption() {
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const [userData, setUserData] = useRecoilState(userDataState);
   const productData = useRecoilValue(productState);
+  const [recommendSize, setSizeRecommend] = useRecoilState(sizeRecommendState);
 
   // 상품 Id 조회
   const getProductId = async () => {
@@ -120,30 +128,6 @@ function SizeOption() {
 
     // 사이즈 테이블을 바탕으로 body 구성
     const body = await getBody(option);
-    const dummy = {
-      sizes: [
-        {
-          isManual: false,
-          manualInputNum: null,
-          topOrBottom: 1,
-          size: 'S',
-          topItemId: null,
-          topLength: null,
-          shoulder: null,
-          chest: null,
-          isWidthOfTop: null,
-          bottomItemId: 123,
-          bottomLength: 90,
-          waist: 30,
-          thigh: 32,
-          rise: 20,
-          hem: 20,
-          isWidthOfBottom: true,
-          userId: 24,
-        },
-      ],
-    };
-    console.log('힘들다', body, dummy);
 
     // 사이즈표 저장하기 POST 호출
     await postSizeTable(body);
@@ -165,12 +149,16 @@ function SizeOption() {
       bottomItemId: selectedOption === 'bottom' ? productId : null,
     };
     // 사이즈 추천 결과 조회
-    const { data } = await saveResult(body);
-    console.log(data);
+    const {
+      data: { recommendSize },
+    } = await saveResult(body);
+    setSizeRecommend(recommendSize);
+    localStorage.setItem('recommend-size', recommendSize);
+    console.log(recommendSize);
   };
 
   const renderNextView = () => {
-    mySize ? setCurrentView('nosize') : setCurrentView('size-recommend');
+    recommendSize ? setCurrentView('nosize') : setCurrentView('size-recommend');
   };
 
   return (

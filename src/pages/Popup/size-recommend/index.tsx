@@ -1,18 +1,22 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
+import { sizeRecommendState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SizeRecommend() {
+  const recommendSize = useRecoilValue(sizeRecommendState);
+
   return (
     <Layout close>
       <Styled.Root>
         <Styled.Title>나와 가장 잘 맞는 사이즈는</Styled.Title>
-        <Styled.Size></Styled.Size>
+        <Styled.Size>{recommendSize}</Styled.Size>
         <Styled.Link
           onClick={() => {
-            /** TODO : userId와 함께 웹 도메인 window.open */
+            window.open('https://ownsize.me/home');
           }}
         >
           나의 옷장으로 이동
@@ -38,10 +42,11 @@ const Styled = {
     color: ${theme.colors.black};
   `,
   Size: styled.div`
-    border: 1px solid black;
-    width: 6.3rem;
-    height: 9.3rem;
     margin-top: 2.7rem;
+    font-weight: 600;
+    font-size: 6.8rem;
+    line-height: 9.3rem;
+    color: ${theme.colors.black};
   `,
   Link: styled.a`
     ${theme.fonts.body3};
