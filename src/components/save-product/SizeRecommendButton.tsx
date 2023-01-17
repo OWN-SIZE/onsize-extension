@@ -8,7 +8,7 @@ import Button from '../common/Button';
 function SizeRecommendButton() {
   const productData = useRecoilValue(productState);
   const [recommendSize, setSizeRecommend] = useRecoilState(sizeRecommendState);
-  const [currentView, setCurrentView] = useRecoilState(currentViewState);
+  const [, setCurrentView] = useRecoilState(currentViewState);
   const topOrBottom = useRecoilValue(topOrBottomState);
 
   // 상품 Id 조회
@@ -19,7 +19,6 @@ function SizeRecommendButton() {
 
     const forwardUrlIndex = url.match('goods/')?.index;
     const questionMarkIndex = url.split('').indexOf('?');
-    console.log(questionMarkIndex);
 
     if (!forwardUrlIndex) return;
     const productId =
@@ -44,7 +43,7 @@ function SizeRecommendButton() {
 
   const getSizeRecommendResult = async () => {
     // body 작성
-    const body = await getBody(topOrBottom);
+    const body = await getBody(topOrBottom as 'top' | 'bottom');
 
     // 사이즈 추천 결과 조회
     const {
@@ -59,7 +58,11 @@ function SizeRecommendButton() {
     recommendSize ? setCurrentView('nosize') : setCurrentView('size-recommend');
   };
 
-  return <Button content="사이즈 추천 받기" onClick={getSizeRecommendResult} />;
+  const handleSizeRecommend = () => {
+    topOrBottom ? getSizeRecommendResult() : setCurrentView('size-option');
+  };
+
+  return <Button content="사이즈 추천 받기" onClick={handleSizeRecommend} />;
 }
 
 export default SizeRecommendButton;

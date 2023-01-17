@@ -66,6 +66,7 @@ const Styled = {
   `,
   SizeValue: styled.p<{ isSelfWrite: boolean }>`
     display: flex;
+    align-items: flex-end;
     ${theme.fonts.title2}
     color: ${theme.colors.gray550};
     & > span {

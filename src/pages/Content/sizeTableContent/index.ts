@@ -67,7 +67,6 @@ if (table) {
 
   table.style.border = '10px solid red';
 }
-console.log('in sizetable content', sizeTable);
 // 사이즈표가 존재하는 경우
 if (sizeTable.length) {
   chrome.storage.local.set({ currentView: 'size-option' });

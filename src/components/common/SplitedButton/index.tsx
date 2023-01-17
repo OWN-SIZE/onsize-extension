@@ -20,7 +20,6 @@ function SplitedButton() {
       currentWindow: true,
     });
     const { url, favIconUrl } = tabs[0];
-    console.log(url);
     if (!url || !favIconUrl) return;
 
     setProductState((prev) => ({

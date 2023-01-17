@@ -102,7 +102,7 @@ function SizeCompare() {
   const getLink = (
     <Styled.Link
       onClick={() => {
-        window.open('https://ownsize.me');
+        window.open('http://localhost:3000');
       }}
     >
       {LINK.BUTTON}

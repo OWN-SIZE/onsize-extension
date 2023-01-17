@@ -24,7 +24,7 @@
       "js": ["script/getUserData.js"]
     },
     {
-      "matches": ["http://localhost:3000/register"],
+      "matches": ["http://localhost:3000/*"],
       "js": ["script/getUserData.js"]
     }
   ],
