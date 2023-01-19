@@ -58,14 +58,21 @@ if (table) {
       });
 
       const th = size.children[0] as HTMLElement;
-      const MY = th.innerText; // 사이즈
+      let MY = th.innerText; // 사이즈
+
+      const bracketIdx = MY.indexOf('(') || MY.indexOf('[');
+      console.log('괄호가 붙었네', bracketIdx);
+      if (bracketIdx) {
+        MY = MY.slice(0, bracketIdx);
+      }
+      console.log(MY);
+
       infoType['size'] = MY;
 
       sizeTable = [...sizeTable, infoType];
     });
   }
 
-  table.style.border = '10px solid red';
 }
 // 사이즈표가 존재하는 경우
 if (sizeTable.length) {

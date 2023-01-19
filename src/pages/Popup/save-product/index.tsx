@@ -15,12 +15,7 @@ function SaveProduct() {
   const getLink = (
     <Styled.Link
       onClick={() => {
-<<<<<<< HEAD
-        window.open('https://ownsize.me/home');
-=======
-        /** TODO : 웹 배포 시 나의 옷장으로 이동 */
-        window.open('https://ownsize.me/home', '_blank')?.focus();
->>>>>>> 6f4ff28 (feat/#26: TODO 연결)
+        window.open('http://localhost:3000/home');
       }}
     >
       {LINK.SAVE}
