@@ -7,6 +7,7 @@ import GlobalStyle from '../../styles/global';
 
 import CannotLoadSize from './cannotloadsize';
 import First from './first';
+import Loading from './loading';
 import NoSize from './nosize';
 import SaveProduct from './save-product';
 import SizeCompare from './size-compare';
@@ -43,8 +44,10 @@ function Popup() {
         return <SizeWrite />;
       case 'nosize':
         return <NoSize />;
-      default:
+      case 'size-recommend':
         return <SizeRecommend />;
+      default:
+        return <Loading />;
     }
   };
 

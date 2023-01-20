@@ -21,7 +21,8 @@ export type CurrentViewType =
   | 'size-write'
   | 'cannotload'
   | 'nosize'
-  | 'size-recommend';
+  | 'size-recommend'
+  | 'loading';
 
 export type IsRegisterType = 'null' | 'true' | 'false';
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { client } from '../../../apis';
@@ -122,23 +122,6 @@ function SizeOption() {
     return body;
   };
 
-  const onClickOption = async (option: 'top' | 'bottom') => {
-    if (!option) return;
-    setSelectedOption(option);
-    setTopOrBottom(option);
-
-    // 사이즈 테이블을 바탕으로 body 구성
-    const body = await getBody(option);
-
-    // 사이즈표 저장하기 POST 호출
-    await postSizeTable(body);
-
-    setTimeout(async () => {
-      await getSizeRecommendResult(option);
-      renderNextView();
-    }, 100);
-  };
-
   // 사이즈 추천 결과 조회
   const getSizeRecommendResult = async (selectedOption: 'top' | 'bottom') => {
     // 상품 정보
@@ -160,8 +143,28 @@ function SizeOption() {
 
   // 다음 뷰 렌더링
   const renderNextView = () => {
-    const size = localStorage.getItem('recommend-size') || null;
-    size ? setCurrentView('size-recommend') : setCurrentView('nosize');
+    setCurrentView('loading');
+    setTimeout(() => {
+      const size = localStorage.getItem('recommend-size') || null;
+      size ? setCurrentView('size-recommend') : setCurrentView('nosize');
+    }, 5000);
+  };
+
+  const onClickOption = async (option: 'top' | 'bottom') => {
+    if (!option) return;
+    setSelectedOption(option);
+    setTopOrBottom(option);
+
+    // 사이즈 테이블을 바탕으로 body 구성
+    const body = await getBody(option);
+
+    // 사이즈표 저장하기 POST 호출
+    // await postSizeTable(body);
+
+    setTimeout(async () => {
+      // await getSizeRecommendResult(option);
+      renderNextView();
+    }, 100);
   };
 
   return (
