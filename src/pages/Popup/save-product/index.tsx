@@ -15,7 +15,7 @@ function SaveProduct() {
   const getLink = (
     <Styled.Link
       onClick={() => {
-        window.open('http://localhost:3000/home');
+        window.open('https://ownsize.me/home');
       }}
     >
       {LINK.SAVE}
