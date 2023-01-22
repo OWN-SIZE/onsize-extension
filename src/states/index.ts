@@ -1,4 +1,4 @@
-export type TopOrBottom = 'top' | 'bottom';
+export type TopOrBottom = 'top' | 'bottom' | 'null';
 
 export interface ProductType {
   productUrl: string;
@@ -21,7 +21,8 @@ export type CurrentViewType =
   | 'size-write'
   | 'cannotload'
   | 'nosize'
-  | 'size-recommend';
+  | 'size-recommend'
+  | 'loading';
 
 export type IsRegisterType = 'null' | 'true' | 'false';
 

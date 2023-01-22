@@ -7,6 +7,7 @@ import GlobalStyle from '../../styles/global';
 
 import CannotLoadSize from './cannotloadsize';
 import First from './first';
+import Loading from './loading';
 import NoSize from './nosize';
 import SaveProduct from './save-product';
 import SizeCompare from './size-compare';
@@ -19,7 +20,7 @@ function Popup() {
 
   // currentView를 체크해서 사이즈표 존재 여부에 따라 라우팅
   const checkCurrentView = async () => {
-    const currentView = (localStorage.getItem('currentView') as CurrentViewType) || 'size-option';
+    const currentView = (localStorage.getItem('currentView') as CurrentViewType) || 'first';
     setCurrentView(currentView);
   };
 
@@ -43,8 +44,10 @@ function Popup() {
         return <SizeWrite />;
       case 'nosize':
         return <NoSize />;
-      default:
+      case 'size-recommend':
         return <SizeRecommend />;
+      default:
+        return <Loading />;
     }
   };
 

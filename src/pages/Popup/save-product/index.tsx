@@ -5,15 +5,18 @@ import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import SizeRecommendButton from '../../../components/save-product/SizeRecommendButton';
 import { LINK, MESSAGE } from '../../../contants/main';
-import { productState, sizeRecommendState } from '../../../states/atom';
+import { productState, sizeRecommendState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SaveProduct() {
   const size = useRecoilValue(sizeRecommendState);
+  const topOrBottom = useRecoilValue(topOrBottomState);
 
   const getLink = (
     <Styled.Link
-      onClick={() => window.open('https://ownsize.me/home', '_blank')?.focus()}
+      onClick={() => {
+        window.open('https://ownsize.me/home');
+      }}
     >
       {LINK.SAVE}
     </Styled.Link>
@@ -29,7 +32,7 @@ function SaveProduct() {
         link={getLink}
         noPadding
       />
-      {!size && <SizeRecommendButton />}
+      {!topOrBottom && <SizeRecommendButton />}
     </Layout>
   );
 }
@@ -46,6 +49,6 @@ const Styled = {
     width: 11rem;
     height: 11rem;
     object-fit: contain;
-    /* margin-bottom: 2.6rem; */
+    margin-bottom: 2.6rem;
   `,
 };

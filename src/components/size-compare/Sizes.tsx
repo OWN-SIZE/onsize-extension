@@ -2,24 +2,23 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { topBottomTextConverter, topBottomTextMapper } from '../../../utils/topBottomTextMapper';
-import { mySizeState, topOrBottomState } from '../../states/atom';
+import { TopOrBottom } from '../../states';
+import { mySizeState } from '../../states/atom';
 import theme from '../../styles/theme';
 
-import { BottomType, TabName, TopBottomType, TopType } from '.';
+import { BottomType, TopBottomType, TopType } from '.';
 interface SizesProps {
   sizes: Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
-  currentTab: TabName;
+  currentTab: TopOrBottom | null;
   isSelfWrite?: boolean;
 }
 
 function Sizes(props: SizesProps) {
   const { sizes, currentTab, isSelfWrite } = props;
   const mySize = useRecoilValue(mySizeState);
-  const topOrBottom = useRecoilValue(topOrBottomState);
 
   const calculateDifference = (key: keyof TopBottomType, size: number) => {
-    const mysize = mySize[topOrBottom] as unknown as TopBottomType;
-    const compareTarget = mysize[key] as unknown as number;
+    const compareTarget = mySize[key] as unknown as number;
     return (size - compareTarget).toFixed(1);
   };
 
@@ -66,6 +65,7 @@ const Styled = {
   `,
   SizeValue: styled.p<{ isSelfWrite: boolean }>`
     display: flex;
+    align-items: flex-end;
     ${theme.fonts.title2}
     color: ${theme.colors.gray550};
     & > span {

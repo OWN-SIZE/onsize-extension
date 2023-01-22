@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -9,7 +9,8 @@ import FormHeader from '../../../components/sizewrite/FormHeader';
 import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 import useForm from '../../../hooks/business/useForm';
-import { currentViewState, historyState, topOrBottomState } from '../../../states/atom';
+import { TopOrBottom } from '../../../states';
+import { currentViewState, sizeRecommendState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { InputSizeInput } from '../../../types/inputSize';
 import { BottomValuesType, TopValuesType } from '../../../types/useForm';
@@ -34,13 +35,12 @@ const BottomInputList = [
 
 const BottomInitValues: BottomValuesType = { size: '', bottomLength: '', waist: '', thigh: '', rise: '', hem: '' };
 
-export type IsRowType = 'top' | 'bottom' | null;
-
 function SizeWrite() {
   const topOrBottom = useRecoilValue(topOrBottomState);
   const [measure, setMeasure] = useState('단면');
-  const [isAddRow, setIsAddRow] = useState<IsRowType>(null);
+  const [isAddRow, setIsAddRow] = useState<TopOrBottom | null>(null);
   const [, setCurrentView] = useRecoilState(currentViewState);
+  const sizeRecommended = useRecoilValue(sizeRecommendState);
 
   const { values, handleChange, handleBlur, addedValues, handleChangeAdded, handleBlurAdded, handleSubmit } = useForm({
     initialValues: topOrBottom === 'top' ? TopInitValues : BottomInitValues,
@@ -95,8 +95,7 @@ function SizeWrite() {
 
         postSelfWrite(inputData);
       }
-      /** TODO : 사이즈 추천 결과 있으면 size-recommend 없으면 nosize */
-      setCurrentView('size-recommend');
+      sizeRecommended ? setCurrentView('size-recommend') : setCurrentView('nosize');
     },
   });
 

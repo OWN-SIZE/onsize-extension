@@ -2,7 +2,6 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import icAlert from '../../../assets/icons/alert.svg';
-import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import SaveButton from '../../../components/size-option/SaveButton';

@@ -2,7 +2,6 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { topOrBottomState } from '../../states/atom';
-import Button from '../common/Button';
 import SaveButton from '../size-option/SaveButton';
 
 import Sizes from './Sizes';

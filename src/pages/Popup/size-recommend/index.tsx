@@ -1,7 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import Button from '../../../components/common/Button';
 import Layout from '../../../components/common/Layout';
 import SaveButton from '../../../components/size-option/SaveButton';
 import { sizeRecommendState } from '../../../states/atom';
@@ -15,11 +14,7 @@ function SizeRecommend() {
       <Styled.Root>
         <Styled.Title>나와 가장 잘 맞는 사이즈는</Styled.Title>
         <Styled.Size>{recommendSize}</Styled.Size>
-        <Styled.Link
-          onClick={() => window.open('https://ownsize.me/home', '_blank')?.focus()}
-        >
-          나의 옷장으로 이동
-        </Styled.Link>
+        <Styled.Link onClick={() => window.open('https://ownsize.me/home')}>나의 옷장으로 이동</Styled.Link>
       </Styled.Root>
 
       <SaveButton />

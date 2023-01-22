@@ -15,12 +15,12 @@ export interface BottomType {
   isWidthOfBottom: boolean;
 }
 
-export interface SizeType {
-  top: TopType | null;
-  bottom: BottomType | null;
-}
-
 export interface TopBottomType {
   top: TopType;
   bottom: BottomType;
+}
+
+export interface SizeType {
+  top: TopType | null;
+  bottom: BottomType | null;
 }

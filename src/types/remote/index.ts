@@ -40,6 +40,7 @@ export interface SaveResultInput {
   url: string;
   topItemId: number | null;
   bottomItemId: number | null;
+  userId?: number | null;
 }
 export interface SaveResultOutput {
   data: {

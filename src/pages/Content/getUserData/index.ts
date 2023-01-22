@@ -15,5 +15,3 @@ chrome.storage.local.set({ token });
   userId && localStorage.setItem('userId', userId);
   token && localStorage.setItem('token', token);
 })();
-
-console.log(isRegister, userId, token);
