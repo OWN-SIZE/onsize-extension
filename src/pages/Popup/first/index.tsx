@@ -1,10 +1,22 @@
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import icCharacter from '../../../assets/img/character.svg';
 import Layout from '../../../components/common/Layout';
+import { currentViewState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function First() {
+  const [, setCurrentView] = useRecoilState(currentViewState);
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      setCurrentView('size-option');
+    }
+  }, []);
+
   return (
     <Layout close>
       <Styled.Root>

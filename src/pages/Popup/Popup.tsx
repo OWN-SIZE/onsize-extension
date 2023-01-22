@@ -20,7 +20,7 @@ function Popup() {
 
   // currentView를 체크해서 사이즈표 존재 여부에 따라 라우팅
   const checkCurrentView = async () => {
-    const currentView = (localStorage.getItem('currentView') as CurrentViewType) || 'size-option';
+    const currentView = (localStorage.getItem('currentView') as CurrentViewType) || 'first';
     setCurrentView(currentView);
   };
 

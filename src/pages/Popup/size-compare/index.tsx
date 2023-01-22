@@ -41,8 +41,7 @@ function SizeCompare() {
   useEffect(() => {
     (async () => {
       // 내 사이즈 조회
-      const data = await getMySize();
-      console.log('getMySize', data, top, bottom);
+      await getMySize();
     })();
   }, []);
 
@@ -102,7 +101,7 @@ function SizeCompare() {
   const getLink = (
     <Styled.Link
       onClick={() => {
-        window.open('http://localhost:3000');
+        window.open('https://ownsize.me');
       }}
     >
       {LINK.BUTTON}

@@ -132,6 +132,7 @@ function SizeOption() {
       url,
       topItemId: selectedOption === 'top' ? productId : null,
       bottomItemId: selectedOption === 'bottom' ? productId : null,
+      userId: Number(localStorage.getItem('userId')) || null,
     };
     // 사이즈 추천 결과 조회
     const {
@@ -147,7 +148,7 @@ function SizeOption() {
     setTimeout(() => {
       const size = localStorage.getItem('recommend-size') || null;
       size ? setCurrentView('size-recommend') : setCurrentView('nosize');
-    }, 5000);
+    }, 500);
   };
 
   const onClickOption = async (option: 'top' | 'bottom') => {
@@ -159,10 +160,10 @@ function SizeOption() {
     const body = await getBody(option);
 
     // 사이즈표 저장하기 POST 호출
-    // await postSizeTable(body);
+    await postSizeTable(body);
 
     setTimeout(async () => {
-      // await getSizeRecommendResult(option);
+      await getSizeRecommendResult(option);
       renderNextView();
     }, 100);
   };
