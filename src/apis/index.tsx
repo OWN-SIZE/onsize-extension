@@ -26,7 +26,7 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 }
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
-  const { token } = useRecoilValue(userDataState);
+  const token = localStorage.getItem('token') || null;
 
   const requestIntercept = client.interceptors.request.use(
     (config: AxiosRequestConfig) => {
