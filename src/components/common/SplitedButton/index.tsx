@@ -5,13 +5,13 @@ import { currentViewState, historyState, productState, topOrBottomState } from '
 import theme from '../../../styles/theme';
 
 function SplitedButton() {
-  const [product, setProductState] = useRecoilState(productState);
+  const [, setProductState] = useRecoilState(productState);
   const topOrBottom = useRecoilValue(topOrBottomState);
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
-  const [history, setHistory] = useRecoilState(historyState);
+  const [, setHistory] = useRecoilState(historyState);
 
   const saveProduct = async () => {
-    const productData = chrome.storage.local.get(['product']).then(({ product: { image, productName } }) => {
+    await chrome.storage.local.get(['product']).then(({ product: { image, productName } }) => {
       setProductState((prev) => ({ ...prev, image, productName }));
     });
 

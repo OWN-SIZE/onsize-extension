@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "version": "1.0",
-  "name": "Ownsize Chrome Extension",
-  "description": "온사이즈 크롬 익스텐션",
+  "name": "온사이즈 OWNSIZE",
+  "description": "쉽고 똑똑한 나만의 쇼핑 도우미, 온사이즈",
   "background": { "service_worker": "script/background.js" },
   "action": {
     "default_popup": "popup.html",
@@ -38,5 +38,5 @@
     }
   ],
   "host_permissions": ["https://www.musinsa.com/*"],
-  "permissions": ["tabs", "activeTab", "storage"]
+  "permissions": ["activeTab", "storage"]
 }

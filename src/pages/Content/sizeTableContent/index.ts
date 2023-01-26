@@ -61,18 +61,15 @@ if (table) {
       let MY = th.innerText; // 사이즈
 
       const bracketIdx = MY.indexOf('(') || MY.indexOf('[');
-      console.log('괄호가 붙었네', bracketIdx);
       if (bracketIdx) {
         MY = MY.slice(0, bracketIdx);
       }
-      console.log(MY);
 
       infoType['size'] = MY;
 
       sizeTable = [...sizeTable, infoType];
     });
   }
-
 }
 // 사이즈표가 존재하는 경우
 if (sizeTable.length) {

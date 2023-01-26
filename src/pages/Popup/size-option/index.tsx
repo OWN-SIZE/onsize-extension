@@ -25,10 +25,10 @@ function SizeOption() {
   const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
   const [, setHistory] = useRecoilState(historyState);
-  const [mySize, setMySize] = useRecoilState(mySizeState);
-  const [userData, setUserData] = useRecoilState(userDataState);
-  const [productData, setProductData] = useRecoilState(productState);
-  const [recommendSize, setSizeRecommend] = useRecoilState(sizeRecommendState);
+  const [, setMySize] = useRecoilState(mySizeState);
+  const [, setUserData] = useRecoilState(userDataState);
+  const [, setProductData] = useRecoilState(productState);
+  const [, setSizeRecommend] = useRecoilState(sizeRecommendState);
   const [, setTopOrBottom] = useRecoilState(topOrBottomState);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ function SizeOption() {
     const sizeTable = await getSizeTable(); // 사이즈 테이블 받아오기 함수 호출
     const { productId } = (await getProductData()) || { productId: 0, url: '' };
 
-    let sizeList: SizeTableType[] = [];
+    let sizes: SizeTableType[] = [];
     sizeTable.forEach((table) => {
       const { size, topLength, shoulder, chest, bottomLength, hem, rise, thigh, waist } = table;
       const data: SizeTableType = {
@@ -114,10 +114,10 @@ function SizeOption() {
         waist: waist || null,
         isWidthOfBottom: option === 'bottom' ? true : null,
       };
-      sizeList = [...sizeList, data];
+      sizes = [...sizes, data];
     });
     const body: PostSizeTableInput = {
-      sizes: sizeList,
+      sizes,
     };
     return body;
   };
@@ -148,7 +148,15 @@ function SizeOption() {
     setTimeout(() => {
       const size = localStorage.getItem('recommend-size') || null;
       size ? setCurrentView('size-recommend') : setCurrentView('nosize');
-    }, 500);
+    }, 2000);
+  };
+
+  const handleSizeTable = async (option: 'top' | 'bottom') => {
+    // 사이즈 테이블을 바탕으로 body 구성
+    const body = await getBody(option);
+
+    // 사이즈표 저장하기 POST 호출
+    await postSizeTable(body);
   };
 
   const onClickOption = async (option: 'top' | 'bottom') => {
@@ -156,11 +164,7 @@ function SizeOption() {
     setSelectedOption(option);
     setTopOrBottom(option);
 
-    // 사이즈 테이블을 바탕으로 body 구성
-    const body = await getBody(option);
-
-    // 사이즈표 저장하기 POST 호출
-    await postSizeTable(body);
+    await handleSizeTable(option);
 
     setTimeout(async () => {
       await getSizeRecommendResult(option);

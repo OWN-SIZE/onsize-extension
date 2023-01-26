@@ -1,5 +1,6 @@
 import { RecoilRoot } from 'recoil';
 
+import { AxiosInterceptor } from '../../apis';
 import GlobalStyle from '../../styles/global';
 
 import Popup from './Popup';
@@ -7,8 +8,10 @@ import Popup from './Popup';
 function App() {
   return (
     <RecoilRoot>
-      <GlobalStyle />
-      <Popup />
+      <AxiosInterceptor>
+        <GlobalStyle />
+        <Popup />
+      </AxiosInterceptor>
     </RecoilRoot>
   );
 }
