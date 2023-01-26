@@ -5,22 +5,13 @@ import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import SizeRecommendButton from '../../../components/save-product/SizeRecommendButton';
 import { LINK, MESSAGE } from '../../../contants/main';
-import { productState, sizeRecommendState, topOrBottomState } from '../../../states/atom';
+import { productState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SaveProduct() {
-  const size = useRecoilValue(sizeRecommendState);
   const topOrBottom = useRecoilValue(topOrBottomState);
 
-  const getLink = (
-    <Styled.Link
-      onClick={() => {
-        window.open('https://ownsize.me/home');
-      }}
-    >
-      {LINK.SAVE}
-    </Styled.Link>
-  );
+  const getLink = <Styled.Link onClick={() => window.open('https://ownsize.me/home')}>{LINK.SAVE}</Styled.Link>;
   const { image } = useRecoilValue(productState);
   const storageItem = localStorage.getItem('productImage');
 
