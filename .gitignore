@@ -12,6 +12,7 @@
 # misc
 .DS_Store
 .history
+.env
 
 # secrets
 secrets.*.js
