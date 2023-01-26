@@ -23,7 +23,6 @@ function SizeCompare() {
   const topOrBottom = useRecoilValue(topOrBottomState);
 
   const { top, bottom } = mySize;
-
   const { currentTab, handleTab } = useTabs();
 
   // 마이사이즈 조회
@@ -32,17 +31,12 @@ function SizeCompare() {
 
     localStorage.setItem('topSize', JSON.stringify(top));
     localStorage.setItem('bottomSize', JSON.stringify(bottom));
-    setMySize({
-      top,
-      bottom,
-    });
+    setMySize({ top, bottom });
   };
 
+  // 내 사이즈 조회
   useEffect(() => {
-    (async () => {
-      // 내 사이즈 조회
-      await getMySize();
-    })();
+    (async () => await getMySize())();
   }, []);
 
   useEffect(() => {
