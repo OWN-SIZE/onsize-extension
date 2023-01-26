@@ -11,7 +11,6 @@
 
 # misc
 .DS_Store
-.env
 .history
 
 # secrets
