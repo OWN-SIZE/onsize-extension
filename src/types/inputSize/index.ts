@@ -1,4 +1,5 @@
 export interface InputSizeInput {
+  [key: string]: string | null | 0 | 1 | boolean | number;
   size: string;
   topLength: number | null;
   shoulder: number | null;
@@ -14,22 +15,6 @@ export interface InputSizeInput {
   manualInputNum: 0 | 1 | null;
   topOrBottom: 0 | 1;
 }
-
-// export type InputSizeInputKeyType =
-//   | 'size'
-//   | 'topLength'
-//   | 'shoulder'
-//   | 'chest'
-//   | 'isWidthOfTop'
-//   | 'bottomLength'
-//   | 'waist'
-//   | 'thigh'
-//   | 'rise'
-//   | 'hem'
-//   | 'isWidthOfBottom'
-//   | 'isManual'
-//   | 'manualInputNum'
-//   | 'topOrBottom';
 
 export interface InputSizeOutput {
   status: number;

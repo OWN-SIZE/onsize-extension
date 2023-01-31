@@ -75,7 +75,7 @@ function SizeWrite() {
         if (inputKey === 'size') {
           inputData.size = inputValue;
         } else {
-          // inputData[inputKey] = parseFloat(inputValue);
+          inputData[inputKey] = parseFloat(inputValue);
         }
       });
 
