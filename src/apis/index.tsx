@@ -1,8 +1,5 @@
 import { PropsWithChildren, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
-import { useRecoilValue } from 'recoil';
-
-import { userDataState } from '../states/atom';
 
 export const BASE_URL = process.env.REACT_APP_SERVER ?? '';
 
@@ -26,7 +23,10 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 }
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
-  const token = localStorage.getItem('token') || null;
+  const token =
+    localStorage.getItem('token') === 'undefined' || localStorage.getItem('token') === null
+      ? ''
+      : localStorage.getItem('token');
 
   const requestIntercept = client.interceptors.request.use(
     (config: AxiosRequestConfig) => {
