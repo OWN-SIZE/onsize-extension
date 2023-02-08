@@ -16,7 +16,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.musinsa.com/*"],
+      "matches": ["https://www.musinsa.com/*/goods/*"],
       "js": ["script/sizeTableContent.js", "script/productContent.js"]
     },
     {
@@ -29,7 +29,7 @@
     }
   ],
   "externally_connectable": {
-    "matches": ["https://www.musinsa.com/*"]
+    "matches": ["https://www.musinsa.com/*/goods/*"]
   },
   "web_accessible_resources": [
     {
@@ -37,6 +37,6 @@
       "matches": []
     }
   ],
-  "host_permissions": ["https://www.musinsa.com/*"],
+  "host_permissions": ["https://www.musinsa.com/*/goods/*"],
   "permissions": ["activeTab", "storage"]
 }
