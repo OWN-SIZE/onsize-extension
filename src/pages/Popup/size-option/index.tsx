@@ -36,9 +36,9 @@ function SizeOption() {
       const { token } = await chrome.storage.local.get(['token']);
       const { userId } = await chrome.storage.local.get(['userId']);
       const { isRegister } = await chrome.storage.local.get(['isRegister']);
-      localStorage.setItem('token', token);
-      localStorage.setItem('userId', userId);
-      localStorage.setItem('isRegister', isRegister);
+      localStorage.setItem('token', token || '');
+      localStorage.setItem('userId', userId || '');
+      localStorage.setItem('isRegister', isRegister || '');
 
       // 회원이 아닌 경우
       if (isRegister === 'false' && !userId) {
@@ -51,9 +51,6 @@ function SizeOption() {
         setMySize({ top: null, bottom: null });
         return;
       }
-
-      // api 요청 헤더에 token 추가
-      client.defaults.headers.token = token;
 
       setUserData({ isRegister, userId: +userId, token });
     })();
