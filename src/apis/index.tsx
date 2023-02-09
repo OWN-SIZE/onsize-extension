@@ -1,8 +1,5 @@
 import { PropsWithChildren, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
-import { useRecoilValue } from 'recoil';
-
-import { userDataState } from '../states/atom';
 
 export const BASE_URL = process.env.REACT_APP_SERVER ?? '';
 
@@ -26,16 +23,14 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 }
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
-  const token = localStorage.getItem('token') || null;
+  const token = localStorage.getItem('token') || '';
 
   const requestIntercept = client.interceptors.request.use(
     (config: AxiosRequestConfig) => {
       if (config.headers && !config.headers['Authorization']) {
         config.headers['Authorization'] = `${token}`;
-
         return config;
       }
-
       return config;
     },
     (error) => Promise.reject(error),
@@ -49,7 +44,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
           const result = confirm('로그인 후 이용해 주세요');
-          result ? window.open('https://ownsize.me') : window.close();
+          result ? window.open('https://ownsize.me/login') : window.close();
         } else {
           /** TODO : refresh token */
           return client(config);
