@@ -24,7 +24,7 @@ function First() {
         <Styled.Message>환영합니다!</Styled.Message>
         <Styled.Button
           onClick={() => {
-            window.open('https://ownsize.me', '_blank')?.focus();
+            window.open('https://ownsize.me/login', '_blank')?.focus();
           }}
         >
           사이즈 추천받으러 가기
