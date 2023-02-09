@@ -41,13 +41,13 @@ function SizeOption() {
       localStorage.setItem('isRegister', isRegister || '');
 
       // 회원이 아닌 경우
-      if (isRegister === 'false' && !userId) {
+      if (!isRegister && !userId) {
         setCurrentView('first');
         return;
       }
 
       // 로그인만 하고 실측치 입력을 안 한 경우
-      if (isRegister === 'false' && userId) {
+      if (!isRegister && userId) {
         setMySize({ top: null, bottom: null });
         return;
       }
