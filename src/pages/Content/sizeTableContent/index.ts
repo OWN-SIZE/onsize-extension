@@ -61,9 +61,9 @@ if (table) {
       });
 
       const th = size.children[0] as HTMLElement;
-      let MY = th.innerText; // 사이즈
+      let MY = th.innerText.trim(); // 사이즈
 
-      const bracketIdx = MY.match('[[(]');
+      const bracketIdx = MY.match(/[\s[(]/);
       if (bracketIdx) {
         MY = MY.slice(0, bracketIdx.index);
       }
