@@ -1,6 +1,7 @@
 const shoppingMallMapper = {
   musinsa: '무신사',
   mrporter: 'MR PORTER',
+  ssense: 'SSENSE',
 };
 
 const url = window.location.href;
@@ -38,6 +39,18 @@ switch (shoppingMallKey) {
     }
     if (productImage) {
       image = productImage.src;
+    }
+    break;
+  }
+  case 'ssense': {
+    const productTitle = document.querySelector('#pdpProductNameText') as HTMLElement;
+    const productImage = document.querySelector('picture > source') as HTMLSourceElement;
+
+    if (productTitle) {
+      productName = productTitle.innerText;
+    }
+    if (productImage) {
+      image = productImage.srcset;
     }
     break;
   }

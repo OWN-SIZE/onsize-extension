@@ -16,7 +16,11 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.musinsa.com/*/goods/*", "https://www.mrporter.com/*/product/*"],
+      "matches": [
+        "https://www.musinsa.com/*/goods/*",
+        "https://www.mrporter.com/*/product/*",
+        "https://www.ssense.com/*/product/*"
+      ],
       "js": ["script/sizeTableContent.js", "script/productContent.js"]
     },
     {
@@ -25,7 +29,11 @@
     }
   ],
   "externally_connectable": {
-    "matches": ["https://www.musinsa.com/*/goods/*", "https://www.mrporter.com/*/product/*"]
+    "matches": [
+      "https://www.musinsa.com/*/goods/*",
+      "https://www.mrporter.com/*/product/*",
+      "https://www.ssense.com/*/product/*"
+    ]
   },
   "web_accessible_resources": [
     {
@@ -33,6 +41,10 @@
       "matches": []
     }
   ],
-  "host_permissions": ["https://www.musinsa.com/*/goods/*", "https://www.mrporter.com/*/product/*"],
-  "permissions": ["activeTab", "storage"]
+  "host_permissions": [
+    "https://www.musinsa.com/*/goods/*",
+    "https://www.mrporter.com/*/product/*",
+    "https://www.ssense.com/*/product/*"
+  ],
+  "permissions": ["activeTab", "storage", "scripting"]
 }
