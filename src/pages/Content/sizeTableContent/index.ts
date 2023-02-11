@@ -45,6 +45,9 @@ if (table) {
         if (innerText.includes('단면')) {
           innerText = innerText.slice(0, column.innerText.indexOf('단면')) as keyof typeof textMapper;
         }
+        if (innerText.includes('너비')) {
+          innerText = innerText.slice(0, column.innerText.indexOf('너비')) as keyof typeof textMapper;
+        }
 
         const key = textMapper[innerText];
         if (!key) return;
@@ -60,17 +63,17 @@ if (table) {
       const th = size.children[0] as HTMLElement;
       let MY = th.innerText; // 사이즈
 
-      const bracketIdx = MY.indexOf('(') || MY.indexOf('[');
+      const bracketIdx = MY.match('[[(]');
       if (bracketIdx) {
-        MY = MY.slice(0, bracketIdx);
+        MY = MY.slice(0, bracketIdx.index);
       }
-
       infoType['size'] = MY;
 
       sizeTable = [...sizeTable, infoType];
     });
   }
 }
+
 // 사이즈표가 존재하는 경우
 if (sizeTable.length) {
   chrome.storage.local.set({ currentView: 'size-option' });
