@@ -1,6 +1,7 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
+import { useRedirect } from '../../hooks/queries/useRedirect';
 import { currentViewState } from '../../states/atom';
 import GlobalStyle from '../../styles/global';
 
@@ -16,6 +17,7 @@ import SizeWrite from './size-write';
 
 function Popup() {
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
+  const { redirect } = useRedirect();
 
   // currentView를 체크해서 사이즈표 존재 여부에 따라 라우팅
   const checkCurrentView = async () => {
@@ -23,8 +25,11 @@ function Popup() {
     setCurrentView(currentView || 'size-option');
   };
 
-  useLayoutEffect(() => {
-    checkCurrentView();
+  useEffect(() => {
+    (async () => {
+      await checkCurrentView();
+      await redirect();
+    })();
   }, []);
 
   const renderView = () => {

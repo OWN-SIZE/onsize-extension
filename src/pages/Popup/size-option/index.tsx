@@ -8,14 +8,13 @@ import imgTop from '../../../assets/img/top.svg';
 import Layout from '../../../components/common/Layout';
 import OptionButton from '../../../components/size-option/OptionButton';
 import SaveButton from '../../../components/size-option/SaveButton';
+import { useRedirect } from '../../../hooks/queries/useRedirect';
 import {
   currentViewState,
   historyState,
-  mySizeState,
   productState,
   sizeRecommendState,
   topOrBottomState,
-  userDataState,
 } from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { PostSizeTableInput, SaveResultInput, SizeTableType } from '../../../types/remote';
@@ -24,38 +23,19 @@ function SizeOption() {
   const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
   const [, setHistory] = useRecoilState(historyState);
-  const [, setMySize] = useRecoilState(mySizeState);
-  const [, setUserData] = useRecoilState(userDataState);
   const [, setProductData] = useRecoilState(productState);
   const [, setSizeRecommend] = useRecoilState(sizeRecommendState);
   const [, setTopOrBottom] = useRecoilState(topOrBottomState);
 
+  const { redirect } = useRedirect();
+
   useEffect(() => {
     (async () => {
-      const { token } = await chrome.storage.local.get(['token']);
-      const { userId } = await chrome.storage.local.get(['userId']);
-      const { isRegister } = await chrome.storage.local.get(['isRegister']);
-      localStorage.setItem('token', token || '');
-      localStorage.setItem('userId', userId || '');
-      localStorage.setItem('isRegister', isRegister || '');
-
-      // 회원이 아닌 경우
-      if (!isRegister && !userId) {
-        setCurrentView('first');
-        return;
-      }
-
-      // 로그인만 하고 실측치 입력을 안 한 경우
-      if (!isRegister && userId) {
-        setMySize({ top: null, bottom: null });
-        return;
-      }
-
-      setUserData({ isRegister, userId: +userId, token });
+      await redirect();
     })();
 
     setHistory(currentView);
-  }, []);
+  }, [currentView, redirect, setHistory]);
 
   // 상품 Id 조회
   const getProductData = async () => {
