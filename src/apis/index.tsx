@@ -24,7 +24,6 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
   const token = localStorage.getItem('token') || '';
-  console.log('token', token);
 
   const requestIntercept = client.interceptors.request.use(
     (config: AxiosRequestConfig) => {
@@ -50,8 +49,8 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
           const result = confirm('로그인 후 이용해 주세요');
           result ? window.open('https://ownsize.me/login') : window.close();
         } else {
-          /** TODO : refresh token */
-          return client(config);
+          const result = confirm('세션이 만료되었습니다. 다시 로그인 해주세요.');
+          result ? window.open('https://ownsize.me/login') : window.close();
         }
       }
 

@@ -25,7 +25,7 @@ const textMapper = {
 // 사이즈별 실측치 저장 배열
 let sizeTable: SizeInfoType = [];
 
-const table = document.querySelector('table');
+const table = document.querySelector('#size_table');
 
 if (table) {
   const columns = table.querySelectorAll('.item_val') as NodeListOf<HTMLElement>;
@@ -82,5 +82,4 @@ if (sizeTable.length) {
   });
 } else {
   chrome.storage.local.set({ currentView: 'cannotload' });
-  chrome.storage.local.clear();
 }

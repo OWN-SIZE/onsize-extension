@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { saveProductToAllCloset } from '../../apis/api';
-import { currentViewState, historyState, sizeRecommendState } from '../../states/atom';
+import { currentViewState, historyState, productState, sizeRecommendState } from '../../states/atom';
 import Button from '../common/Button';
 
 interface ProductType {
@@ -23,6 +23,7 @@ function SaveButton() {
   const [, setHistory] = useRecoilState(historyState);
   const [userId, setUserId] = useState<number>(0);
   const sizeRecommended = useRecoilValue(sizeRecommendState);
+  const [, setProductState] = useRecoilState(productState);
 
   useEffect(() => {
     (async () => {
@@ -41,7 +42,10 @@ function SaveButton() {
     const {
       product: { image, productName, mallName },
     } = (await chrome.storage.local.get(['product'])) as ProductType;
+
     storeProductImage(image);
+    setProductState((prev) => ({ ...prev, image, productName }));
+
     return { image, mallName, productName };
   };
 
@@ -58,6 +62,7 @@ function SaveButton() {
   // 저장하기 버튼 클릭
   const onClickSaveProduct = async () => {
     const { image, mallName, productName } = await getProductData(); // 상품 이미지 및 상품명
+
     const { productUrl, faviconUrl } = await getUrlData();
     const body = {
       productUrl,
