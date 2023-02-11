@@ -66,7 +66,7 @@ function SaveButton() {
       productUrl,
       image,
       mallName,
-      productName: productName.replace(/ /g, '').slice(0, 36),
+      productName: productName.slice(0, 36),
       size: sizeRecommended || null,
       isRecommend: sizeRecommended ? true : false,
       faviconUrl,
