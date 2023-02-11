@@ -15,43 +15,27 @@ let productName;
 
 switch (shoppingMallKey) {
   case 'musinsa': {
-    const productImage = document.querySelector('.product-img') as HTMLElement;
+    const productImage = document.querySelector('.product-img') as HTMLImageElement;
     const productTitle = document.querySelector('.product_title') as HTMLElement;
 
-    if (productTitle) {
-      productName = productTitle.innerText;
-    }
-
-    if (productImage) {
-      const imageElement = productImage.querySelector('img');
-      if (imageElement) {
-        image = imageElement.src;
-      }
-    }
+    productName = productTitle.innerText;
+    image = productImage.src;
     break;
   }
   case 'mrporter': {
-    const productImage = document.querySelector('img');
+    const productImage = document.querySelector('img') as HTMLImageElement;
     const productTitle = document.querySelectorAll('meta[itemprop="name"]')[1] as HTMLMetaElement;
 
-    if (productTitle) {
-      productName = productTitle.content;
-    }
-    if (productImage) {
-      image = productImage.src;
-    }
+    productName = productTitle.content;
+    image = productImage.src;
     break;
   }
   case 'ssense': {
     const productTitle = document.querySelector('#pdpProductNameText') as HTMLElement;
-    const productImage = document.querySelector('picture > source') as HTMLSourceElement;
+    const productImage = document.querySelector('picture img') as HTMLImageElement;
 
-    if (productTitle) {
-      productName = productTitle.innerText;
-    }
-    if (productImage) {
-      image = productImage.srcset;
-    }
+    productName = productTitle.innerText.trim();
+    image = productImage.dataset.srcset;
     break;
   }
 }
