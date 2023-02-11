@@ -1,7 +1,6 @@
 import { useLayoutEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { CurrentViewType } from '../../states';
 import { currentViewState } from '../../states/atom';
 import GlobalStyle from '../../styles/global';
 
@@ -21,7 +20,7 @@ function Popup() {
   // currentView를 체크해서 사이즈표 존재 여부에 따라 라우팅
   const checkCurrentView = async () => {
     const { currentView } = await chrome.storage.local.get(['currentView']);
-    setCurrentView(currentView);
+    setCurrentView(currentView || 'size-option');
   };
 
   useLayoutEffect(() => {
@@ -46,7 +45,7 @@ function Popup() {
         return <NoSize />;
       case 'size-recommend':
         return <SizeRecommend />;
-      default:
+      case 'loading':
         return <Loading />;
     }
   };

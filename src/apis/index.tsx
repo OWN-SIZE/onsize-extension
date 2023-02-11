@@ -24,6 +24,7 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
   const token = localStorage.getItem('token') || '';
+  console.log('token', token);
 
   const requestIntercept = client.interceptors.request.use(
     (config: AxiosRequestConfig) => {
@@ -40,7 +41,10 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
     (config) => config,
     async (error) => {
       const config = error.config;
-
+      if (error.response.status === 400) {
+        alert('상품 페이지가 아니네요.');
+        return;
+      }
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
           const result = confirm('로그인 후 이용해 주세요');
@@ -60,7 +64,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       client.interceptors.request.eject(requestIntercept);
       client.interceptors.response.eject(responseIntercept);
     };
-  }, []);
+  }, [requestIntercept, responseIntercept]);
 
   return <>{children}</>;
 }

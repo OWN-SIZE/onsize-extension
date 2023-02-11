@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import styled from 'styled-components';
 
 import { saveProductToAllCloset } from '../../apis/api';
-import { currentViewState, historyState, sizeRecommendState, topOrBottomState } from '../../states/atom';
-import theme from '../../styles/theme';
+import { currentViewState, historyState, sizeRecommendState } from '../../states/atom';
 import Button from '../common/Button';
 
 interface ProductType {
@@ -21,9 +19,8 @@ interface UrlType {
 }
 
 function SaveButton() {
-  const topOrBottom = useRecoilValue(topOrBottomState);
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
-  const [history, setHistory] = useRecoilState(historyState);
+  const [, setHistory] = useRecoilState(historyState);
   const [userId, setUserId] = useState<number>(0);
   const sizeRecommended = useRecoilValue(sizeRecommendState);
 
@@ -42,7 +39,7 @@ function SaveButton() {
   // image, productName, mallName명 가져오기
   const getProductData = async () => {
     const {
-      product: { image, mallName, productName },
+      product: { image, productName, mallName },
     } = (await chrome.storage.local.get(['product'])) as ProductType;
     storeProductImage(image);
     return { image, mallName, productName };
