@@ -9,12 +9,16 @@ import theme from '../../../styles/theme';
 function SizeRecommend() {
   const recommendSize = useRecoilValue(sizeRecommendState);
 
+  const navigate = () => {
+    chrome.windows.create({ url: 'https://ownsize.me/home' });
+  };
+
   return (
     <Layout close>
       <Styled.Root>
         <Styled.Title>나와 가장 잘 맞는 사이즈는</Styled.Title>
         <Styled.Size>{recommendSize}</Styled.Size>
-        <Styled.Link onClick={() => window.open('https://ownsize.me/home')}>나의 옷장으로 이동</Styled.Link>
+        <Styled.Link onClick={navigate}>나의 옷장으로 이동</Styled.Link>
       </Styled.Root>
 
       <SaveButton />

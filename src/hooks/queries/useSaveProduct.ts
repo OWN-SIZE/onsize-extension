@@ -1,7 +1,7 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { useEffect } from 'react';
-import { saveProductToAllCloset } from '../../apis/api';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { saveProductToAllCloset } from '../../apis/api';
 import { currentViewState, historyState, productState, sizeRecommendState, userDataState } from '../../states/atom';
 
 interface ProductType {
