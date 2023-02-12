@@ -18,7 +18,7 @@ let productName;
 
 switch (shoppingMallKey) {
   case 'musinsa': {
-    const productImage = document.querySelector('.product-img') as HTMLImageElement;
+    const productImage = document.querySelector('.product-img img') as HTMLImageElement;
     const productTitle = document.querySelector('.product_title') as HTMLElement;
 
     productName = productTitle.innerText;
