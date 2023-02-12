@@ -21,6 +21,8 @@ function Header(props: HeaderProps) {
     localStorage.removeItem('currentView');
     localStorage.removeItem('currentTab');
     localStorage.removeItem('recommend-size');
+    localStorage.removeItem('productImage');
+    localStorage.removeItem('history');
 
     window.close();
   };

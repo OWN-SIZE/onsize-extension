@@ -40,14 +40,17 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
     (config) => config,
     async (error) => {
       const config = error.config;
-
+      if (error.response.status === 400) {
+        alert('상품 페이지가 아니네요.');
+        return;
+      }
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
           const result = confirm('로그인 후 이용해 주세요');
           result ? window.open('https://ownsize.me/login') : window.close();
         } else {
-          /** TODO : refresh token */
-          return client(config);
+          const result = confirm('세션이 만료되었습니다. 다시 로그인 해주세요.');
+          result ? window.open('https://ownsize.me/login') : window.close();
         }
       }
 
@@ -60,7 +63,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       client.interceptors.request.eject(requestIntercept);
       client.interceptors.response.eject(responseIntercept);
     };
-  }, []);
+  }, [requestIntercept, responseIntercept]);
 
   return <>{children}</>;
 }
