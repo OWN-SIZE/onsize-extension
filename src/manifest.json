@@ -19,7 +19,10 @@
       "matches": [
         "https://www.musinsa.com/*/goods/*",
         "https://www.mrporter.com/*/product/*",
-        "https://www.ssense.com/*/product/*"
+        "https://www.ssense.com/*/product/*",
+        "https://www.okmall.com/products/*",
+        "https://product.29cm.co.kr/*",
+        "https://www.wconcept.co.kr/Product/*"
       ],
       "js": ["script/sizeTableContent.js", "script/productContent.js"]
     },
@@ -32,7 +35,10 @@
     "matches": [
       "https://www.musinsa.com/*/goods/*",
       "https://www.mrporter.com/*/product/*",
-      "https://www.ssense.com/*/product/*"
+      "https://www.ssense.com/*/product/*",
+      "https://www.okmall.com/products/*",
+      "https://product.29cm.co.kr/*",
+      "https://www.wconcept.co.kr/Product/*"
     ]
   },
   "web_accessible_resources": [
@@ -44,7 +50,10 @@
   "host_permissions": [
     "https://www.musinsa.com/*/goods/*",
     "https://www.mrporter.com/*/product/*",
-    "https://www.ssense.com/*/product/*"
+    "https://www.ssense.com/*/product/*",
+    "https://www.okmall.com/products/*",
+    "https://product.29cm.co.kr/*",
+    "https://www.wconcept.co.kr/Product/*"
   ],
   "permissions": ["activeTab", "storage", "scripting"]
 }

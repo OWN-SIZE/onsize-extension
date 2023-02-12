@@ -2,6 +2,9 @@ const shoppingMallMapper = {
   musinsa: '무신사',
   mrporter: 'MR PORTER',
   ssense: 'SSENSE',
+  okmall: 'OKmall',
+  '29cm': '29cm',
+  wconcept: 'w컨셉',
 };
 
 const url = window.location.href;
@@ -36,6 +39,30 @@ switch (shoppingMallKey) {
 
     productName = productTitle.innerText.trim();
     image = productImage.dataset.srcset;
+    break;
+  }
+  case 'okmall': {
+    const productTitle = document.querySelector('.prd_name') as HTMLElement;
+    const productImage = document.querySelector('#imageView img') as HTMLImageElement;
+
+    productName = productTitle.innerText;
+    image = productImage.src;
+    break;
+  }
+  case '29cm': {
+    const productTitle = document.querySelector('h2') as HTMLElement;
+    const productImage = document.querySelector('.css-12qah06') as HTMLImageElement;
+
+    productName = productTitle.innerText;
+    image = productImage.src;
+    break;
+  }
+  case 'wconcept': {
+    const productTitle = document.querySelector('.product ') as HTMLElement;
+    const productImage = document.querySelector('.img_area img') as HTMLImageElement;
+
+    productName = productTitle.innerText;
+    image = productImage.src;
     break;
   }
 }
