@@ -41,7 +41,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
     async (error) => {
       const config = error.config;
       if (error.response.status === 400) {
-        alert('상품 페이지가 아니네요.');
+        alert('상품 상세 페이지에서 이용해주세요.');
         return;
       }
       if (error.response.status === 401) {
