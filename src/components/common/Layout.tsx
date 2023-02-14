@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode } from 'react';
+import { PropsWithChildren, ReactNode, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -14,6 +14,7 @@ interface LayoutProps {
 }
 
 function Layout(props: PropsWithChildren<LayoutProps>) {
+  const { children, back, title, close } = props;
   const currentView = useRecoilValue(currentViewState);
   const history = useRecoilValue(historyState);
 
@@ -21,7 +22,19 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
   history && localStorage.setItem('history', history);
   localStorage.setItem('currentView', currentView);
 
-  const { children, back, title, close } = props;
+  useEffect(() => {
+    const container = document.getElementById('app-container') as HTMLElement;
+    if (container) {
+      if (currentView === 'size-write') {
+        container.style.width = '63.2rem';
+        container.style.height = '31.4rem';
+      } else {
+        container.style.width = '38rem';
+        container.style.height = '37.5rem';
+      }
+    }
+  }, []);
+
   return (
     <Styled.Root>
       <Header back={back} title={title} close={close} />

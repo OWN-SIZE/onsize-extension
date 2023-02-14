@@ -1,9 +1,9 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import icBack from '../../../assets/icons/back.svg';
 import icClose from '../../../assets/icons/close.svg';
-import useGoBackToHistory from '../../../hooks/ui/useGoBackToHistory';
+import { useRemoveLocalStorage } from '../../../hooks/queries/useRemoveLocalStorage';
+import { useGoBackToHistory } from '../../../hooks/ui/useGoBackToHistory';
 import theme from '../../../styles/theme';
 
 interface HeaderProps {
@@ -14,16 +14,11 @@ interface HeaderProps {
 
 function Header(props: HeaderProps) {
   const { back, title, close } = props;
-  const goBackToHistory = useGoBackToHistory();
+  const { goBackToHistory } = useGoBackToHistory();
+  const { removeLocalStorageItem } = useRemoveLocalStorage();
 
-  const closePopup = () => {
-    // 초기화
-    localStorage.removeItem('currentView');
-    localStorage.removeItem('currentTab');
-    localStorage.removeItem('recommend-size');
-    localStorage.removeItem('productImage');
-    localStorage.removeItem('history');
-
+  const reset = () => {
+    removeLocalStorageItem(['currentView', 'currentTab', 'recommend-size', 'productImage', 'history']);
     window.close();
   };
 
@@ -31,7 +26,7 @@ function Header(props: HeaderProps) {
     <Styled.Root>
       <Styled.Back>{back && <img src={icBack} alt="back" onClick={goBackToHistory} />}</Styled.Back>
       <Styled.Title>{title || null}</Styled.Title>
-      <Styled.Close>{close && <img src={icClose} alt="close" onClick={closePopup} />}</Styled.Close>
+      <Styled.Close>{close && <img src={icClose} alt="close" onClick={reset} />}</Styled.Close>
     </Styled.Root>
   );
 }
