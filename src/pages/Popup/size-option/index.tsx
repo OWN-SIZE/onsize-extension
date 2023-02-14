@@ -120,7 +120,6 @@ function SizeOption() {
 
   // 다음 뷰 렌더링
   const renderNextView = () => {
-    setCurrentView('loading');
     setTimeout(() => {
       const size = localStorage.getItem('recommend-size') || null;
       size ? setCurrentView('size-recommend') : setCurrentView('nosize');
@@ -137,6 +136,8 @@ function SizeOption() {
 
   const onClickOption = async (option: 'top' | 'bottom') => {
     if (!option) return;
+    setCurrentView('loading');
+
     setSelectedOption(option);
     setTopOrBottom(option);
 

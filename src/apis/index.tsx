@@ -1,5 +1,8 @@
 import { PropsWithChildren, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
+import { useRecoilState } from 'recoil';
+
+import { userDataState } from '../states/atom';
 
 export const BASE_URL = process.env.REACT_APP_SERVER ?? '';
 
@@ -23,6 +26,7 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 }
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
+  const [, setUserData] = useRecoilState(userDataState);
   const token = localStorage.getItem('token') || '';
 
   const requestIntercept = client.interceptors.request.use(
@@ -47,6 +51,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
           const result = confirm('로그인 후 이용해 주세요');
+          setUserData((prev) => ({ ...prev, userId: 0, token: '' }));
           result ? window.open('https://ownsize.me/login') : window.close();
         } else {
           const result = confirm('세션이 만료되었습니다. 다시 로그인 해주세요.');
