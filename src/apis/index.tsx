@@ -46,6 +46,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       const config = error.config;
       if (error.response.status === 400) {
         alert('상품 상세 페이지에서 이용해주세요.');
+        window.close();
         return;
       }
       if (error.response.status === 401) {

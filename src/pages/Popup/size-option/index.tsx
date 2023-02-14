@@ -137,6 +137,8 @@ function SizeOption() {
   };
 
   const onClickOption = async (option: 'top' | 'bottom') => {
+    if (!option) return;
+
     setSelectedOption(option);
     setTopOrBottom(option);
 
@@ -144,7 +146,6 @@ function SizeOption() {
       setCurrentView('size-write');
       return;
     }
-    if (!option) return;
     setCurrentView('loading');
 
     await handleSizeTable(option);

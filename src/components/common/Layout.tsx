@@ -18,20 +18,25 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
   const currentView = useRecoilValue(currentViewState);
   const history = useRecoilValue(historyState);
 
-  // back 버튼 클릭을 통한 히스토리 존재 시 로컬 스토리지에 저장
-  history && localStorage.setItem('history', history);
+  if (history) {
+    localStorage.setItem('history', history);
+  }
   localStorage.setItem('currentView', currentView);
 
   useEffect(() => {
+    if (currentView !== 'compare') {
+      localStorage.removeItem('currentTab');
+    }
+
     const container = document.getElementById('app-container') as HTMLElement;
-    if (container) {
-      if (currentView === 'size-write') {
-        container.style.width = '63.2rem';
-        container.style.height = '31.4rem';
-      } else {
-        container.style.width = '38rem';
-        container.style.height = '37.5rem';
-      }
+    if (!container) return;
+
+    if (currentView === 'size-write') {
+      container.style.width = '63.2rem';
+      container.style.height = '31.4rem';
+    } else {
+      container.style.width = '38rem';
+      container.style.height = '37.5rem';
     }
   }, []);
 
