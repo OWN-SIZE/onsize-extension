@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { postSizeTable, saveResult } from '../../../apis/api';
@@ -12,6 +12,7 @@ import { useRedirect } from '../../../hooks/queries/useRedirect';
 import {
   currentViewState,
   historyState,
+  isSelfWriteState,
   productState,
   sizeRecommendState,
   topOrBottomState,
@@ -26,6 +27,7 @@ function SizeOption() {
   const [, setProductData] = useRecoilState(productState);
   const [, setSizeRecommend] = useRecoilState(sizeRecommendState);
   const [, setTopOrBottom] = useRecoilState(topOrBottomState);
+  const isSelfWrite = useRecoilValue(isSelfWriteState);
 
   const { redirect } = useRedirect();
 
@@ -135,11 +137,15 @@ function SizeOption() {
   };
 
   const onClickOption = async (option: 'top' | 'bottom') => {
-    if (!option) return;
-    setCurrentView('loading');
-
     setSelectedOption(option);
     setTopOrBottom(option);
+
+    if (isSelfWrite) {
+      setCurrentView('size-write');
+      return;
+    }
+    if (!option) return;
+    setCurrentView('loading');
 
     await handleSizeTable(option);
 

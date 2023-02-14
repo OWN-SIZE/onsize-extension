@@ -2,16 +2,22 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { useSaveProduct } from '../../../hooks/queries/useSaveProduct';
-import { currentViewState } from '../../../states/atom';
+import { currentViewState, isSelfWriteState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SplitedButton() {
   const [, setCurrentView] = useRecoilState(currentViewState);
+  const [, setIsSelfWrite] = useRecoilState(isSelfWriteState);
   const { onClickSaveProduct } = useSaveProduct();
+
+  const onClickSelfWriteButton = () => {
+    setIsSelfWrite(true);
+    setCurrentView('size-option');
+  };
 
   return (
     <Styled.Root>
-      <Styled.SizeInputButton onClick={() => setCurrentView('size-write')}>사이즈 직접 입력하기</Styled.SizeInputButton>
+      <Styled.SizeInputButton onClick={onClickSelfWriteButton}>사이즈 직접 입력하기</Styled.SizeInputButton>
 
       <Styled.SaveButton onClick={onClickSaveProduct}>저장</Styled.SaveButton>
     </Styled.Root>
