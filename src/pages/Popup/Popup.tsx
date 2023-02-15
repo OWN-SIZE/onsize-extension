@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { useRedirect } from '../../hooks/queries/useRedirect';
+import { CurrentViewType } from '../../states';
 import { currentViewState } from '../../states/atom';
 import GlobalStyle from '../../styles/global';
 
@@ -19,10 +20,12 @@ function Popup() {
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
   const { redirect } = useRedirect();
 
-  // currentView를 체크해서 사이즈표 존재 여부에 따라 라우팅
   const checkCurrentView = async () => {
-    const { currentView } = await chrome.storage.local.get(['currentView']);
-    setCurrentView(currentView || 'size-option');
+    const { sizeTable } = await chrome.storage.local.get(['sizeTable']);
+
+    sizeTable
+      ? setCurrentView((localStorage.getItem('currentView') as CurrentViewType) || 'size-option')
+      : setCurrentView('cannotload');
   };
 
   useEffect(() => {
