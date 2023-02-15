@@ -2,6 +2,7 @@ import { PropsWithChildren, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
 import { useRecoilState } from 'recoil';
 
+import { DOMAIN } from '../contants/domain';
 import { userDataState } from '../states/atom';
 
 export const BASE_URL = process.env.REACT_APP_SERVER ?? '';
@@ -53,10 +54,10 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
         if (!config.headers['Authorization']) {
           const result = confirm('로그인 후 이용해 주세요');
           setUserData((prev) => ({ ...prev, userId: 0, token: '' }));
-          result ? window.open('https://ownsize.me/login') : window.close();
+          result ? window.open(DOMAIN.LOGIN) : window.close();
         } else {
           const result = confirm('세션이 만료되었습니다. 다시 로그인 해주세요.');
-          result ? window.open('https://ownsize.me/login') : window.close();
+          result ? window.open(DOMAIN.LOGIN) : window.close();
         }
       }
 

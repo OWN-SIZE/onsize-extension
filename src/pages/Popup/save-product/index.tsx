@@ -4,14 +4,15 @@ import styled from 'styled-components';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import SizeRecommendButton from '../../../components/save-product/SizeRecommendButton';
-import { LINK, MESSAGE } from '../../../contants/main';
+import { DOMAIN } from '../../../contants/domain';
+import { LINK, MESSAGE } from '../../../contants/text';
 import { productState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SaveProduct() {
   const topOrBottom = useRecoilValue(topOrBottomState);
 
-  const getLink = <Styled.Link onClick={() => window.open('https://ownsize.me/home')}>{LINK.SAVE}</Styled.Link>;
+  const getLink = <Styled.Link onClick={() => window.open(DOMAIN.HOME)}>{LINK.SAVE}</Styled.Link>;
   const { image } = useRecoilValue(productState);
   const storageItem = localStorage.getItem('productImage');
 

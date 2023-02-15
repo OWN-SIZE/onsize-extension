@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 
-import { CAPTION } from '../../../contants/main';
+import { CAPTION } from '../../../contants/text';
 import theme from '../../../styles/theme';
 
 interface AlertProps {
