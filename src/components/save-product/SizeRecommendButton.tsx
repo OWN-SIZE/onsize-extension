@@ -55,7 +55,7 @@ function SizeRecommendButton() {
   };
 
   const renderNextView = () => {
-    recommendSize ? setCurrentView('nosize') : setCurrentView('size-recommend');
+    recommendSize ? setCurrentView('size-recommend') : setCurrentView('nosize');
   };
 
   const handleSizeRecommend = () => {
