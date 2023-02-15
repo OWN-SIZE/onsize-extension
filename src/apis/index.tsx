@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { useRecoilState } from 'recoil';
 
 import { DOMAIN } from '../contants/domain';
-import { userDataState } from '../states/atom';
+import { currentViewState, userDataState } from '../states/atom';
 
 export const BASE_URL = process.env.REACT_APP_SERVER ?? '';
 
@@ -28,6 +28,7 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
   const [, setUserData] = useRecoilState(userDataState);
+  const [, setCurrentView] = useRecoilState(currentViewState);
   const token = localStorage.getItem('token') || '';
 
   const requestIntercept = client.interceptors.request.use(
@@ -46,9 +47,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
     async (error) => {
       const config = error.config;
       if (error.response.status === 400) {
-        alert('상품 상세 페이지에서 이용해주세요.');
-        window.close();
-        return;
+        setCurrentView('cannotload');
       }
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
