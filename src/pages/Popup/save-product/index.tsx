@@ -16,6 +16,7 @@ function SaveProduct() {
   const { image } = useRecoilValue(productState);
   const storageItem = localStorage.getItem('productImage');
 
+  const noRecommendedSize = !sizeRecommend || sizeRecommend === 'nosize';
   return (
     <Layout close>
       <Main
@@ -24,7 +25,7 @@ function SaveProduct() {
         link={getLink}
         noPadding
       />
-      {!sizeRecommend && <SizeRecommendButton />}
+      {noRecommendedSize && <SizeRecommendButton />}
     </Layout>
   );
 }
