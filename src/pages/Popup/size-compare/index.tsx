@@ -24,7 +24,7 @@ function SizeCompare() {
   const topOrBottom = useRecoilValue(topOrBottomState);
 
   const { top, bottom } = mySize;
-  const { currentTab, handleTab } = useTabs();
+  const { currentTab = 'top', handleTab } = useTabs();
 
   // 마이사이즈 조회
   const getMySize = async () => {
