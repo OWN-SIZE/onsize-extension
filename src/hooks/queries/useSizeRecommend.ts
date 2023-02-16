@@ -40,7 +40,7 @@ export const useSizeRecommend = () => {
 
   const getSizeTable = async () => {
     const { sizeTable } = await chrome.storage.local.get(['sizeTable']);
-    return sizeTable as SizeTableType[];
+    return (sizeTable as SizeTableType[]) || [];
   };
 
   const getBody = async (option: TopOrBottom) => {

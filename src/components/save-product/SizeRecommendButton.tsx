@@ -9,12 +9,15 @@ function SizeRecommendButton() {
   const [, setCurrentView] = useRecoilState(currentViewState);
   const topOrBottom = useRecoilValue(topOrBottomState);
 
-  return (
-    <Button
-      content="사이즈 추천 받기"
-      onClick={() => (topOrBottom ? handleSizeRecommend(topOrBottom) : setCurrentView('size-option'))}
-    />
-  );
+  const onClickSizeRecommendButton = () => {
+    if (topOrBottom === 'top' || topOrBottom === 'bottom') {
+      handleSizeRecommend(topOrBottom);
+    } else {
+      setCurrentView('size-option');
+    }
+  };
+
+  return <Button content="사이즈 추천 받기" onClick={onClickSizeRecommendButton} />;
 }
 
 export default SizeRecommendButton;
