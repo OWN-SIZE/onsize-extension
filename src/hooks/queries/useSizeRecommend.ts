@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { postSizeTable, saveResult } from '../../apis/api';
+import { TopOrBottom } from '../../states';
 import {
   currentViewState,
-  historyState,
   isSelfWriteState,
   productState,
   sizeRecommendState,
@@ -13,15 +13,13 @@ import {
 import { PostSizeTableInput, SaveResultInput, SizeTableType } from '../../types/remote';
 
 export const useSizeRecommend = () => {
-  const [selectedOption, setSelectedOption] = useState<'top' | 'bottom'>();
-  const [currentView, setCurrentView] = useRecoilState(currentViewState);
-  const [, setHistory] = useRecoilState(historyState);
+  const [, setSelectedOption] = useState<Omit<TopOrBottom, 'null'>>();
+  const [, setCurrentView] = useRecoilState(currentViewState);
   const [, setProductData] = useRecoilState(productState);
   const [, setSizeRecommend] = useRecoilState(sizeRecommendState);
   const [, setTopOrBottom] = useRecoilState(topOrBottomState);
   const isSelfWrite = useRecoilValue(isSelfWriteState);
 
-  // 상품 Id 조회
   const getProductData = async () => {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
     const url = tabs[0].url;
@@ -40,14 +38,13 @@ export const useSizeRecommend = () => {
     return { productId, url };
   };
 
-  // sync에 저장한 사이즈표 데이터 가져오기
   const getSizeTable = async () => {
     const { sizeTable } = await chrome.storage.local.get(['sizeTable']);
     return sizeTable as SizeTableType[];
   };
 
-  const getBody = async (option: 'top' | 'bottom') => {
-    const sizeTable = await getSizeTable(); // 사이즈 테이블 받아오기 함수 호출
+  const getBody = async (option: TopOrBottom) => {
+    const sizeTable = await getSizeTable();
     const { productId } = (await getProductData()) || { productId: 0, url: '' };
 
     let sizes: SizeTableType[] = [];
@@ -82,9 +79,7 @@ export const useSizeRecommend = () => {
     return body;
   };
 
-  // 사이즈 추천 결과 조회
-  const getSizeRecommendResult = async (selectedOption: 'top' | 'bottom') => {
-    // 상품 정보
+  const getSizeRecommendResult = async (selectedOption: TopOrBottom) => {
     const { productId, url } = (await getProductData()) || { productId: 0, url: '' };
 
     const body: SaveResultInput = {
@@ -94,7 +89,7 @@ export const useSizeRecommend = () => {
       bottomItemId: selectedOption === 'bottom' ? productId : null,
       userId: Number(localStorage.getItem('userId')) || null,
     };
-    // 사이즈 추천 결과 조회
+
     const {
       data: { recommendSize },
     } = await saveResult(body);
@@ -102,7 +97,6 @@ export const useSizeRecommend = () => {
     localStorage.setItem('recommend-size', recommendSize || '');
   };
 
-  // 다음 뷰 렌더링
   const renderNextView = () => {
     setTimeout(() => {
       const size = localStorage.getItem('recommend-size') || null;
@@ -110,31 +104,43 @@ export const useSizeRecommend = () => {
     }, 2000);
   };
 
-  const handleSizeTable = async (option: 'top' | 'bottom') => {
+  const sizeCrawling = async (option: TopOrBottom) => {
     // 사이즈 테이블을 바탕으로 body 구성
     const body = await getBody(option);
 
-    // 사이즈표 저장하기 POST 호출
     await postSizeTable(body);
   };
-  const onClickOption = async (option: 'top' | 'bottom') => {
+
+  const checkOption = (option: TopOrBottom) => {
     if (!option) return;
 
+    if (option === 'null') {
+      setCurrentView('size-option');
+      return;
+    }
     setSelectedOption(option);
     setTopOrBottom(option);
+  };
+
+  const executeSizeRecommmend = async (option: TopOrBottom) => {
+    setCurrentView('loading');
+
+    await sizeCrawling(option);
+    await getSizeRecommendResult(option);
+
+    setTimeout(async () => {
+      renderNextView();
+    }, 100);
+  };
+
+  const onClickOption = (option: TopOrBottom) => {
+    checkOption(option);
 
     if (isSelfWrite) {
       setCurrentView('size-write');
       return;
     }
-    setCurrentView('loading');
-
-    await handleSizeTable(option);
-
-    setTimeout(async () => {
-      await getSizeRecommendResult(option);
-      renderNextView();
-    }, 100);
+    executeSizeRecommmend(option);
   };
 
   return { onClickOption };

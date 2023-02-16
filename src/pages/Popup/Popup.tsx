@@ -58,12 +58,7 @@ function Popup() {
     }
   };
 
-  return (
-    <>
-      <GlobalStyle />
-      {renderView()}
-    </>
-  );
+  return renderView();
 }
 
 export default Popup;
