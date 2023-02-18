@@ -95,8 +95,7 @@ function SizeWrite() {
 
         postSelfWrite(inputData);
       }
-      changeViewSize('38rem', '38rem');
-      sizeRecommended ? setCurrentView('size-recommend') : setCurrentView('nosize');
+      sizeRecommended ? setCurrentView('size-recommend') : setCurrentView('compare');
     },
   });
 

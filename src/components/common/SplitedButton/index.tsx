@@ -1,41 +1,25 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import { currentViewState, historyState, productState, topOrBottomState } from '../../../states/atom';
+import { useSaveProduct } from '../../../hooks/queries/useSaveProduct';
+import { currentViewState, isSelfWriteState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SplitedButton() {
-  const [, setProductState] = useRecoilState(productState);
-  const topOrBottom = useRecoilValue(topOrBottomState);
-  const [currentView, setCurrentView] = useRecoilState(currentViewState);
-  const [, setHistory] = useRecoilState(historyState);
+  const [, setCurrentView] = useRecoilState(currentViewState);
+  const [, setIsSelfWrite] = useRecoilState(isSelfWriteState);
+  const { onClickSaveProduct } = useSaveProduct();
 
-  const saveProduct = async () => {
-    await chrome.storage.local.get(['product']).then(({ product: { image, productName } }) => {
-      setProductState((prev) => ({ ...prev, image, productName }));
-    });
-
-    const tabs = await chrome.tabs.query({
-      active: true,
-      currentWindow: true,
-    });
-    const { url, favIconUrl } = tabs[0];
-    if (!url || !favIconUrl) return;
-
-    setProductState((prev) => ({
-      ...prev,
-      favIconUrl,
-      productUrl: url,
-      topOrBottom: topOrBottom === 'top' ? 0 : 1,
-    }));
-    setHistory(currentView);
-    setCurrentView('save');
+  const onClickSelfWriteButton = () => {
+    setIsSelfWrite(true);
+    setCurrentView('size-option');
   };
+
   return (
     <Styled.Root>
-      <Styled.SizeInputButton onClick={() => setCurrentView('size-write')}>사이즈 직접 입력하기</Styled.SizeInputButton>
+      <Styled.SizeInputButton onClick={onClickSelfWriteButton}>사이즈 직접 입력하기</Styled.SizeInputButton>
 
-      <Styled.SaveButton onClick={saveProduct}>저장</Styled.SaveButton>
+      <Styled.SaveButton onClick={onClickSaveProduct}>저장</Styled.SaveButton>
     </Styled.Root>
   );
 }
