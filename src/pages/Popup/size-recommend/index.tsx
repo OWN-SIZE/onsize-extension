@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Layout from '../../../components/common/Layout';
 import SaveButton from '../../../components/size-option/SaveButton';
+import { DOMAIN } from '../../../contants/domain';
 import { sizeRecommendState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
@@ -10,7 +11,7 @@ function SizeRecommend() {
   const recommendSize = useRecoilValue(sizeRecommendState);
 
   const navigate = () => {
-    chrome.windows.create({ url: 'https://ownsize.me/home' });
+    chrome.windows.create({ url: DOMAIN.HOME });
   };
 
   return (

@@ -74,12 +74,8 @@ if (table) {
   }
 }
 
-// 사이즈표가 존재하는 경우
 if (sizeTable.length) {
-  chrome.storage.local.set({ currentView: 'size-option' });
-  chrome.storage.local.set({
-    sizeTable,
-  });
+  chrome.storage.local.set({ sizeTable });
 } else {
-  chrome.storage.local.set({ currentView: 'cannotload' });
+  chrome.storage.local.remove('sizeTable');
 }

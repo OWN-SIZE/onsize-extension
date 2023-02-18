@@ -95,22 +95,9 @@ function SizeWrite() {
 
         postSelfWrite(inputData);
       }
-      changeViewSize('38rem', '38rem');
       sizeRecommended ? setCurrentView('size-recommend') : setCurrentView('nosize');
     },
   });
-
-  const changeViewSize = (width: string, height: string) => {
-    const root = document.getElementById('app-container');
-    if (root) {
-      root.style.width = width;
-      root.style.height = height;
-    }
-  };
-
-  useEffect(() => {
-    changeViewSize('63.2rem', '31.4rem');
-  }, []);
 
   return (
     <Layout title="지금 보고 있는 옷의 궁금한 사이즈를 입력해주세요" back close>

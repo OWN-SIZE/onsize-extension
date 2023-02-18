@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import theme from '../../styles/theme';
@@ -5,14 +6,19 @@ import theme from '../../styles/theme';
 interface OptionProps {
   src: string;
   caption: '상의' | '하의';
-  isActive: boolean;
   onClick: (selectedOption: 'top' | 'bottom') => void;
 }
 
 function OptionButton(props: OptionProps) {
-  const { src, caption, isActive, onClick } = props;
+  const { src, caption, onClick } = props;
+  const [isActive, setIsActive] = useState(false);
+
   return (
-    <Styled.Root isActive={isActive} onClick={() => onClick(caption === '상의' ? 'top' : 'bottom')}>
+    <Styled.Root
+      onMouseDown={() => setIsActive(true)}
+      isActive={isActive}
+      onClick={() => onClick(caption === '상의' ? 'top' : 'bottom')}
+    >
       <img src={src} alt={`${caption} 버튼이미지`} />
       <Styled.Caption>{caption}</Styled.Caption>
     </Styled.Root>

@@ -42,9 +42,9 @@ export const mySizeState = atom<SizeType>({
   },
 });
 
-export const topOrBottomState = atom<TopOrBottom | null>({
+export const topOrBottomState = atom<TopOrBottom>({
   key: 'topOrBottom',
-  default: null,
+  default: 'null',
 });
 
 export const productState = atom<ProductType>({
