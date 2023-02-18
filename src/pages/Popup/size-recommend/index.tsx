@@ -3,18 +3,23 @@ import styled from 'styled-components';
 
 import Layout from '../../../components/common/Layout';
 import SaveButton from '../../../components/size-option/SaveButton';
+import { DOMAIN } from '../../../contants/domain';
 import { sizeRecommendState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SizeRecommend() {
   const recommendSize = useRecoilValue(sizeRecommendState);
 
+  const navigate = () => {
+    chrome.windows.create({ url: DOMAIN.HOME });
+  };
+
   return (
     <Layout close>
       <Styled.Root>
         <Styled.Title>나와 가장 잘 맞는 사이즈는</Styled.Title>
         <Styled.Size>{recommendSize}</Styled.Size>
-        <Styled.Link onClick={() => window.open('https://ownsize.me/home')}>나의 옷장으로 이동</Styled.Link>
+        <Styled.Link onClick={navigate}>나의 옷장으로 이동</Styled.Link>
       </Styled.Root>
 
       <SaveButton />

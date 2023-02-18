@@ -16,12 +16,15 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.musinsa.com/*"],
+      "matches": [
+        "https://www.musinsa.com/*/goods/*",
+        "https://www.mrporter.com/*/product/*",
+        "https://www.ssense.com/*/product/*",
+        "https://www.okmall.com/products/*",
+        "https://product.29cm.co.kr/*",
+        "https://www.wconcept.co.kr/Product/*"
+      ],
       "js": ["script/sizeTableContent.js", "script/productContent.js"]
-    },
-    {
-      "matches": ["https://ownsize.me/*"],
-      "js": ["script/getUserData.js"]
     },
     {
       "matches": ["https://ownsize.me/*"],
@@ -29,7 +32,14 @@
     }
   ],
   "externally_connectable": {
-    "matches": ["https://www.musinsa.com/*"]
+    "matches": [
+      "https://www.musinsa.com/*/goods/*",
+      "https://www.mrporter.com/*/product/*",
+      "https://www.ssense.com/*/product/*",
+      "https://www.okmall.com/products/*",
+      "https://product.29cm.co.kr/*",
+      "https://www.wconcept.co.kr/Product/*"
+    ]
   },
   "web_accessible_resources": [
     {
@@ -37,6 +47,13 @@
       "matches": []
     }
   ],
-  "host_permissions": ["https://www.musinsa.com/*"],
-  "permissions": ["activeTab", "storage"]
+  "host_permissions": [
+    "https://www.musinsa.com/*/goods/*",
+    "https://www.mrporter.com/*/product/*",
+    "https://www.ssense.com/*/product/*",
+    "https://www.okmall.com/products/*",
+    "https://product.29cm.co.kr/*",
+    "https://www.wconcept.co.kr/Product/*"
+  ],
+  "permissions": ["activeTab", "storage", "scripting", "tabs"]
 }

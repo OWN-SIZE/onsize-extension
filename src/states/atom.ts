@@ -42,9 +42,9 @@ export const mySizeState = atom<SizeType>({
   },
 });
 
-export const topOrBottomState = atom<TopOrBottom | null>({
+export const topOrBottomState = atom<TopOrBottom>({
   key: 'topOrBottom',
-  default: null,
+  default: 'null',
 });
 
 export const productState = atom<ProductType>({
@@ -52,7 +52,7 @@ export const productState = atom<ProductType>({
   default: {
     productUrl: '',
     image: '',
-    mallName: '무신사(MUSINSA)',
+    mallName: '',
     productName: '',
     isRecommend: true,
     topOrBottom: 0,

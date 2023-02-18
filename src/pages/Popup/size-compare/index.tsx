@@ -11,7 +11,8 @@ import { SizeType } from '../../../components/size-compare';
 import Compare from '../../../components/size-compare/Compare';
 import SelfWriteCompare from '../../../components/size-compare/SelfWriteCompare';
 import Tabs from '../../../components/size-compare/Tabs';
-import { LINK, MESSAGE } from '../../../contants/main';
+import { DOMAIN } from '../../../contants/domain';
+import { LINK, MESSAGE } from '../../../contants/text';
 import useTabs from '../../../hooks/ui/useTabs';
 import { isSelfWriteState, mySizeState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
@@ -23,7 +24,7 @@ function SizeCompare() {
   const topOrBottom = useRecoilValue(topOrBottomState);
 
   const { top, bottom } = mySize;
-  const { currentTab, handleTab } = useTabs();
+  const { currentTab = 'top', handleTab } = useTabs();
 
   // 마이사이즈 조회
   const getMySize = async () => {
@@ -95,7 +96,7 @@ function SizeCompare() {
   const getLink = (
     <Styled.Link
       onClick={() => {
-        window.open('https://ownsize.me');
+        window.open(DOMAIN.LOGIN);
       }}
     >
       {LINK.BUTTON}

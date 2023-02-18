@@ -5,7 +5,7 @@ import icAlert from '../../../assets/icons/alert.svg';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import SplitedButton from '../../../components/common/SplitedButton';
-import { LINK, MESSAGE } from '../../../contants/main';
+import { LINK, MESSAGE } from '../../../contants/text';
 import { currentViewState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 

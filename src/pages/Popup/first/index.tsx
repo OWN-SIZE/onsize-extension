@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import icCharacter from '../../../assets/img/character.svg';
 import Layout from '../../../components/common/Layout';
+import { DOMAIN } from '../../../contants/domain';
 import { currentViewState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
@@ -22,13 +23,7 @@ function First() {
       <Styled.Root>
         <Styled.Image src={icCharacter} alt="캐릭터 이미지" />
         <Styled.Message>환영합니다!</Styled.Message>
-        <Styled.Button
-          onClick={() => {
-            window.open('https://ownsize.me', '_blank')?.focus();
-          }}
-        >
-          사이즈 추천받으러 가기
-        </Styled.Button>
+        <Styled.Button onClick={() => window.open(DOMAIN.LOGIN)}>사이즈 추천받으러 가기</Styled.Button>
       </Styled.Root>
     </Layout>
   );

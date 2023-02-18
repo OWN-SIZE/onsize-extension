@@ -1,8 +1,9 @@
 import { PropsWithChildren, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
-import { userDataState } from '../states/atom';
+import { DOMAIN } from '../contants/domain';
+import { currentViewState, userDataState } from '../states/atom';
 
 export const BASE_URL = process.env.REACT_APP_SERVER ?? '';
 
@@ -26,16 +27,16 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 }
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
-  const token = localStorage.getItem('token') || null;
+  const [, setUserData] = useRecoilState(userDataState);
+  const [, setCurrentView] = useRecoilState(currentViewState);
+  const token = localStorage.getItem('token') || '';
 
   const requestIntercept = client.interceptors.request.use(
     (config: AxiosRequestConfig) => {
       if (config.headers && !config.headers['Authorization']) {
         config.headers['Authorization'] = `${token}`;
-
         return config;
       }
-
       return config;
     },
     (error) => Promise.reject(error),
@@ -45,14 +46,17 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
     (config) => config,
     async (error) => {
       const config = error.config;
-
+      if (error.response.status === 400) {
+        setCurrentView('cannotload');
+      }
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
           const result = confirm('로그인 후 이용해 주세요');
-          result ? window.open('https://ownsize.me') : window.close();
+          setUserData((prev) => ({ ...prev, userId: 0, token: '' }));
+          result ? window.open(DOMAIN.LOGIN) : window.close();
         } else {
-          /** TODO : refresh token */
-          return client(config);
+          const result = confirm('세션이 만료되었습니다. 다시 로그인 해주세요.');
+          result ? window.open(DOMAIN.LOGIN) : window.close();
         }
       }
 
@@ -65,7 +69,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       client.interceptors.request.eject(requestIntercept);
       client.interceptors.response.eject(responseIntercept);
     };
-  }, []);
+  }, [requestIntercept, responseIntercept]);
 
   return <>{children}</>;
 }
