@@ -7,23 +7,48 @@ const matchList = [
   'https://www.wconcept.co.kr',
 ];
 
-function listener() {
+const reloadUserData = (tabId: number) => {
+  chrome.scripting.executeScript({ target: { tabId }, files: ['/script/getUserData.js'] });
+};
+
+const reloadProductData = (tabId: number) => {
+  chrome.scripting.executeScript({ target: { tabId }, files: ['/script/productContent.js'] });
+};
+
+const reloadSizeTable = (tabId: number) => {
+  chrome.scripting.executeScript({ target: { tabId }, files: ['/script/sizeTableContent.js'] });
+};
+
+const refreshExtension = () => {
+  chrome.tabs.onActivated.addListener((activeInfo) => {
+    const { tabId } = activeInfo;
+    chrome.tabs.query({ active: true }, (tab) => {
+      const url = tab[0].url;
+      if (!url) return;
+      if (url.includes('ownsize.me')) {
+        reloadUserData(tabId);
+      }
+
+      if (matchList.some((v) => url.includes(v))) {
+        reloadProductData(tabId);
+        reloadSizeTable(tabId);
+      }
+    });
+  });
   chrome.tabs.onUpdated.addListener((tabs) => {
     chrome.tabs.query({ active: true }, (tab) => {
       const url = tab[0].url;
       if (!url) return;
       if (url.includes('ownsize.me')) {
-        chrome.scripting.executeScript({ target: { tabId: tabs }, files: ['/script/getUserData.js'] });
-        console.log('getUserData script reload');
+        reloadUserData(tabs);
       }
 
       if (matchList.some((v) => url.includes(v))) {
-        chrome.scripting.executeScript({ target: { tabId: tabs }, files: ['/script/productContent.js'] }).then(() => {
-          console.log('productContent script reload');
-        });
+        reloadProductData(tabs);
+        reloadSizeTable(tabs);
       }
     });
   });
-}
-listener();
-chrome.tabs.onUpdated.removeListener(listener);
+};
+refreshExtension();
+chrome.tabs.onUpdated.removeListener(refreshExtension);
