@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { TopOrBottom } from '../../states';
 import { ValuesType } from '../../types/useForm';
 
 interface FormProps {
@@ -10,6 +11,7 @@ interface FormProps {
 function useForm({ initialValues, onSubmit }: FormProps) {
   const [values, setValues] = useState<ValuesType>(initialValues);
   const [addedValues, setAddedValues] = useState<ValuesType>(initialValues);
+  const [isAddRow, setIsAddRow] = useState<TopOrBottom | null>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -37,8 +39,16 @@ function useForm({ initialValues, onSubmit }: FormProps) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    // 완료시 처리할 코드
-    onSubmit(values);
+
+    Object.values(values).filter((value) => value.length === 0).length > 0
+      ? alert('모두 입력해주세요')
+      : // 완료시 처리할 코드
+        onSubmit(values);
+
+    Object.values(addedValues).filter((value) => value.length === 0).length > 0
+      ? alert('모두 입력해주세요')
+      : // 완료시 처리할 코드
+        onSubmit(values);
   };
 
   return {
@@ -49,6 +59,8 @@ function useForm({ initialValues, onSubmit }: FormProps) {
     handleChangeAdded,
     handleBlurAdded,
     handleSubmit,
+    isAddRow,
+    setIsAddRow,
   };
 }
 

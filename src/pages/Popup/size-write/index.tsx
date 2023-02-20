@@ -38,12 +38,21 @@ const BottomInitValues: BottomValuesType = { size: '', bottomLength: '', waist: 
 function SizeWrite() {
   const topOrBottom = useRecoilValue(topOrBottomState);
   const [measure, setMeasure] = useState('단면');
-  const [isAddRow, setIsAddRow] = useState<TopOrBottom | null>(null);
   const [, setCurrentView] = useRecoilState(currentViewState);
   const sizeRecommended = useRecoilValue(sizeRecommendState);
   const [, setProductSize] = useRecoilState(productSelfWriteState);
 
-  const { values, handleChange, handleBlur, addedValues, handleChangeAdded, handleBlurAdded, handleSubmit } = useForm({
+  const {
+    values,
+    handleChange,
+    handleBlur,
+    addedValues,
+    handleChangeAdded,
+    handleBlurAdded,
+    handleSubmit,
+    isAddRow,
+    setIsAddRow,
+  } = useForm({
     initialValues: topOrBottom === 'top' ? TopInitValues : BottomInitValues,
     onSubmit: (values) => {
       const inputData: InputSizeInput = {
