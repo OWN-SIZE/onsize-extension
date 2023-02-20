@@ -40,15 +40,17 @@ function useForm({ initialValues, onSubmit }: FormProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    Object.values(values).filter((value) => value.length === 0).length > 0
-      ? alert('모두 입력해주세요')
-      : // 완료시 처리할 코드
-        onSubmit(values);
-
-    Object.values(addedValues).filter((value) => value.length === 0).length > 0
-      ? alert('모두 입력해주세요')
-      : // 완료시 처리할 코드
-        onSubmit(values);
+    if (isAddRow) {
+      Object.values(addedValues).filter((value) => value.length === 0).length > 0
+        ? alert('모두 입력해주세요')
+        : // 완료시 처리할 코드
+          onSubmit(values);
+    } else {
+      Object.values(values).filter((value) => value.length === 0).length > 0
+        ? alert('모두 입력해주세요')
+        : // 완료시 처리할 코드
+          onSubmit(values);
+    }
   };
 
   return {
