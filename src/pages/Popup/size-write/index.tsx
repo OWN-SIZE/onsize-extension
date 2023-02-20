@@ -10,7 +10,7 @@ import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 import useForm from '../../../hooks/business/useForm';
 import { TopOrBottom } from '../../../states';
-import { currentViewState, sizeRecommendState, topOrBottomState } from '../../../states/atom';
+import { currentViewState, productSelfWriteState, sizeRecommendState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { InputSizeInput } from '../../../types/inputSize';
 import { BottomValuesType, TopValuesType } from '../../../types/useForm';
@@ -41,6 +41,7 @@ function SizeWrite() {
   const [isAddRow, setIsAddRow] = useState<TopOrBottom | null>(null);
   const [, setCurrentView] = useRecoilState(currentViewState);
   const sizeRecommended = useRecoilValue(sizeRecommendState);
+  const [, setProductSize] = useRecoilState(productSelfWriteState);
 
   const { values, handleChange, handleBlur, addedValues, handleChangeAdded, handleBlurAdded, handleSubmit } = useForm({
     initialValues: topOrBottom === 'top' ? TopInitValues : BottomInitValues,
@@ -79,6 +80,7 @@ function SizeWrite() {
         }
       });
 
+      setProductSize(inputData);
       postSelfWrite(inputData);
 
       // 두번째 사이즈 칼럼이 존재하는 경우
@@ -93,10 +95,11 @@ function SizeWrite() {
           }
         });
 
+        setProductSize(inputData);
         postSelfWrite(inputData);
       }
 
-      sizeRecommended ? setCurrentView('size-recommend') : setCurrentView('compare');
+      sizeRecommended ? setCurrentView('size-recommend') : setCurrentView('nosize');
     },
   });
 

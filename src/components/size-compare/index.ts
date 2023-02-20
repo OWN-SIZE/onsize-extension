@@ -1,5 +1,7 @@
 export type TabName = 'top' | 'bottom';
 
+export type SizePropType = Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
+
 export interface TopType {
   topLength: number;
   shoulder: number;
