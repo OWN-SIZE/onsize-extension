@@ -1,10 +1,9 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { useRedirect } from '../../hooks/queries/useRedirect';
 import { CurrentViewType } from '../../states';
 import { currentViewState } from '../../states/atom';
-import GlobalStyle from '../../styles/global';
 
 import CannotLoadSize from './cannotloadsize';
 import First from './first';
@@ -23,9 +22,16 @@ function Popup() {
   const checkCurrentView = async () => {
     const { sizeTable } = await chrome.storage.local.get(['sizeTable']);
 
-    sizeTable
-      ? setCurrentView((localStorage.getItem('currentView') as CurrentViewType) || 'size-option')
-      : setCurrentView('cannotload');
+    if (sizeTable) {
+      const storedCurrentView = localStorage.getItem('currentView') as CurrentViewType;
+      if (storedCurrentView === 'cannotload') {
+        setCurrentView('size-option');
+      } else {
+        setCurrentView(storedCurrentView || 'size-option');
+      }
+    } else {
+      setCurrentView('cannotload');
+    }
   };
 
   useEffect(() => {
