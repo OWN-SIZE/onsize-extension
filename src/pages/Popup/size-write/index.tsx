@@ -9,10 +9,12 @@ import FormHeader from '../../../components/sizewrite/FormHeader';
 import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 import useForm from '../../../hooks/business/useForm';
-import { TopOrBottom } from '../../../states';
+import { useSizeCompare } from '../../../hooks/queries/useSizeCompare';
+import { useSizeRecommend } from '../../../hooks/queries/useSizeRecommend';
 import { currentViewState, productSelfWriteState, sizeRecommendState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { InputSizeInput } from '../../../types/inputSize';
+import { PostSizeTableInput, SizeTableType } from '../../../types/remote';
 import { BottomValuesType, TopValuesType } from '../../../types/useForm';
 
 const TopInputList = [
@@ -41,6 +43,8 @@ function SizeWrite() {
   const [, setCurrentView] = useRecoilState(currentViewState);
   const sizeRecommended = useRecoilValue(sizeRecommendState);
   const [, setProductSize] = useRecoilState(productSelfWriteState);
+  const { onClickOption: handleSizeRecommend } = useSizeCompare();
+  const userId = JSON.parse(localStorage.getItem('userId') ?? '-99');
 
   const {
     values,
@@ -54,8 +58,8 @@ function SizeWrite() {
     setIsAddRow,
   } = useForm({
     initialValues: topOrBottom === 'top' ? TopInitValues : BottomInitValues,
-    onSubmit: (values) => {
-      const inputData: InputSizeInput = {
+    onSubmit: async (values) => {
+      const inputData: SizeTableType = {
         size: '',
         topLength: null,
         shoulder: null,
@@ -67,13 +71,22 @@ function SizeWrite() {
         rise: null,
         hem: null,
         isWidthOfBottom: true,
-        isManual: true,
-        manualInputNum: 0,
+        //isManual: true,
+        //manualInputNum: 0,
         topOrBottom: 0,
+        userId: userId,
+        topItemId: 0,
+        bottomItemId: 0,
       };
+      const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+      const url = tabs[0].url;
+      const productId = parseInt(url?.split('/').pop() ?? '-99');
 
       if (topOrBottom === 'bottom') {
         inputData.topOrBottom = 1;
+        inputData.bottomItemId = productId;
+      } else if (topOrBottom === 'top') {
+        inputData.topItemId = productId;
       }
 
       if (measure === '둘레') {
@@ -85,27 +98,59 @@ function SizeWrite() {
         if (inputKey === 'size') {
           inputData.size = inputValue;
         } else {
-          inputData[inputKey] = parseFloat(inputValue);
+          // inputData[inputKey] = parseFloat(inputValue);
         }
       });
 
-      setProductSize(inputData);
-      postSelfWrite(inputData);
+      //setProductSize(inputData);
+      //postSelfWrite(inputData);
 
       // 두번째 사이즈 칼럼이 존재하는 경우
       if (isAddRow) {
-        inputData.manualInputNum = 1;
+        const addedInput: SizeTableType = {
+          size: '',
+          topLength: null,
+          shoulder: null,
+          chest: null,
+          isWidthOfTop: true,
+          bottomLength: null,
+          waist: null,
+          thigh: null,
+          rise: null,
+          hem: null,
+          isWidthOfBottom: true,
+          //isManual: true,
+          //manualInputNum: 0,
+          topOrBottom: 0,
+          userId: userId,
+          topItemId: 0,
+          bottomItemId: 0,
+        };
+
+        if (topOrBottom === 'bottom') {
+          inputData.topOrBottom = 1;
+          inputData.bottomItemId = productId;
+        } else if (topOrBottom === 'top') {
+          inputData.topItemId = productId;
+        }
+
+        if (measure === '둘레') {
+          inputData.isWidthOfTop = false;
+          inputData.isWidthOfBottom = false;
+        }
 
         Object.entries(addedValues).map(([inputKey, inputValue]) => {
           if (inputKey === 'size') {
-            inputData.size = inputValue;
+            addedInput.size = inputValue;
           } else {
             // inputData[inputKey] = parseFloat(inputValue);
           }
         });
+        const sizes: PostSizeTableInput = { sizes: [inputData, addedInput] };
 
-        setProductSize(inputData);
-        postSelfWrite(inputData);
+        //setProductSize(inputData);
+        //postSelfWrite(inputData);
+        handleSizeRecommend(sizes);
       }
 
       sizeRecommended ? setCurrentView('size-recommend') : setCurrentView('nosize');

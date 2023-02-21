@@ -11,8 +11,8 @@ export interface InputSizeInput {
   rise: number | null;
   hem: number | null;
   isWidthOfBottom: boolean;
-  isManual: boolean;
-  manualInputNum: 0 | 1 | null;
+  //isManual: boolean;
+  //manualInputNum: 0 | 1 | null;
   topOrBottom: 0 | 1;
 }
 

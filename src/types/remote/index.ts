@@ -54,8 +54,8 @@ export interface SaveResultOutput {
 
 export interface SizeTableType {
   size: string;
-  isManual: boolean; // 수동입력한 사이즈: true / 크롤링사이즈면 : false
-  manualInputNum: number | null; // 첫번째컬럼: 0, 두번째컬럼: 1 (수동입력 사이즈 아닐 경우에는 null값)
+  //isManual: boolean; // 수동입력한 사이즈: true / 크롤링사이즈면 : false
+  //manualInputNum: number | null; // 첫번째컬럼: 0, 두번째컬럼: 1 (수동입력 사이즈 아닐 경우에는 null값)
   topOrBottom: number;
 
   userId: number | null;
