@@ -21,6 +21,6 @@ export interface TopBottomType {
 }
 
 export interface SizeType {
-  top: TopType | null;
-  bottom: BottomType | null;
+  top: TopType;
+  bottom: BottomType;
 }

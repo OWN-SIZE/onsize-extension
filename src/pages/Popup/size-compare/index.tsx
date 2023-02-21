@@ -22,23 +22,29 @@ function SizeCompare() {
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const isSelfWrite = useRecoilValue(isSelfWriteState);
   const topOrBottom = useRecoilValue(topOrBottomState);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { top, bottom } = mySize;
   const { currentTab = 'top', handleTab } = useTabs();
 
   // 마이사이즈 조회
   const getMySize = async () => {
     const { top, bottom } = await fetchMySize();
-    console.log(top, bottom);
 
     localStorage.setItem('topSize', JSON.stringify(top));
     localStorage.setItem('bottomSize', JSON.stringify(bottom));
     setMySize({ top, bottom });
   };
 
+  const isEmptyData = (data: object) => {
+    return Object.entries(data).every(([key, value]) => value === null);
+  };
+
   // 내 사이즈 조회
   useEffect(() => {
-    (async () => await getMySize())();
+    (async () => {
+      await getMySize();
+      setIsLoading(false);
+    })();
   }, []);
 
   useEffect(() => {
@@ -76,34 +82,32 @@ function SizeCompare() {
     hem: productSize.bottom?.hem,
   };
 
-  const myTop = top
-    ? {
-        topLength: top.topLength,
-        shoulder: top.shoulder,
-        chest: top.chest,
-      }
-    : null;
-
-  const myBottom = bottom
-    ? {
-        bottomLength: bottom.bottomLength,
-        waist: bottom.waist,
-        thigh: bottom.thigh,
-        rise: bottom.rise,
-        hem: bottom.hem,
-      }
-    : null;
-
   const getLink = (
     <Styled.Link
       onClick={() => {
-        window.open(DOMAIN.LOGIN);
+        window.open(DOMAIN.MYSIZE);
       }}
     >
       {LINK.BUTTON}
     </Styled.Link>
   );
-  const noSize = !myTop && !myBottom;
+  if (isLoading) return;
+  const { top, bottom } = mySize;
+  const noSize = isEmptyData(top) && isEmptyData(bottom);
+
+  const myTop = {
+    topLength: top.topLength,
+    shoulder: top.shoulder,
+    chest: top.chest,
+  };
+
+  const myBottom = {
+    bottomLength: bottom.bottomLength,
+    waist: bottom.waist,
+    thigh: bottom.thigh,
+    rise: bottom.rise,
+    hem: bottom.hem,
+  };
 
   return isSelfWrite ? (
     <Layout title="내 사이즈와 이렇게 달라요" close>
@@ -114,7 +118,7 @@ function SizeCompare() {
       {!noSize && <Tabs currentTab={currentTab} handler={handleTab} />}
 
       {currentTab === 'top' ? (
-        !myTop ? (
+        isEmptyData(top) ? (
           <>
             <Main
               image={<Styled.Image src={icAlert} />}
@@ -127,7 +131,7 @@ function SizeCompare() {
         ) : (
           <Compare sizes={myTop} currentTab={currentTab} />
         )
-      ) : !myBottom ? (
+      ) : isEmptyData(bottom) ? (
         <>
           <Main
             image={<Styled.Image src={icAlert} />}
