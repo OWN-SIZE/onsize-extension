@@ -51,8 +51,6 @@ export const useSizeRecommend = () => {
     sizeTable.forEach((table) => {
       const { size, topLength, shoulder, chest, bottomLength, hem, rise, thigh, waist } = table;
       const data: SizeTableType = {
-        isManual: false,
-        manualInputNum: null,
         topOrBottom: option === 'top' ? 0 : 1,
         userId: Number(localStorage.getItem('userId')) || null,
         size: size,

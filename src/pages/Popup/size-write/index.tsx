@@ -57,8 +57,6 @@ function SizeWrite() {
         rise: null,
         hem: null,
         isWidthOfBottom: true,
-        isManual: true,
-        manualInputNum: 0,
         topOrBottom: 0,
       };
 
