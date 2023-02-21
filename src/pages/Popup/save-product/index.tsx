@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
+import skeleton from '../../../assets/img/skeleton.svg';
 import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import SizeRecommendButton from '../../../components/save-product/SizeRecommendButton';
@@ -11,16 +13,27 @@ import theme from '../../../styles/theme';
 
 function SaveProduct() {
   const sizeRecommend = useRecoilValue(sizeRecommendState);
+  const { image } = useRecoilValue(productState);
+  const storageImage = localStorage.getItem('productImage');
+  const [isLoading, setIsLoading] = useState(true);
 
   const getLink = <Styled.Link onClick={() => window.open(DOMAIN.HOME)}>{LINK.SAVE}</Styled.Link>;
-  const { image } = useRecoilValue(productState);
-  const storageItem = localStorage.getItem('productImage');
 
   const noRecommendedSize = !sizeRecommend || sizeRecommend === 'nosize';
   return (
     <Layout close>
       <Main
-        image={<Styled.Image src={storageItem || image} />}
+        image={
+          <Styled.Image
+            width="110"
+            height="110"
+            src={isLoading ? skeleton : storageImage || image}
+            alt="저장한 상품"
+            loading="lazy"
+            data-src={isLoading ? skeleton : storageImage || image}
+            onLoad={() => setIsLoading(false)}
+          />
+        }
         content={MESSAGE.SAVE_MY_CLOSET}
         link={getLink}
         noPadding
