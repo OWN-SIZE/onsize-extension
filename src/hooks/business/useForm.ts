@@ -43,6 +43,8 @@ function useForm({ initialValues, onSubmit }: FormProps) {
     if (isAddRow) {
       Object.values(addedValues).filter((value) => value.length === 0).length > 0
         ? alert('모두 입력해주세요')
+        : Object.values(values).filter((value) => value.length === 0).length > 0
+        ? alert('모두 입력해주세요')
         : // 완료시 처리할 코드
           onSubmit(values);
     } else {
