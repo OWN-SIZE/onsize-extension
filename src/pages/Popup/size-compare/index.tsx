@@ -29,6 +29,7 @@ function SizeCompare() {
   // 마이사이즈 조회
   const getMySize = async () => {
     const { top, bottom } = await fetchMySize();
+    console.log(top, bottom);
 
     localStorage.setItem('topSize', JSON.stringify(top));
     localStorage.setItem('bottomSize', JSON.stringify(bottom));

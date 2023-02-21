@@ -33,13 +33,15 @@ if (table) {
   const tbody = table.querySelector('tbody');
   if (tbody) {
     const sizes = [...tbody.querySelectorAll('tr')].filter((size) => !size.classList.length && !size.id);
+    const ignore = new Set();
+    const keyOrder: string[] = [];
 
     // 사이즈 저장
     [...sizes].forEach((size) => {
       const infoType: InfoType = {};
 
       // 실측 측정방식 객체로 저장
-      [...columns].forEach((column) => {
+      [...columns].forEach((column, idx) => {
         // 한글 key값 영어로 변환
         let innerText = column.innerText as keyof typeof textMapper;
         if (innerText.includes('단면')) {
@@ -50,14 +52,21 @@ if (table) {
         }
 
         const key = textMapper[innerText];
-        if (!key) return;
+        if (!key) {
+          ignore.add(idx);
+          return;
+        }
         infoType[key] = 0;
+        keyOrder.push(key);
       });
 
       const values = [...size.children].filter((element) => element.nodeName === 'TD') as HTMLElement[];
 
-      Object.keys(infoType).forEach((key, index) => {
-        if (values[index]) infoType[key] = Number(values[index].innerText);
+      let i = 0;
+      values.forEach((value, index) => {
+        if (value && !ignore.has(index)) {
+          infoType[keyOrder[i++]] = Number(values[index].innerText);
+        }
       });
 
       const th = size.children[0] as HTMLElement;
@@ -70,6 +79,7 @@ if (table) {
       infoType['size'] = MY;
 
       sizeTable = [...sizeTable, infoType];
+      console.log(infoType);
     });
   }
 }
