@@ -35,7 +35,15 @@ const refreshExtension = () => {
       }
     });
   });
-  chrome.tabs.onUpdated.addListener((tabs) => {
+  chrome.tabs.onUpdated.addListener((tabs, changeInfo) => {
+    const { status } = changeInfo;
+    if (status === 'loading') {
+      chrome.action.setPopup({ popup: '' });
+    }
+    if (status === 'complete') {
+      chrome.action.setPopup({ popup: 'popup.html' });
+    }
+
     chrome.tabs.query({ active: true }, (tab) => {
       const url = tab[0].url;
       if (!url) return;
