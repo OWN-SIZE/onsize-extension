@@ -1,19 +1,19 @@
 // 수동입력된 두 사이즈간 비교
 import { useRecoilState } from 'recoil';
 
-import { postSizeTable } from '../../apis/api';
+import { postSizeTable, saveResult } from '../../apis/api';
 import { TopOrBottom } from '../../states';
-import { currentViewState, productState, topOrBottomState } from '../../states/atom';
-import { PostSizeTableInput } from '../../types/remote';
+import { currentViewState, productState, sizeRecommendState, topOrBottomState } from '../../states/atom';
+import { PostSizeTableInput, SaveResultInput } from '../../types/remote';
 
 export const useSizeCompare = () => {
   const [, setCurrentView] = useRecoilState(currentViewState);
+  const [, setSizeRecommend] = useRecoilState(sizeRecommendState);
   const [, setProductData] = useRecoilState(productState);
   const [topOrBottom, setTopOrBottom] = useRecoilState(topOrBottomState);
 
   const sizeCrawling = async (body: PostSizeTableInput) => {
-    const result = await postSizeTable(body);
-    return result;
+    await postSizeTable(body);
   };
 
   const renderNextView = () => {
@@ -23,39 +23,43 @@ export const useSizeCompare = () => {
     }, 2000);
   };
 
-  const checkOption = (option: TopOrBottom) => {
-    if (!option) return;
+  const getSizeRecommendResult = async (id: number | null, urlString: string) => {
+    const { productId, url } = { productId: id, url: urlString } || { productId: 0, url: '' };
 
-    if (option === 'null') {
-      setCurrentView('size-option');
-      return;
-    }
-    //setSelectedOption(option);
-    setTopOrBottom(option);
+    const body: SaveResultInput = {
+      topOrBottom: topOrBottom === 'top' ? 0 : 1,
+      url,
+      topItemId: topOrBottom === 'top' ? productId : null,
+      bottomItemId: topOrBottom === 'bottom' ? productId : null,
+      userId: Number(localStorage.getItem('userId')) || null,
+    };
+
+    const {
+      data: { recommendSize },
+    } = await saveResult(body);
+    setSizeRecommend(recommendSize);
+    localStorage.setItem('recommend-size', recommendSize || '');
   };
 
-  const executeSizeRecommmend = async (option: TopOrBottom) => {
+  const executeSizeRecommmend = async (body: PostSizeTableInput, url: string) => {
     setCurrentView('loading');
 
-    // await sizeCrawling(option);
-    //await getSizeRecommendResult(option);
+    await sizeCrawling(body);
+    await getSizeRecommendResult(topOrBottom === 'top' ? body.sizes[0].topItemId : body.sizes[0].bottomItemId, url);
 
     setTimeout(async () => {
       renderNextView();
     }, 100);
   };
 
-  const onClickOption = async (body: PostSizeTableInput) => {
+  const onClickOption = async (body: PostSizeTableInput, url: string) => {
     //checkOption(option);
 
     // if (isSelfWrite) {
     //   setCurrentView('size-write');
     //   return;
     // }
-    //executeSizeRecommmend(option);
-    const response = await sizeCrawling(body);
-
-    console.log(response);
+    executeSizeRecommmend(body, url);
   };
 
   return { onClickOption };

@@ -59,6 +59,7 @@ function SizeWrite() {
   } = useForm({
     initialValues: topOrBottom === 'top' ? TopInitValues : BottomInitValues,
     onSubmit: async (values) => {
+      const sizes: SizeTableType[] = [];
       const inputData: SizeTableType = {
         size: '',
         topLength: null,
@@ -98,7 +99,7 @@ function SizeWrite() {
         if (inputKey === 'size') {
           inputData.size = inputValue;
         } else {
-          // inputData[inputKey] = parseFloat(inputValue);
+          inputData[inputKey] = parseFloat(inputValue);
         }
       });
 
@@ -128,29 +129,33 @@ function SizeWrite() {
         };
 
         if (topOrBottom === 'bottom') {
-          inputData.topOrBottom = 1;
-          inputData.bottomItemId = productId;
+          addedInput.topOrBottom = 1;
+          addedInput.bottomItemId = productId;
         } else if (topOrBottom === 'top') {
-          inputData.topItemId = productId;
+          addedInput.topItemId = productId;
         }
 
         if (measure === '둘레') {
-          inputData.isWidthOfTop = false;
-          inputData.isWidthOfBottom = false;
+          addedInput.isWidthOfTop = false;
+          addedInput.isWidthOfBottom = false;
         }
 
         Object.entries(addedValues).map(([inputKey, inputValue]) => {
           if (inputKey === 'size') {
             addedInput.size = inputValue;
           } else {
-            // inputData[inputKey] = parseFloat(inputValue);
+            addedInput[inputKey] = parseFloat(inputValue);
           }
         });
-        const sizes: PostSizeTableInput = { sizes: [inputData, addedInput] };
 
+        sizes.push(inputData);
+        sizes.push(addedInput);
+        const body = {
+          sizes: sizes,
+        };
         //setProductSize(inputData);
         //postSelfWrite(inputData);
-        handleSizeRecommend(sizes);
+        handleSizeRecommend(body, url ?? '');
       }
 
       sizeRecommended ? setCurrentView('size-recommend') : setCurrentView('nosize');
