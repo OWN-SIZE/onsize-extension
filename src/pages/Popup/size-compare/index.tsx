@@ -91,7 +91,7 @@ function SizeCompare() {
       {LINK.BUTTON}
     </Styled.Link>
   );
-  if (isLoading) return;
+  if (isLoading) return <></>;
   const { top, bottom } = mySize;
   const noSize = isEmptyData(top) && isEmptyData(bottom);
 

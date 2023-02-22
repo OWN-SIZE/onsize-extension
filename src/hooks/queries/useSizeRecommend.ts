@@ -96,10 +96,8 @@ export const useSizeRecommend = () => {
   };
 
   const renderNextView = () => {
-    setTimeout(() => {
-      const size = localStorage.getItem('recommend-size') || null;
-      size ? setCurrentView('size-recommend') : setCurrentView('nosize');
-    }, 2000);
+    const size = localStorage.getItem('recommend-size') || null;
+    size ? setCurrentView('size-recommend') : setCurrentView('nosize');
   };
 
   const sizeCrawling = async (option: TopOrBottom) => {
@@ -125,10 +123,7 @@ export const useSizeRecommend = () => {
 
     await sizeCrawling(option);
     await getSizeRecommendResult(option);
-
-    setTimeout(async () => {
-      renderNextView();
-    }, 100);
+    renderNextView();
   };
 
   const onClickOption = (option: TopOrBottom) => {
