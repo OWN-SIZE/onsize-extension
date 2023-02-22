@@ -157,8 +157,6 @@ function SizeWrite() {
         //postSelfWrite(inputData);
         handleSizeRecommend(body, url ?? '');
       }
-
-      sizeRecommended ? setCurrentView('size-recommend') : setCurrentView('nosize');
     },
   });
 
