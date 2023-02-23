@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
 import { SizeType } from '../components/size-compare';
-import { InputSizeInput } from '../types/inputSize';
+import { SizeTableType } from '../types/remote';
 
 import { CurrentViewType, ProductType, TopOrBottom, UserDataType } from '.';
 
@@ -43,7 +43,7 @@ export const mySizeState = atom<SizeType>({
   },
 });
 
-export const productSelfWriteState = atom<InputSizeInput>({
+export const productSelfWriteState = atom<SizeTableType>({
   key: 'productSelfWriteSize',
   default: {
     size: '',
@@ -57,9 +57,10 @@ export const productSelfWriteState = atom<InputSizeInput>({
     rise: null,
     hem: null,
     isWidthOfBottom: true,
-    isManual: true,
-    manualInputNum: 0,
     topOrBottom: 0,
+    userId: -99,
+    topItemId: 0,
+    bottomItemId: 0,
   },
 });
 

@@ -72,8 +72,6 @@ function SizeWrite() {
         rise: null,
         hem: null,
         isWidthOfBottom: true,
-        //isManual: true,
-        //manualInputNum: 0,
         topOrBottom: 0,
         userId: userId,
         topItemId: 0,
@@ -103,8 +101,8 @@ function SizeWrite() {
         }
       });
 
-      //setProductSize(inputData);
-      //postSelfWrite(inputData);
+      setCurrentView('nosize');
+      setProductSize(inputData);
 
       // 두번째 사이즈 칼럼이 존재하는 경우
       if (isAddRow) {
@@ -153,8 +151,7 @@ function SizeWrite() {
         const body = {
           sizes: sizes,
         };
-        //setProductSize(inputData);
-        //postSelfWrite(inputData);
+
         handleSizeRecommend(body, url ?? '');
       }
     },
