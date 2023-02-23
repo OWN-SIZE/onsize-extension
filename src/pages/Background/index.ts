@@ -1,10 +1,10 @@
 const matchList = [
-  'https://www.musinsa.com',
-  'https://www.mrporter.com',
-  'https://www.ssense.com',
-  'https://www.okmall.com',
-  'https://product.29cm.co.kr',
-  'https://www.wconcept.co.kr',
+  'https://www.musinsa.com/[a-zA-Z]*/goods/[a-zA-Z]*',
+  'https://www.mrporter.com/[a-zA-Z]*/product/[a-zA-Z]*',
+  'https://www.ssense.com/[a-zA-Z]*/product/[a-zA-Z]*',
+  'https://www.okmall.com/products/[a-zA-Z]*',
+  'https://product.29cm.co.kr/[a-zA-Z]*',
+  'https://www.wconcept.co.kr/Product/[a-zA-Z]*',
 ];
 
 const reloadUserData = (tabId: number) => {
@@ -32,15 +32,27 @@ const refreshExtension = () => {
       if (matchList.some((v) => url.includes(v))) {
         reloadProductData(tabId);
         reloadSizeTable(tabId);
+      } else {
+        chrome.action.setIcon({
+          path: '/assets/img/icon-inactive.png',
+        });
+        chrome.action.setPopup({ popup: '' });
       }
     });
   });
   chrome.tabs.onUpdated.addListener((tabs, changeInfo) => {
     const { status } = changeInfo;
+
     if (status === 'loading') {
+      chrome.action.setIcon({
+        path: '/assets/img/icon-inactive.png',
+      });
       chrome.action.setPopup({ popup: '' });
     }
     if (status === 'complete') {
+      chrome.action.setIcon({
+        path: '/assets/img/icon32.png',
+      });
       chrome.action.setPopup({ popup: 'popup.html' });
     }
 
@@ -51,9 +63,19 @@ const refreshExtension = () => {
         reloadUserData(tabs);
       }
 
-      if (matchList.some((v) => url.includes(v))) {
+      const isShoppingMall = matchList.some((v) => {
+        const regex = new RegExp(v);
+        return url.match(regex);
+      });
+
+      if (isShoppingMall) {
         reloadProductData(tabs);
         reloadSizeTable(tabs);
+      } else {
+        chrome.action.setIcon({
+          path: '/assets/img/icon-inactive.png',
+        });
+        chrome.action.setPopup({ popup: '' });
       }
     });
   });
