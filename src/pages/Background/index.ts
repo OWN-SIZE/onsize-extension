@@ -1,7 +1,7 @@
 const matchList = [
   'https://www.musinsa.com/[a-zA-Z]*/goods/[a-zA-Z]*',
-  'https://www.mrporter.com/[a-zA-Z]*/product/[a-zA-Z]*',
-  'https://www.ssense.com/[a-zA-Z]*/product/[a-zA-Z]*',
+  'https://www.mrporter.com/.*/[a-zA-Z]*/product/[a-zA-Z]*',
+  'https://www.ssense.com/.*/[a-zA-Z]*/product/[a-zA-Z]*',
   'https://www.okmall.com/products/[a-zA-Z]*',
   'https://product.29cm.co.kr/[a-zA-Z]*',
   'https://www.wconcept.co.kr/Product/[a-zA-Z]*',
