@@ -19,65 +19,64 @@ const reloadSizeTable = (tabId: number) => {
   chrome.scripting.executeScript({ target: { tabId }, files: ['/script/sizeTableContent.js'] });
 };
 
+const activate = () => {
+  chrome.action.setIcon({
+    path: '/assets/img/icon32.png',
+  });
+  chrome.action.setPopup({ popup: 'popup.html' });
+};
+
+const inactivate = () => {
+  chrome.action.setIcon({
+    path: '/assets/img/icon-inactive.png',
+  });
+  chrome.action.setPopup({ popup: '' });
+};
+
+const checkUrl = (url: string, tabId: number) => {
+  if (url.includes('ownsize.me')) {
+    reloadUserData(tabId);
+  }
+
+  const isShoppingMall = matchList.some((v) => {
+    const regex = new RegExp(v);
+    return url.match(regex);
+  });
+
+  if (isShoppingMall) {
+    reloadProductData(tabId);
+    reloadSizeTable(tabId);
+    activate();
+  } else {
+    inactivate();
+  }
+};
+
 const refreshExtension = () => {
   chrome.tabs.onActivated.addListener((activeInfo) => {
     const { tabId } = activeInfo;
+
     chrome.tabs.query({ active: true }, (tab) => {
       const url = tab[0].url;
       if (!url) return;
-      if (url.includes('ownsize.me')) {
-        reloadUserData(tabId);
-      }
-
-      if (matchList.some((v) => url.includes(v))) {
-        reloadProductData(tabId);
-        reloadSizeTable(tabId);
-      } else {
-        chrome.action.setIcon({
-          path: '/assets/img/icon-inactive.png',
-        });
-        chrome.action.setPopup({ popup: '' });
-      }
+      checkUrl(url, tabId);
     });
   });
   chrome.tabs.onUpdated.addListener((tabs, changeInfo) => {
     const { status } = changeInfo;
 
     if (status === 'loading') {
-      chrome.action.setIcon({
-        path: '/assets/img/icon-inactive.png',
-      });
-      chrome.action.setPopup({ popup: '' });
+      inactivate();
     }
     if (status === 'complete') {
-      chrome.action.setIcon({
-        path: '/assets/img/icon32.png',
+      activate();
+
+      chrome.tabs.query({ active: true }, (tab) => {
+        const url = tab[0].url;
+        if (!url) return;
+        checkUrl(url, tabs);
       });
-      chrome.action.setPopup({ popup: 'popup.html' });
     }
-
-    chrome.tabs.query({ active: true }, (tab) => {
-      const url = tab[0].url;
-      if (!url) return;
-      if (url.includes('ownsize.me')) {
-        reloadUserData(tabs);
-      }
-
-      const isShoppingMall = matchList.some((v) => {
-        const regex = new RegExp(v);
-        return url.match(regex);
-      });
-
-      if (isShoppingMall) {
-        reloadProductData(tabs);
-        reloadSizeTable(tabs);
-      } else {
-        chrome.action.setIcon({
-          path: '/assets/img/icon-inactive.png',
-        });
-        chrome.action.setPopup({ popup: '' });
-      }
-    });
   });
 };
 refreshExtension();
