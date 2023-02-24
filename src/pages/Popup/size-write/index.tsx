@@ -118,8 +118,6 @@ function SizeWrite() {
           rise: null,
           hem: null,
           isWidthOfBottom: true,
-          //isManual: true,
-          //manualInputNum: 0,
           topOrBottom: 0,
           userId: userId,
           topItemId: 0,
@@ -146,10 +144,9 @@ function SizeWrite() {
           }
         });
 
-        sizes.push(inputData);
-        sizes.push(addedInput);
+        sizes.push(inputData, addedInput);
         const body = {
-          sizes: sizes,
+          sizes,
         };
 
         handleSizeRecommend(body, url ?? '');

@@ -3,18 +3,18 @@ export type TabName = 'top' | 'bottom';
 export type SizePropType = Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
 
 export interface TopType {
-  topLength: number;
-  shoulder: number;
-  chest: number;
-  isWidthOfTop: boolean;
+  topLength: number | null;
+  shoulder: number | null;
+  chest: number | null;
+  isWidthOfTop: boolean | null;
 }
 export interface BottomType {
-  bottomLength: number;
-  rise: number;
-  waist: number;
-  thigh: number;
-  hem: number;
-  isWidthOfBottom: boolean;
+  bottomLength: number | null;
+  rise: number | null;
+  waist: number | null;
+  thigh: number | null;
+  hem: number | null;
+  isWidthOfBottom: boolean | null;
 }
 
 export interface TopBottomType {
@@ -23,6 +23,6 @@ export interface TopBottomType {
 }
 
 export interface SizeType {
-  top: TopType | null;
-  bottom: BottomType | null;
+  top: TopType;
+  bottom: BottomType;
 }

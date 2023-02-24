@@ -7,7 +7,7 @@ import theme from '../../styles/theme';
 import { SizePropType } from '.';
 interface SizesProps {
   sizes: SizePropType;
-  productSizes: SizePropType;
+  productSizes?: SizePropType;
   currentTab: TopOrBottom | null;
   isSelfWrite?: boolean;
 }
@@ -16,6 +16,7 @@ function Sizes(props: SizesProps) {
   const { sizes, productSizes, currentTab, isSelfWrite } = props;
 
   const calculateDifference = (key: keyof SizePropType, size: number) => {
+    if (!productSizes) return;
     const compareTarget = productSizes[key] as unknown as number;
     return size - compareTarget >= 0 ? `+${(size - compareTarget).toFixed(1)}` : (size - compareTarget).toFixed(1);
   };

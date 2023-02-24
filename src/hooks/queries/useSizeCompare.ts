@@ -17,10 +17,8 @@ export const useSizeCompare = () => {
   };
 
   const renderNextView = () => {
-    setTimeout(() => {
-      const size = localStorage.getItem('recommend-size') || null;
-      size ? setCurrentView('size-recommend') : setCurrentView('nosize');
-    }, 2000);
+    const size = localStorage.getItem('recommend-size') || null;
+    size ? setCurrentView('size-recommend') : setCurrentView('nosize');
   };
 
   const getSizeRecommendResult = async (id: number | null, urlString: string) => {
@@ -46,19 +44,10 @@ export const useSizeCompare = () => {
 
     await sizeCrawling(body);
     await getSizeRecommendResult(topOrBottom === 'top' ? body.sizes[0].topItemId : body.sizes[0].bottomItemId, url);
-
-    setTimeout(async () => {
-      renderNextView();
-    }, 100);
+    renderNextView();
   };
 
   const onClickOption = async (body: PostSizeTableInput, url: string) => {
-    //checkOption(option);
-
-    // if (isSelfWrite) {
-    //   setCurrentView('size-write');
-    //   return;
-    // }
     executeSizeRecommmend(body, url);
   };
 

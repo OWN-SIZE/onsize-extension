@@ -52,7 +52,7 @@ function SizeCompare() {
       topLength: productSelfWrite.topLength ?? 0,
       chest: productSelfWrite.chest ?? 0,
       shoulder: productSelfWrite.shoulder ?? 0,
-      isWidthOfTop: productSelfWrite.isWidthOfTop,
+      isWidthOfTop: productSelfWrite.isWidthOfTop ?? true,
     },
     bottom: {
       bottomLength: productSelfWrite.bottomLength ?? 0,
@@ -60,7 +60,7 @@ function SizeCompare() {
       thigh: productSelfWrite.thigh ?? 0,
       rise: productSelfWrite.rise ?? 0,
       hem: productSelfWrite.hem ?? 0,
-      isWidthOfBottom: productSelfWrite.isWidthOfBottom,
+      isWidthOfBottom: productSelfWrite.isWidthOfBottom ?? true,
     },
   });
 
