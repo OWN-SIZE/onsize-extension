@@ -14,7 +14,7 @@ import Tabs from '../../../components/size-compare/Tabs';
 import { DOMAIN } from '../../../contants/domain';
 import { LINK, MESSAGE } from '../../../contants/text';
 import useTabs from '../../../hooks/ui/useTabs';
-import { isSelfWriteState, mySizeState, topOrBottomState } from '../../../states/atom';
+import { isSelfWriteState, mySizeState, productSelfWriteState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SizeCompare() {
@@ -22,6 +22,7 @@ function SizeCompare() {
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const isSelfWrite = useRecoilValue(isSelfWriteState);
   const topOrBottom = useRecoilValue(topOrBottomState);
+  const productSelfWrite = useRecoilValue(productSelfWriteState);
 
   const { top, bottom } = mySize;
   const { currentTab = 'top', handleTab } = useTabs();
@@ -48,18 +49,18 @@ function SizeCompare() {
   /** TODO : 수동입력 시 그 입력한 값을 여기에 저장 */
   const [productSize, setProductSize] = useState<SizeType>({
     top: {
-      topLength: 13.4,
-      chest: 28,
-      shoulder: 19.8,
-      isWidthOfTop: true,
+      topLength: productSelfWrite.topLength ?? 0,
+      chest: productSelfWrite.chest ?? 0,
+      shoulder: productSelfWrite.shoulder ?? 0,
+      isWidthOfTop: productSelfWrite.isWidthOfTop ?? true,
     },
     bottom: {
-      bottomLength: 12.3,
-      waist: 45.67,
-      thigh: 24.5,
-      rise: 10,
-      hem: 28,
-      isWidthOfBottom: true,
+      bottomLength: productSelfWrite.bottomLength ?? 0,
+      waist: productSelfWrite.waist ?? 0,
+      thigh: productSelfWrite.thigh ?? 0,
+      rise: productSelfWrite.rise ?? 0,
+      hem: productSelfWrite.hem ?? 0,
+      isWidthOfBottom: productSelfWrite.isWidthOfBottom ?? true,
     },
   });
 
@@ -82,7 +83,11 @@ function SizeCompare() {
         shoulder: top.shoulder,
         chest: top.chest,
       }
-    : null;
+    : {
+        topLength: 0,
+        shoulder: 0,
+        chest: 0,
+      };
 
   const myBottom = bottom
     ? {
@@ -92,7 +97,13 @@ function SizeCompare() {
         rise: bottom.rise,
         hem: bottom.hem,
       }
-    : null;
+    : {
+        bottomLength: 0,
+        waist: 0,
+        thigh: 0,
+        rise: 0,
+        hem: 0,
+      };
 
   const getLink = (
     <Styled.Link
@@ -107,7 +118,10 @@ function SizeCompare() {
 
   return isSelfWrite ? (
     <Layout title="내 사이즈와 이렇게 달라요" close>
-      <SelfWriteCompare sizes={topOrBottom === 'top' ? productTop : productBottom} />
+      <SelfWriteCompare
+        sizes={topOrBottom === 'top' ? myTop : myBottom}
+        productSizes={topOrBottom === 'top' ? productTop : productBottom}
+      />
     </Layout>
   ) : (
     <Layout back close>
