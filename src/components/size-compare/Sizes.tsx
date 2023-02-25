@@ -18,7 +18,7 @@ function Sizes(props: SizesProps) {
   const calculateDifference = (key: keyof SizePropType, size: number) => {
     if (!productSizes) return;
     const compareTarget = (productSizes[key] as unknown as number) || 0;
-    return size - compareTarget >= 0 ? `+${(size - compareTarget).toFixed(1)}` : (size - compareTarget).toFixed(1);
+    return size > compareTarget ? `-${(size - compareTarget).toFixed(1)}` : `+${(compareTarget - size).toFixed(1)}`;
   };
 
   return (

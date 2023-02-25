@@ -101,8 +101,8 @@ function SizeWrite() {
         }
       });
 
-      setCurrentView('nosize');
       setProductSize(inputData);
+      setCurrentView('compare');
 
       // 두번째 사이즈 칼럼이 존재하는 경우
       if (isAddRow) {
