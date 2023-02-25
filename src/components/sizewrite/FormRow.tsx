@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import icDelete from '../../assets/icons/delete.svg';
-import { IsRowType } from '../../pages/Popup/size-write';
+import { TopOrBottom } from '../../states';
 import theme from '../../styles/theme';
 import { ValuesType } from '../../types/useForm';
 
@@ -11,7 +11,7 @@ interface RowProps {
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   handleSubmit: React.FormEventHandler<HTMLFormElement>;
-  isAddRow?: IsRowType;
+  isAddRow?: TopOrBottom | null;
   onClickDelete?: () => void;
 }
 
@@ -72,7 +72,7 @@ const Styled = {
     color: ${theme.colors.gray550};
     ${theme.fonts.bodydsb};
   `,
-  DeleteButton: styled.button<{ isAddRow: IsRowType }>`
+  DeleteButton: styled.button<{ isAddRow: TopOrBottom | null }>`
     position: fixed;
     height: 3rem;
     background: transparent;

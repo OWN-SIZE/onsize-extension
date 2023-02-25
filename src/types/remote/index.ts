@@ -53,6 +53,7 @@ export interface SaveResultOutput {
 }
 
 export interface SizeTableType {
+  [key: string]: string | number | boolean | null;
   size: string;
   topOrBottom: number;
 

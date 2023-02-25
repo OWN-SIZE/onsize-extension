@@ -1,23 +1,32 @@
 export type TabName = 'top' | 'bottom';
 
-export interface TopType {
+export type SizePropType = MyTopType | MyBottomType;
+
+export interface MyTopType {
   topLength: number;
   shoulder: number;
   chest: number;
-  isWidthOfTop: boolean;
 }
-export interface BottomType {
+export interface MyBottomType {
   bottomLength: number;
   rise: number;
   waist: number;
   thigh: number;
   hem: number;
-  isWidthOfBottom: boolean;
 }
-
-export interface TopBottomType {
-  top: TopType;
-  bottom: BottomType;
+export interface TopType {
+  topLength: number | null;
+  shoulder: number | null;
+  chest: number | null;
+  isWidthOfTop: boolean | null;
+}
+export interface BottomType {
+  bottomLength: number | null;
+  rise: number | null;
+  waist: number | null;
+  thigh: number | null;
+  hem: number | null;
+  isWidthOfBottom: boolean | null;
 }
 
 export interface SizeType {

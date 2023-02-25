@@ -1,25 +1,24 @@
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { topBottomTextConverter, topBottomTextMapper } from '../../../utils/topBottomTextMapper';
 import { TopOrBottom } from '../../states';
-import { mySizeState } from '../../states/atom';
 import theme from '../../styles/theme';
 
-import { BottomType, TopBottomType, TopType } from '.';
+import { BottomType, SizePropType, TopType } from '.';
 interface SizesProps {
-  sizes: Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
+  sizes: SizePropType;
+  productSizes?: Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
   currentTab: TopOrBottom | null;
   isSelfWrite?: boolean;
 }
 
 function Sizes(props: SizesProps) {
-  const { sizes, currentTab, isSelfWrite } = props;
-  const mySize = useRecoilValue(mySizeState);
+  const { sizes, productSizes, currentTab, isSelfWrite } = props;
 
-  const calculateDifference = (key: keyof TopBottomType, size: number) => {
-    const compareTarget = mySize[key] as unknown as number;
-    return (size - compareTarget).toFixed(1);
+  const calculateDifference = (key: keyof SizePropType, size: number) => {
+    if (!productSizes) return;
+    const compareTarget = (productSizes[key] as unknown as number) || 0;
+    return size - compareTarget >= 0 ? `+${(size - compareTarget).toFixed(1)}` : (size - compareTarget).toFixed(1);
   };
 
   return (
@@ -30,7 +29,7 @@ function Sizes(props: SizesProps) {
           <Styled.SizeValue isSelfWrite={isSelfWrite ? true : false}>
             {size.toFixed(1)}
             <span>cm</span>
-            {isSelfWrite && <Styled.Differ>{calculateDifference(key as keyof TopBottomType, size)}</Styled.Differ>}
+            {isSelfWrite && <Styled.Differ>{calculateDifference(key as keyof SizePropType, size)}</Styled.Differ>}
           </Styled.SizeValue>
         </Styled.Size>
       ))}

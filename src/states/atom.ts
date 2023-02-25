@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
 
 import { SizeType } from '../components/size-compare';
+import { SizeTableType } from '../types/remote';
 
 import { CurrentViewType, ProductType, TopOrBottom, UserDataType } from '.';
 
@@ -39,6 +40,27 @@ export const mySizeState = atom<SizeType>({
       thigh: 0,
       isWidthOfBottom: false,
     },
+  },
+});
+
+export const productSelfWriteState = atom<SizeTableType>({
+  key: 'productSelfWriteSize',
+  default: {
+    size: '',
+    topLength: null,
+    shoulder: null,
+    chest: null,
+    isWidthOfTop: true,
+    bottomLength: null,
+    waist: null,
+    thigh: null,
+    rise: null,
+    hem: null,
+    isWidthOfBottom: true,
+    topOrBottom: 0,
+    userId: -99,
+    topItemId: 0,
+    bottomItemId: 0,
   },
 });
 
