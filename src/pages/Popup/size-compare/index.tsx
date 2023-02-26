@@ -22,6 +22,7 @@ function SizeCompare() {
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const isSelfWrite = useRecoilValue(isSelfWriteState);
   const productSelfWrite = useRecoilValue(productSelfWriteState);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { currentTab = 'top', handleTab } = useTabs();
 
@@ -41,7 +42,7 @@ function SizeCompare() {
   // 내 사이즈 조회
   useEffect(() => {
     (async () => {
-      await getMySize();
+      const data = await getMySize().then(() => setIsLoading(false));
     })();
   }, []);
 
@@ -79,15 +80,7 @@ function SizeCompare() {
     hem: productSize.bottom.hem,
   };
 
-  const getLink = (
-    <Styled.Link
-      onClick={() => {
-        window.open(DOMAIN.MYSIZE);
-      }}
-    >
-      {LINK.BUTTON}
-    </Styled.Link>
-  );
+  const getLink = <Styled.Link onClick={() => window.open(DOMAIN.MYSIZE)}>{LINK.BUTTON}</Styled.Link>;
   const { top, bottom } = mySize;
   const { topLength, shoulder, chest } = top;
   const { bottomLength, waist, thigh, rise, hem } = bottom;
@@ -173,6 +166,8 @@ function SizeCompare() {
       )}
     </Layout>
   );
+
+  if (isLoading) return <></>;
 
   return isSelfWrite ? renderSelfWriteView : renderCompareView;
 }
