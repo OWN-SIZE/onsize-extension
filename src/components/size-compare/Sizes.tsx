@@ -1,7 +1,9 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { topBottomTextConverter, topBottomTextMapper } from '../../../utils/topBottomTextMapper';
 import { TopOrBottom } from '../../states';
+import { isSelfWriteState } from '../../states/atom';
 import theme from '../../styles/theme';
 
 import { BottomType, SizePropType, TopType } from '.';
@@ -13,7 +15,8 @@ interface SizesProps {
 }
 
 function Sizes(props: SizesProps) {
-  const { sizes, productSizes, currentTab, isSelfWrite } = props;
+  const { sizes, productSizes, currentTab } = props;
+  const isSelfWrite = useRecoilValue(isSelfWriteState);
 
   const calculateDifference = (key: keyof SizePropType, size: number) => {
     if (!productSizes) return;
