@@ -22,15 +22,19 @@ function Popup() {
   const checkCurrentView = async () => {
     const { sizeTable } = await chrome.storage.local.get(['sizeTable']);
 
+    const storedCurrentView = localStorage.getItem('currentView') as CurrentViewType;
     if (sizeTable) {
-      const storedCurrentView = localStorage.getItem('currentView') as CurrentViewType;
       if (storedCurrentView === 'cannotload') {
         setCurrentView('size-option');
       } else {
         setCurrentView(storedCurrentView || 'size-option');
       }
     } else {
-      setCurrentView('cannotload');
+      if (storedCurrentView === 'compare' || storedCurrentView === 'size-write') {
+        setCurrentView(storedCurrentView || 'cannotload');
+      } else {
+        setCurrentView('cannotload');
+      }
     }
   };
 

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 import Sizes from './Sizes';
-import { BottomType, TabName, TopType } from '.';
+import { SizePropType, TabName } from '.';
 
 interface CompareProps {
-  sizes: Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
+  sizes: SizePropType;
   currentTab: TabName;
 }
 

@@ -1,24 +1,27 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { topBottomTextConverter, topBottomTextMapper } from '../../../utils/topBottomTextMapper';
 import { TopOrBottom } from '../../states';
+import { isSelfWriteState } from '../../states/atom';
 import theme from '../../styles/theme';
 
-import { SizePropType } from '.';
+import { BottomType, SizePropType, TopType } from '.';
 interface SizesProps {
   sizes: SizePropType;
-  productSizes?: SizePropType;
+  productSizes?: Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
   currentTab: TopOrBottom | null;
   isSelfWrite?: boolean;
 }
 
 function Sizes(props: SizesProps) {
-  const { sizes, productSizes, currentTab, isSelfWrite } = props;
+  const { sizes, productSizes, currentTab } = props;
+  const isSelfWrite = useRecoilValue(isSelfWriteState);
 
   const calculateDifference = (key: keyof SizePropType, size: number) => {
     if (!productSizes) return;
-    const compareTarget = productSizes[key] as unknown as number;
-    return size - compareTarget >= 0 ? `+${(size - compareTarget).toFixed(1)}` : (size - compareTarget).toFixed(1);
+    const compareTarget = (productSizes[key] as unknown as number) || 0;
+    return size > compareTarget ? `-${(size - compareTarget).toFixed(1)}` : `+${(compareTarget - size).toFixed(1)}`;
   };
 
   return (

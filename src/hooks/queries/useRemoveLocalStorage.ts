@@ -1,7 +1,7 @@
 export const useRemoveLocalStorage = () => {
-  const removeLocalStorageItem = (...args: unknown[]) => {
+  const removeLocalStorageItem = (...args: string[]) => {
     args.forEach((key) => {
-      localStorage.removeItem(`${key}`);
+      localStorage.removeItem(key);
     });
   };
 

@@ -25,7 +25,22 @@ export const useRedirect = () => {
 
     // 로그인만 하고 실측치 입력을 안 한 경우
     if (!isRegister && userId) {
-      setMySize({ top: null, bottom: null });
+      setMySize({
+        top: {
+          topLength: 0,
+          chest: 0,
+          shoulder: 0,
+          isWidthOfTop: true,
+        },
+        bottom: {
+          bottomLength: 0,
+          waist: 0,
+          rise: 0,
+          hem: 0,
+          thigh: 0,
+          isWidthOfBottom: true,
+        },
+      });
       return;
     }
   };

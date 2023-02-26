@@ -7,12 +7,13 @@
   "action": {
     "default_popup": "popup.html",
     "default_title": "온사이즈(Own-Size)",
-    "default_icon": "assets/img/icon32.png"
+    "default_icon": "assets/img/icon-inactive.png"
   },
   "icons": {
     "16": "assets/img/icon16.png",
     "32": "assets/img/icon32.png",
-    "48": "assets/img/icon48.png"
+    "48": "assets/img/icon48.png",
+    "128": "assets/img/icon-inactive.png"
   },
   "content_scripts": [
     {
@@ -33,7 +34,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["icon16.png", "icon32.png", "icon48.png"],
+      "resources": ["icon16.png", "icon32.png", "icon48.png", "icon-inactive.png"],
       "matches": []
     }
   ],

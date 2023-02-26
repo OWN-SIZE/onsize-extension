@@ -51,8 +51,6 @@ export const useSizeRecommend = () => {
     sizeTable.forEach((table) => {
       const { size, topLength, shoulder, chest, bottomLength, hem, rise, thigh, waist } = table;
       const data: SizeTableType = {
-        isManual: false,
-        manualInputNum: null,
         topOrBottom: option === 'top' ? 0 : 1,
         userId: Number(localStorage.getItem('userId')) || null,
         size: size,
@@ -98,10 +96,8 @@ export const useSizeRecommend = () => {
   };
 
   const renderNextView = () => {
-    setTimeout(() => {
-      const size = localStorage.getItem('recommend-size') || null;
-      size ? setCurrentView('size-recommend') : setCurrentView('nosize');
-    }, 2000);
+    const size = localStorage.getItem('recommend-size') || null;
+    size ? setCurrentView('size-recommend') : setCurrentView('nosize');
   };
 
   const sizeCrawling = async (option: TopOrBottom) => {
@@ -114,7 +110,7 @@ export const useSizeRecommend = () => {
   const checkOption = (option: TopOrBottom) => {
     if (!option) return;
 
-    if (option === 'null') {
+    if (option === null) {
       setCurrentView('size-option');
       return;
     }
@@ -127,10 +123,7 @@ export const useSizeRecommend = () => {
 
     await sizeCrawling(option);
     await getSizeRecommendResult(option);
-
-    setTimeout(async () => {
-      renderNextView();
-    }, 100);
+    renderNextView();
   };
 
   const onClickOption = (option: TopOrBottom) => {

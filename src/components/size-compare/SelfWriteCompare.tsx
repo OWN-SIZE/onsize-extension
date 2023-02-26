@@ -5,11 +5,11 @@ import { topOrBottomState } from '../../states/atom';
 import SaveButton from '../size-option/SaveButton';
 
 import Sizes from './Sizes';
-import { SizePropType } from '.';
+import { BottomType, SizePropType, TopType } from '.';
 
 interface SelfWriteCompareProps {
   sizes: SizePropType;
-  productSizes: SizePropType;
+  productSizes: Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
 }
 
 function SelfWriteCompare(props: SelfWriteCompareProps) {

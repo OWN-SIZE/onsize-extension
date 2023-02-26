@@ -79,7 +79,6 @@ if (table) {
       infoType['size'] = MY;
 
       sizeTable = [...sizeTable, infoType];
-      console.log(infoType);
     });
   }
 }

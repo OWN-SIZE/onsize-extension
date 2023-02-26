@@ -14,39 +14,42 @@ import Tabs from '../../../components/size-compare/Tabs';
 import { DOMAIN } from '../../../contants/domain';
 import { LINK, MESSAGE } from '../../../contants/text';
 import useTabs from '../../../hooks/ui/useTabs';
-import { isSelfWriteState, mySizeState, productSelfWriteState, topOrBottomState } from '../../../states/atom';
+import { isSelfWriteState, mySizeState, productSelfWriteState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SizeCompare() {
   // 서버에서 받아오는 사용자 실측 사이즈 데이터
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const isSelfWrite = useRecoilValue(isSelfWriteState);
-  const topOrBottom = useRecoilValue(topOrBottomState);
   const productSelfWrite = useRecoilValue(productSelfWriteState);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { top, bottom } = mySize;
   const { currentTab = 'top', handleTab } = useTabs();
 
   // 마이사이즈 조회
   const getMySize = async () => {
     const { top, bottom } = await fetchMySize();
-    console.log(top, bottom);
 
     localStorage.setItem('topSize', JSON.stringify(top));
     localStorage.setItem('bottomSize', JSON.stringify(bottom));
     setMySize({ top, bottom });
   };
 
+  const isEmptyData = (data: object) => {
+    return Object.values(data).every((value) => value === null);
+  };
+
   // 내 사이즈 조회
   useEffect(() => {
-    (async () => await getMySize())();
+    (async () => {
+      const data = await getMySize().then(() => setIsLoading(false));
+    })();
   }, []);
 
   useEffect(() => {
     localStorage.setItem('currentTab', currentTab);
   }, [currentTab]);
 
-  /** TODO : 수동입력 시 그 입력한 값을 여기에 저장 */
   const [productSize, setProductSize] = useState<SizeType>({
     top: {
       topLength: productSelfWrite.topLength ?? 0,
@@ -65,70 +68,77 @@ function SizeCompare() {
   });
 
   const productTop = {
-    topLength: productSize.top?.topLength,
-    shoulder: productSize.top?.shoulder,
-    chest: productSize.top?.chest,
+    topLength: productSize.top.topLength,
+    shoulder: productSize.top.shoulder,
+    chest: productSize.top.chest,
   };
   const productBottom = {
-    bottomLength: productSize.bottom?.bottomLength,
-    waist: productSize.bottom?.waist,
-    thigh: productSize.bottom?.thigh,
-    rise: productSize.bottom?.rise,
-    hem: productSize.bottom?.hem,
+    bottomLength: productSize.bottom.bottomLength,
+    waist: productSize.bottom.waist,
+    thigh: productSize.bottom.thigh,
+    rise: productSize.bottom.rise,
+    hem: productSize.bottom.hem,
   };
 
-  const myTop = top
-    ? {
-        topLength: top.topLength,
-        shoulder: top.shoulder,
-        chest: top.chest,
-      }
-    : {
-        topLength: 0,
-        shoulder: 0,
-        chest: 0,
-      };
+  const getLink = <Styled.Link onClick={() => window.open(DOMAIN.MYSIZE)}>{LINK.BUTTON}</Styled.Link>;
+  const { top, bottom } = mySize;
+  const { topLength, shoulder, chest } = top;
+  const { bottomLength, waist, thigh, rise, hem } = bottom;
+  const noSize = isEmptyData(top) && isEmptyData(bottom);
 
-  const myBottom = bottom
-    ? {
-        bottomLength: bottom.bottomLength,
-        waist: bottom.waist,
-        thigh: bottom.thigh,
-        rise: bottom.rise,
-        hem: bottom.hem,
-      }
-    : {
-        bottomLength: 0,
-        waist: 0,
-        thigh: 0,
-        rise: 0,
-        hem: 0,
-      };
+  const myTop = {
+    topLength: topLength as number,
+    shoulder: shoulder as number,
+    chest: chest as number,
+  };
 
-  const getLink = (
-    <Styled.Link
-      onClick={() => {
-        window.open(DOMAIN.LOGIN);
-      }}
-    >
-      {LINK.BUTTON}
-    </Styled.Link>
+  const myBottom = {
+    bottomLength: bottomLength as number,
+    waist: waist as number,
+    thigh: thigh as number,
+    rise: rise as number,
+    hem: hem as number,
+  };
+
+  const renderSelfWriteView = (
+    <>
+      {currentTab === 'top' ? (
+        isEmptyData(top) ? (
+          <Layout back close>
+            <Main
+              image={<Styled.Image src={icAlert} />}
+              content={MESSAGE.NO_SIZE_COMPARE}
+              caption={noSize}
+              link={!noSize && getLink}
+            />
+          </Layout>
+        ) : (
+          <Layout title="내 사이즈와 이렇게 달라요" close>
+            <SelfWriteCompare sizes={myTop} productSizes={productTop} />
+          </Layout>
+        )
+      ) : isEmptyData(bottom) ? (
+        <Layout back close>
+          <Main
+            image={<Styled.Image src={icAlert} />}
+            content={MESSAGE.NO_SIZE_COMPARE}
+            caption={noSize}
+            link={!noSize && getLink}
+          />
+        </Layout>
+      ) : (
+        <Layout title="내 사이즈와 이렇게 달라요" close>
+          <SelfWriteCompare sizes={myBottom} productSizes={productBottom} />
+        </Layout>
+      )}
+    </>
   );
-  const noSize = !myTop && !myBottom;
 
-  return isSelfWrite ? (
-    <Layout title="내 사이즈와 이렇게 달라요" close>
-      <SelfWriteCompare
-        sizes={topOrBottom === 'top' ? myTop : myBottom}
-        productSizes={topOrBottom === 'top' ? productTop : productBottom}
-      />
-    </Layout>
-  ) : (
+  const renderCompareView = (
     <Layout back close>
       {!noSize && <Tabs currentTab={currentTab} handler={handleTab} />}
-
       {currentTab === 'top' ? (
-        !myTop ? (
+        isEmptyData(top) ? (
           <>
             <Main
               image={<Styled.Image src={icAlert} />}
@@ -141,7 +151,7 @@ function SizeCompare() {
         ) : (
           <Compare sizes={myTop} currentTab={currentTab} />
         )
-      ) : !myBottom ? (
+      ) : isEmptyData(bottom) ? (
         <>
           <Main
             image={<Styled.Image src={icAlert} />}
@@ -156,6 +166,10 @@ function SizeCompare() {
       )}
     </Layout>
   );
+
+  if (isLoading) return <></>;
+
+  return isSelfWrite ? renderSelfWriteView : renderCompareView;
 }
 
 export default SizeCompare;

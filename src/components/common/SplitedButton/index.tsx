@@ -1,18 +1,20 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { useSaveProduct } from '../../../hooks/queries/useSaveProduct';
-import { currentViewState, isSelfWriteState } from '../../../states/atom';
+import { currentViewState, isSelfWriteState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SplitedButton() {
+  const topOrBottom = useRecoilValue(topOrBottomState);
   const [, setCurrentView] = useRecoilState(currentViewState);
   const [, setIsSelfWrite] = useRecoilState(isSelfWriteState);
   const { onClickSaveProduct } = useSaveProduct();
 
   const onClickSelfWriteButton = () => {
     setIsSelfWrite(true);
-    setCurrentView('size-option');
+    localStorage.setItem('isSelfWrite', 'true');
+    topOrBottom ? setCurrentView('size-write') : setCurrentView('size-option');
   };
 
   return (

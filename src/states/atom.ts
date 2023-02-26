@@ -66,7 +66,7 @@ export const productSelfWriteState = atom<SizeTableType>({
 
 export const topOrBottomState = atom<TopOrBottom>({
   key: 'topOrBottom',
-  default: 'null',
+  default: null,
 });
 
 export const productState = atom<ProductType>({
@@ -92,7 +92,7 @@ export const currentViewState = atom<CurrentViewType>({
 
 export const isSelfWriteState = atom<boolean>({
   key: 'isSelfWrite',
-  default: false,
+  default: JSON.parse(localStorage.getItem('isSelfWrite') as string) || false,
 });
 
 export const historyState = atom<CurrentViewType | null>({

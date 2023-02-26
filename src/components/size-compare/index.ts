@@ -1,7 +1,19 @@
 export type TabName = 'top' | 'bottom';
 
-export type SizePropType = Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
+export type SizePropType = MyTopType | MyBottomType;
 
+export interface MyTopType {
+  topLength: number;
+  shoulder: number;
+  chest: number;
+}
+export interface MyBottomType {
+  bottomLength: number;
+  rise: number;
+  waist: number;
+  thigh: number;
+  hem: number;
+}
 export interface TopType {
   topLength: number | null;
   shoulder: number | null;
@@ -15,11 +27,6 @@ export interface BottomType {
   thigh: number | null;
   hem: number | null;
   isWidthOfBottom: boolean | null;
-}
-
-export interface TopBottomType {
-  top: TopType;
-  bottom: BottomType;
 }
 
 export interface SizeType {
