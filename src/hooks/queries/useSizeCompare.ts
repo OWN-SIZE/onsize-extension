@@ -2,7 +2,6 @@
 import { useRecoilState } from 'recoil';
 
 import { postSizeTable, saveResult } from '../../apis/api';
-import { TopOrBottom } from '../../states';
 import { currentViewState, productState, sizeRecommendState, topOrBottomState } from '../../states/atom';
 import { PostSizeTableInput, SaveResultInput } from '../../types/remote';
 

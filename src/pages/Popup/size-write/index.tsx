@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { postSelfWrite } from '../../../apis/api';
 import Layout from '../../../components/common/Layout';
 import AddRowButton from '../../../components/sizewrite/AddRowButton';
 import FormHeader from '../../../components/sizewrite/FormHeader';
@@ -10,11 +9,9 @@ import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 import useForm from '../../../hooks/business/useForm';
 import { useSizeCompare } from '../../../hooks/queries/useSizeCompare';
-import { useSizeRecommend } from '../../../hooks/queries/useSizeRecommend';
-import { currentViewState, productSelfWriteState, sizeRecommendState, topOrBottomState } from '../../../states/atom';
+import { currentViewState, productSelfWriteState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
-import { InputSizeInput } from '../../../types/inputSize';
-import { PostSizeTableInput, SizeTableType } from '../../../types/remote';
+import { SizeTableType } from '../../../types/remote';
 import { BottomValuesType, TopValuesType } from '../../../types/useForm';
 
 const TopInputList = [
@@ -41,7 +38,6 @@ function SizeWrite() {
   const topOrBottom = useRecoilValue(topOrBottomState);
   const [measure, setMeasure] = useState('단면');
   const [, setCurrentView] = useRecoilState(currentViewState);
-  const sizeRecommended = useRecoilValue(sizeRecommendState);
   const [, setProductSize] = useRecoilState(productSelfWriteState);
   const { onClickOption: handleSizeRecommend } = useSizeCompare();
   const userId = JSON.parse(localStorage.getItem('userId') ?? '-99');
@@ -84,7 +80,7 @@ function SizeWrite() {
       if (topOrBottom === 'bottom') {
         inputData.topOrBottom = 1;
         inputData.bottomItemId = productId;
-      } else if (topOrBottom === 'top') {
+      } else {
         inputData.topItemId = productId;
       }
 
@@ -127,7 +123,7 @@ function SizeWrite() {
         if (topOrBottom === 'bottom') {
           addedInput.topOrBottom = 1;
           addedInput.bottomItemId = productId;
-        } else if (topOrBottom === 'top') {
+        } else {
           addedInput.topItemId = productId;
         }
 

@@ -110,7 +110,7 @@ export const useSizeRecommend = () => {
   const checkOption = (option: TopOrBottom) => {
     if (!option) return;
 
-    if (option === 'null') {
+    if (option === null) {
       setCurrentView('size-option');
       return;
     }

@@ -13,6 +13,7 @@ function SplitedButton() {
 
   const onClickSelfWriteButton = () => {
     setIsSelfWrite(true);
+    localStorage.setItem('isSelfWrite', 'true');
     topOrBottom ? setCurrentView('size-write') : setCurrentView('size-option');
   };
 
