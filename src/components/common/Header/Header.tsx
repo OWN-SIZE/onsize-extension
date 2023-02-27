@@ -26,6 +26,7 @@ function Header(props: HeaderProps) {
       'history',
       'isSelfWrite',
       'productSizes',
+      'topOrBottom',
     );
     window.close();
   };
