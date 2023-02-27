@@ -66,7 +66,7 @@ export const productSelfWriteState = atom<SizeTableType>({
 
 export const topOrBottomState = atom<TopOrBottom>({
   key: 'topOrBottom',
-  default: null,
+  default: 'top',
 });
 
 export const productState = atom<ProductType>({

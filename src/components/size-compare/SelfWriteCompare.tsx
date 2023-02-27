@@ -15,11 +15,12 @@ interface SelfWriteCompareProps {
 function SelfWriteCompare(props: SelfWriteCompareProps) {
   const { sizes, productSizes } = props;
   const topOrBottom = useRecoilValue(topOrBottomState);
+  const storedProductSizes = JSON.parse(localStorage.getItem('productSizes') || '');
 
   return (
     <>
       <Styled.Root isTop={topOrBottom === 'top'}>
-        <Sizes sizes={sizes} productSizes={productSizes} currentTab={topOrBottom} isSelfWrite />
+        <Sizes sizes={sizes} productSizes={storedProductSizes || productSizes} currentTab={topOrBottom} isSelfWrite />
       </Styled.Root>
       <SaveButton />
     </>
