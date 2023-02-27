@@ -45,8 +45,7 @@
     "https://www.ssense.com/*/product/*",
     "https://www.okmall.com/products/*",
     "https://product.29cm.co.kr/*",
-    "https://www.wconcept.co.kr/Product/*",
-    "<all_urls>"
+    "https://www.wconcept.co.kr/Product/*"
   ],
-  "permissions": ["activeTab", "storage", "scripting", "tabs", "<all_urls>"]
+  "permissions": ["activeTab", "storage", "scripting", "tabs"]
 }

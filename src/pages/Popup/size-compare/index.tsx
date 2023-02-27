@@ -26,30 +26,6 @@ function SizeCompare() {
 
   const { currentTab = 'top', handleTab } = useTabs();
 
-  // 마이사이즈 조회
-  const getMySize = async () => {
-    const { top, bottom } = await fetchMySize();
-
-    localStorage.setItem('topSize', JSON.stringify(top));
-    localStorage.setItem('bottomSize', JSON.stringify(bottom));
-    setMySize({ top, bottom });
-  };
-
-  const isEmptyData = (data: object) => {
-    return Object.values(data).every((value) => value === null);
-  };
-
-  // 내 사이즈 조회
-  useEffect(() => {
-    (async () => {
-      const data = await getMySize().then(() => setIsLoading(false));
-    })();
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('currentTab', currentTab);
-  }, [currentTab]);
-
   const [productSize, setProductSize] = useState<SizeType>({
     top: {
       topLength: productSelfWrite.topLength ?? 0,
@@ -84,7 +60,6 @@ function SizeCompare() {
   const { top, bottom } = mySize;
   const { topLength, shoulder, chest } = top;
   const { bottomLength, waist, thigh, rise, hem } = bottom;
-  const noSize = isEmptyData(top) && isEmptyData(bottom);
 
   const myTop = {
     topLength: topLength as number,
@@ -99,6 +74,31 @@ function SizeCompare() {
     rise: rise as number,
     hem: hem as number,
   };
+
+  // 마이사이즈 조회
+  const getMySize = async () => {
+    const { top, bottom } = await fetchMySize();
+
+    localStorage.setItem('topSize', JSON.stringify(top));
+    localStorage.setItem('bottomSize', JSON.stringify(bottom));
+    setMySize({ top, bottom });
+  };
+
+  const isEmptyData = (data: object) => {
+    return Object.values(data).every((value) => value === null);
+  };
+
+  const noSize = isEmptyData(top) && isEmptyData(bottom);
+
+  useEffect(() => {
+    (async () => {
+      await getMySize().then(() => setIsLoading(false));
+    })();
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('currentTab', currentTab);
+  }, [currentTab]);
 
   const renderSelfWriteView = (
     <>

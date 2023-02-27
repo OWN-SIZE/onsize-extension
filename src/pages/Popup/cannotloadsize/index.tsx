@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
@@ -6,13 +7,18 @@ import Layout from '../../../components/common/Layout';
 import Main from '../../../components/common/Main';
 import SplitedButton from '../../../components/common/SplitedButton';
 import { LINK, MESSAGE } from '../../../contants/text';
-import { currentViewState } from '../../../states/atom';
+import { currentViewState, isSelfWriteState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function CannotLoadSize() {
   const [, setCurrentView] = useRecoilState(currentViewState);
+  const [, setIsSelfWrite] = useRecoilState(isSelfWriteState);
 
   const getLink = <Styled.Link onClick={() => setCurrentView('compare')}>{LINK.ANCHOR}</Styled.Link>;
+
+  useEffect(() => {
+    setIsSelfWrite(false);
+  }, []);
 
   return (
     <Layout close>

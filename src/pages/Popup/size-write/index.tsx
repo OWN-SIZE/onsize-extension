@@ -97,6 +97,7 @@ function SizeWrite() {
         }
       });
 
+      localStorage.setItem('productSizes', JSON.stringify(inputData));
       setProductSize(inputData);
       setCurrentView('compare');
 

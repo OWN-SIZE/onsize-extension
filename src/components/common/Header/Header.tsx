@@ -18,7 +18,15 @@ function Header(props: HeaderProps) {
   const { removeLocalStorageItem } = useRemoveLocalStorage();
 
   const reset = () => {
-    removeLocalStorageItem('currentView', 'currentTab', 'recommend-size', 'productImage', 'history', 'isSelfWrite');
+    removeLocalStorageItem(
+      'currentView',
+      'currentTab',
+      'recommend-size',
+      'productImage',
+      'history',
+      'isSelfWrite',
+      'productSizes',
+    );
     window.close();
   };
 
