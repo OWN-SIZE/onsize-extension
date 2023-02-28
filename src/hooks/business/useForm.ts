@@ -22,30 +22,20 @@ function useForm(props: FormProps) {
     if (topOrBottom === 'top') {
       setValues({
         ...values,
-        shoulder: `${
-          measure === '둘레'
-            ? (parseFloat(values.shoulder) * 2).toFixed(1)
-            : (parseFloat(values.shoulder) / 2).toFixed(1)
-        }`,
-        chest: `${
-          measure === '둘레' ? (parseFloat(values.chest) * 2).toFixed(1) : (parseFloat(values.chest) / 2).toFixed(1)
-        }`,
+        shoulder: measureConverter(values.shoulder),
+        chest: measureConverter(values.chest),
       });
       setAddedValues({
         ...addedValues,
-        shoulder: `${
-          measure === '둘레'
-            ? (parseFloat(addedValues.shoulder) * 2).toFixed(1)
-            : (parseFloat(addedValues.shoulder) / 2).toFixed(1)
-        }`,
-        chest: `${
-          measure === '둘레'
-            ? (parseFloat(addedValues.chest) * 2).toFixed(1)
-            : (parseFloat(addedValues.chest) / 2).toFixed(1)
-        }`,
+        shoulder: measureConverter(addedValues.shoulder),
+        chest: measureConverter(addedValues.chest),
       });
     }
   }, [measure]);
+
+  const measureConverter = (value: string) => {
+    return `${measure === '둘레' ? (parseFloat(value) * 2).toFixed(1) : (parseFloat(value) / 2).toFixed(1)}`;
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
