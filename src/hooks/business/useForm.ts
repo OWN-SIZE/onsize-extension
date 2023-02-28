@@ -30,6 +30,19 @@ function useForm(props: FormProps) {
         shoulder: measureConverter(addedValues.shoulder),
         chest: measureConverter(addedValues.chest),
       });
+    } else {
+      setValues({
+        ...values,
+        waist: measureConverter(values.waist),
+        thigh: measureConverter(values.thigh),
+        hem: measureConverter(values.hem),
+      });
+      setAddedValues({
+        ...addedValues,
+        waist: measureConverter(addedValues.waist),
+        thigh: measureConverter(addedValues.thigh),
+        hem: measureConverter(addedValues.hem),
+      });
     }
   }, [measure]);
 
