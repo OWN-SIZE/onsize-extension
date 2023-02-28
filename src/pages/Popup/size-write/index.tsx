@@ -26,13 +26,13 @@ const TopInitValues: TopValuesType = { size: '', topLength: '', shoulder: '', ch
 const BottomInputList = [
   { inputKey: 'size', withcm: false },
   { inputKey: 'bottomLength', withcm: true },
+  { inputKey: 'rise', withcm: true },
   { inputKey: 'waist', withcm: true },
   { inputKey: 'thigh', withcm: true },
-  { inputKey: 'rise', withcm: true },
   { inputKey: 'hem', withcm: true },
 ];
 
-const BottomInitValues: BottomValuesType = { size: '', bottomLength: '', waist: '', thigh: '', rise: '', hem: '' };
+const BottomInitValues: BottomValuesType = { size: '', bottomLength: '', rise: '', waist: '', thigh: '', hem: '' };
 
 function SizeWrite() {
   const topOrBottom = useRecoilValue(topOrBottomState);
