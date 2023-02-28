@@ -53,7 +53,7 @@ function SizeWrite() {
     isAddRow,
     setIsAddRow,
   } = useForm({
-    initialValues: topOrBottom === 'top' ? TopInitValues : BottomInitValues,
+    initialValues: topOrBottom === 'top' || topOrBottom === null ? TopInitValues : BottomInitValues,
     onSubmit: async (values) => {
       const sizes: SizeTableType[] = [];
       const inputData: SizeTableType = {

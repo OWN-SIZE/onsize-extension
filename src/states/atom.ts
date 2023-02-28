@@ -3,7 +3,7 @@ import { atom } from 'recoil';
 import { SizeType } from '../components/size-compare';
 import { SizeTableType } from '../types/remote';
 
-import { CurrentViewType, ProductType, TopOrBottom, UserDataType } from '.';
+import { CurrentViewType, MeasureType, ProductType, TopOrBottom, UserDataType } from '.';
 
 export const mySizeState = atom<SizeType>({
   key: 'mySize',
@@ -66,7 +66,7 @@ export const productSelfWriteState = atom<SizeTableType>({
 
 export const topOrBottomState = atom<TopOrBottom>({
   key: 'topOrBottom',
-  default: 'top',
+  default: (localStorage.getItem('topOrBottom') as TopOrBottom) || null,
 });
 
 export const productState = atom<ProductType>({
@@ -112,4 +112,12 @@ export const userDataState = atom<UserDataType>({
 export const sizeRecommendState = atom<string | null>({
   key: 'size-recommend',
   default: localStorage.getItem('recommend-size') || null,
+});
+
+export const measureState = atom<MeasureType>({
+  key: 'measure',
+  default: {
+    top: true,
+    bottom: true,
+  },
 });

@@ -1,9 +1,11 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import icBack from '../../../assets/icons/back.svg';
 import icClose from '../../../assets/icons/close.svg';
 import { useRemoveLocalStorage } from '../../../hooks/queries/useRemoveLocalStorage';
 import { useGoBackToHistory } from '../../../hooks/ui/useGoBackToHistory';
+import { currentViewState, isSelfWriteState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 interface HeaderProps {
@@ -16,6 +18,8 @@ function Header(props: HeaderProps) {
   const { back, title, close } = props;
   const { goBackToHistory } = useGoBackToHistory();
   const { removeLocalStorageItem } = useRemoveLocalStorage();
+  const currentView = useRecoilValue(currentViewState);
+  const isSelfWrite = useRecoilValue(isSelfWriteState);
 
   const reset = () => {
     removeLocalStorageItem(
@@ -26,6 +30,7 @@ function Header(props: HeaderProps) {
       'history',
       'isSelfWrite',
       'productSizes',
+      'topOrBottom',
     );
     window.close();
   };
@@ -33,7 +38,7 @@ function Header(props: HeaderProps) {
   return (
     <Styled.Root>
       <Styled.Back>{back && <img src={icBack} alt="back" onClick={goBackToHistory} />}</Styled.Back>
-      <Styled.Title>{title || null}</Styled.Title>
+      <Styled.Title hasMargin={currentView === 'compare' && isSelfWrite}>{title || null}</Styled.Title>
       <Styled.Close>{close && <img src={icClose} alt="close" onClick={reset} />}</Styled.Close>
     </Styled.Root>
   );
@@ -60,9 +65,10 @@ const Styled = {
       cursor: pointer;
     }
   `,
-  Title: styled.h1`
+  Title: styled.h1<{ hasMargin: boolean }>`
     ${theme.fonts.title1}
     color: ${theme.colors.black};
+    margin-top: ${({ hasMargin }) => hasMargin && '2.77rem'};
   `,
   Close: styled.div`
     width: 2.4rem;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { topBottomTextConverter, topBottomTextMapper } from '../../../utils/topBottomTextMapper';
 import { TopOrBottom } from '../../states';
-import { isSelfWriteState } from '../../states/atom';
+import { isSelfWriteState, measureState } from '../../states/atom';
 import theme from '../../styles/theme';
 
 import { BottomType, SizePropType, TopType } from '.';
@@ -17,6 +17,7 @@ interface SizesProps {
 function Sizes(props: SizesProps) {
   const { sizes, productSizes, currentTab } = props;
   const isSelfWrite = useRecoilValue(isSelfWriteState);
+  const measure = useRecoilValue(measureState);
 
   const calculateDifference = (key: keyof SizePropType, size: number) => {
     if (!productSizes) return;
@@ -24,11 +25,20 @@ function Sizes(props: SizesProps) {
     return size > compareTarget ? `-${(size - compareTarget).toFixed(1)}` : `+${(compareTarget - size).toFixed(1)}`;
   };
 
+  const getMeasure = () => {
+    if (currentTab === 'top') {
+      return measure.top ? '단면' : '둘레';
+    }
+    return measure.bottom ? '단면' : '둘레';
+  };
+
   return (
     <Styled.Root>
       {Object.entries(sizes).map(([key, size]) => (
         <Styled.Size isTop={currentTab === 'top'} key={key}>
-          <Styled.SizeKey>{topBottomTextConverter(key as keyof typeof topBottomTextMapper)}</Styled.SizeKey>
+          <Styled.SizeKey>
+            {topBottomTextConverter(key as keyof typeof topBottomTextMapper, getMeasure())}
+          </Styled.SizeKey>
           <Styled.SizeValue isSelfWrite={isSelfWrite ? true : false}>
             {size.toFixed(1)}
             <span>cm</span>

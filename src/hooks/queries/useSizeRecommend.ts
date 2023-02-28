@@ -116,6 +116,8 @@ export const useSizeRecommend = () => {
     }
     setSelectedOption(option);
     setTopOrBottom(option);
+    console.log(option);
+    localStorage.setItem('topOrBottom', option);
   };
 
   const executeSizeRecommmend = async (option: TopOrBottom) => {
