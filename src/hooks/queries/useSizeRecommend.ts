@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { postSizeTable, saveResult } from '../../apis/api';
+import { fetchMySize, postSizeTable, saveResult } from '../../apis/api';
 import { TopOrBottom } from '../../states';
 import {
   currentViewState,
@@ -120,21 +120,35 @@ export const useSizeRecommend = () => {
   };
 
   const executeSizeRecommmend = async (option: TopOrBottom) => {
-    setCurrentView('loading');
-
     await sizeCrawling(option);
     await getSizeRecommendResult(option);
     renderNextView();
   };
 
+  const isEmptyData = (data: object) => {
+    return Object.values(data).every((value) => value === null);
+  };
+
+  const checkMySizeExist = async (option: TopOrBottom) => {
+    const { top, bottom } = await fetchMySize();
+
+    if (option === 'top') {
+      isEmptyData(top) ? setCurrentView('nosize') : executeSizeRecommmend('top');
+    } else {
+      isEmptyData(bottom) ? setCurrentView('nosize') : executeSizeRecommmend('bottom');
+    }
+  };
+
   const onClickOption = (option: TopOrBottom) => {
+    setCurrentView('loading');
+
     checkOption(option);
 
     if (isSelfWrite) {
       setCurrentView('size-write');
       return;
     }
-    executeSizeRecommmend(option);
+    checkMySizeExist(option);
   };
 
   return { onClickOption };
