@@ -93,6 +93,7 @@ function SizeWrite() {
       } else {
         setSelfMeasureState({ ...selfMeasureState, selfTop: true, selfBottom: true });
       }
+      localStorage.setItem('measure', JSON.stringify(measure));
 
       Object.entries(values).map(([inputKey, inputValue]) => {
         if (inputKey === 'size') {

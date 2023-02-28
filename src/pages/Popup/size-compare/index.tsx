@@ -84,6 +84,7 @@ function SizeCompare() {
     localStorage.setItem('bottomSize', JSON.stringify(bottom));
     setMySize({ top, bottom });
     setMeasure({ ...measure, top: top.isWidthOfTop, bottom: bottom.isWidthOfBottom });
+    localStorage.setItem('measure', JSON.stringify(measure));
   };
 
   const isEmptyData = (data: object) => {
