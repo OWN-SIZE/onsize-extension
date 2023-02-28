@@ -7,6 +7,9 @@ const matchList = [
   'https://www.wconcept.co.kr/Product/[a-zA-Z]*',
 ];
 
+const extensionUrl = 'chrome://extensions/';
+const websiteUrl = 'ownsize.me';
+
 const reloadUserData = (tabId: number) => {
   chrome.scripting.executeScript({ target: { tabId }, files: ['/script/getUserData.js'] });
 };
@@ -34,8 +37,13 @@ const inactivate = () => {
 };
 
 const checkUrl = (url: string, tabId: number) => {
-  if (url.includes('ownsize.me')) {
+  if (url.includes(websiteUrl)) {
     reloadUserData(tabId);
+  }
+
+  if (url.includes(extensionUrl)) {
+    activate();
+    return;
   }
 
   const isShoppingMall = matchList.some((v) => {
