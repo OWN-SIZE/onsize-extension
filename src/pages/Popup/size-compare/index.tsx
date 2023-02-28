@@ -22,7 +22,7 @@ function SizeCompare() {
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const isSelfWrite = useRecoilValue(isSelfWriteState);
   const productSelfWrite = useRecoilValue(productSelfWriteState);
-  const [, setMeasure] = useRecoilState(measureState);
+  const [measure, setMeasure] = useRecoilState(measureState);
   const [isLoading, setIsLoading] = useState(true);
 
   const { currentTab = 'top', handleTab } = useTabs();
@@ -83,7 +83,8 @@ function SizeCompare() {
     localStorage.setItem('topSize', JSON.stringify(top));
     localStorage.setItem('bottomSize', JSON.stringify(bottom));
     setMySize({ top, bottom });
-    setMeasure({ top: top.isWidthOfTop, bottom: bottom.isWidthOfBottom });
+    setMeasure({ ...measure, top: top.isWidthOfTop, bottom: bottom.isWidthOfBottom });
+    localStorage.setItem('measure', JSON.stringify(measure));
   };
 
   const isEmptyData = (data: object) => {

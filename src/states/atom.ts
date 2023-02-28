@@ -116,8 +116,18 @@ export const sizeRecommendState = atom<string | null>({
 
 export const measureState = atom<MeasureType>({
   key: 'measure',
-  default: {
+  default: JSON.parse(
+    localStorage.getItem('measure') ||
+      JSON.stringify({
+        top: true,
+        bottom: true,
+        selfTop: true,
+        selfBottom: true,
+      }),
+  ) || {
     top: true,
     bottom: true,
+    selfTop: true,
+    selfBottom: true,
   },
 });

@@ -11,7 +11,6 @@ interface SizesProps {
   sizes: SizePropType;
   productSizes?: Partial<Omit<TopType, 'isWidthOfTop'> | Omit<BottomType, 'isWidthOfBottom'>>;
   currentTab: TopOrBottom | null;
-  isSelfWrite?: boolean;
 }
 
 function Sizes(props: SizesProps) {
@@ -26,6 +25,12 @@ function Sizes(props: SizesProps) {
   };
 
   const getMeasure = () => {
+    if (isSelfWrite) {
+      if (currentTab === 'top') {
+        return measure.selfTop ? '단면' : '둘레';
+      }
+      return measure.selfBottom ? '단면' : '둘레';
+    }
     if (currentTab === 'top') {
       return measure.top ? '단면' : '둘레';
     }

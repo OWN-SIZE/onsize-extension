@@ -35,4 +35,6 @@ export interface UserDataType {
 export interface MeasureType {
   top: boolean;
   bottom: boolean;
+  selfTop: boolean;
+  selfBottom: boolean;
 }

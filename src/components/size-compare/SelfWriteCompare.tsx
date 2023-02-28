@@ -20,7 +20,7 @@ function SelfWriteCompare(props: SelfWriteCompareProps) {
   return (
     <>
       <Styled.Root isTop={topOrBottom === 'top'}>
-        <Sizes sizes={sizes} productSizes={storedProductSizes || productSizes} currentTab={topOrBottom} isSelfWrite />
+        <Sizes sizes={sizes} productSizes={storedProductSizes || productSizes} currentTab={topOrBottom} />
       </Styled.Root>
       <SaveButton />
     </>

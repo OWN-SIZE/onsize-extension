@@ -9,7 +9,7 @@ import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 import useForm from '../../../hooks/business/useForm';
 import { useSizeCompare } from '../../../hooks/queries/useSizeCompare';
-import { currentViewState, productSelfWriteState, topOrBottomState } from '../../../states/atom';
+import { currentViewState, measureState, productSelfWriteState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { SizeTableType } from '../../../types/remote';
 import { BottomValuesType, TopValuesType } from '../../../types/useForm';
@@ -26,13 +26,13 @@ const TopInitValues: TopValuesType = { size: '', topLength: '', shoulder: '', ch
 const BottomInputList = [
   { inputKey: 'size', withcm: false },
   { inputKey: 'bottomLength', withcm: true },
+  { inputKey: 'rise', withcm: true },
   { inputKey: 'waist', withcm: true },
   { inputKey: 'thigh', withcm: true },
-  { inputKey: 'rise', withcm: true },
   { inputKey: 'hem', withcm: true },
 ];
 
-const BottomInitValues: BottomValuesType = { size: '', bottomLength: '', waist: '', thigh: '', rise: '', hem: '' };
+const BottomInitValues: BottomValuesType = { size: '', bottomLength: '', rise: '', waist: '', thigh: '', hem: '' };
 
 function SizeWrite() {
   const topOrBottom = useRecoilValue(topOrBottomState);
@@ -41,6 +41,7 @@ function SizeWrite() {
   const [, setProductSize] = useRecoilState(productSelfWriteState);
   const { onClickOption: handleSizeRecommend } = useSizeCompare();
   const userId = JSON.parse(localStorage.getItem('userId') ?? '-99');
+  const [selfMeasureState, setSelfMeasureState] = useRecoilState(measureState);
 
   const {
     values,
@@ -88,7 +89,11 @@ function SizeWrite() {
       if (measure === '둘레') {
         inputData.isWidthOfTop = false;
         inputData.isWidthOfBottom = false;
+        setSelfMeasureState({ ...selfMeasureState, selfTop: false, selfBottom: false });
+      } else {
+        setSelfMeasureState({ ...selfMeasureState, selfTop: true, selfBottom: true });
       }
+      localStorage.setItem('measure', JSON.stringify(measure));
 
       Object.entries(values).map(([inputKey, inputValue]) => {
         if (inputKey === 'size') {
