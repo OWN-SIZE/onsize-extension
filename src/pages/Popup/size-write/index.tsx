@@ -36,7 +36,7 @@ const BottomInitValues: BottomValuesType = { size: '', bottomLength: '', waist: 
 
 function SizeWrite() {
   const topOrBottom = useRecoilValue(topOrBottomState);
-  const [measure, setMeasure] = useState('단면');
+  const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
   const [, setCurrentView] = useRecoilState(currentViewState);
   const [, setProductSize] = useRecoilState(productSelfWriteState);
   const { onClickOption: handleSizeRecommend } = useSizeCompare();
@@ -53,6 +53,7 @@ function SizeWrite() {
     isAddRow,
     setIsAddRow,
   } = useForm({
+    measure,
     initialValues: topOrBottom === 'top' || topOrBottom === null ? TopInitValues : BottomInitValues,
     onSubmit: async (values) => {
       const sizes: SizeTableType[] = [];
@@ -93,7 +94,8 @@ function SizeWrite() {
         if (inputKey === 'size') {
           inputData.size = inputValue;
         } else {
-          inputData[inputKey] = parseFloat(inputValue);
+          const value = measure === '둘레' ? inputValue * 2 : inputValue;
+          inputData[inputKey] = parseFloat(value);
         }
       });
 
