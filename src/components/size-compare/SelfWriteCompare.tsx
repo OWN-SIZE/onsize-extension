@@ -33,7 +33,7 @@ const Styled = {
   Root: styled.div<{ isTop: boolean }>`
     display: flex;
     justify-content: center;
-    padding-top: ${({ isTop }) => (isTop ? '7.4rem' : '3rem')};
-    margin-bottom: ${({ isTop }) => (isTop ? '7.3rem' : '3.4rem')};
+    padding-top: ${({ isTop }) => (isTop ? '6.95rem' : '3rem')};
+    margin-bottom: ${({ isTop }) => (isTop ? '6.95rem' : '3.4rem')};
   `,
 };
