@@ -9,7 +9,7 @@ import FormRow from '../../../components/sizewrite/FormRow';
 import RadioButton from '../../../components/sizewrite/RadioButton';
 import useForm from '../../../hooks/business/useForm';
 import { useSizeCompare } from '../../../hooks/queries/useSizeCompare';
-import { currentViewState, productSelfWriteState, topOrBottomState } from '../../../states/atom';
+import { currentViewState, measureState, productSelfWriteState, topOrBottomState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 import { SizeTableType } from '../../../types/remote';
 import { BottomValuesType, TopValuesType } from '../../../types/useForm';
@@ -41,6 +41,7 @@ function SizeWrite() {
   const [, setProductSize] = useRecoilState(productSelfWriteState);
   const { onClickOption: handleSizeRecommend } = useSizeCompare();
   const userId = JSON.parse(localStorage.getItem('userId') ?? '-99');
+  const [selfMeasureState, setSelfMeasureState] = useRecoilState(measureState);
 
   const {
     values,
@@ -88,6 +89,9 @@ function SizeWrite() {
       if (measure === '둘레') {
         inputData.isWidthOfTop = false;
         inputData.isWidthOfBottom = false;
+        setSelfMeasureState({ ...selfMeasureState, selfTop: false, selfBottom: false });
+      } else {
+        setSelfMeasureState({ ...selfMeasureState, selfTop: true, selfBottom: true });
       }
 
       Object.entries(values).map(([inputKey, inputValue]) => {

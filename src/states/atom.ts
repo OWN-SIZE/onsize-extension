@@ -119,5 +119,7 @@ export const measureState = atom<MeasureType>({
   default: {
     top: true,
     bottom: true,
+    selfTop: true,
+    selfBottom: true,
   },
 });

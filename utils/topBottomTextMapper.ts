@@ -9,10 +9,10 @@ export const topBottomTextMapper = {
   hem: '밑단 ',
 };
 
-const measureCheckList = ['chest', 'waist', 'thigh', 'hem'];
+const measureCheckList = ['shoulder', 'chest', 'waist', 'thigh', 'hem'];
 
 export const topBottomTextConverter = (key: keyof typeof topBottomTextMapper, measure: string) => {
-  if (key === 'shoulder') {
+  if (key === 'shoulder' && measure === '단면') {
     const text = topBottomTextMapper[key] + '너비';
     return text;
   }
