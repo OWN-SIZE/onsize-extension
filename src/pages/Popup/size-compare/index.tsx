@@ -14,7 +14,7 @@ import Tabs from '../../../components/size-compare/Tabs';
 import { DOMAIN } from '../../../contants/domain';
 import { LINK, MESSAGE } from '../../../contants/text';
 import useTabs from '../../../hooks/ui/useTabs';
-import { isSelfWriteState, mySizeState, productSelfWriteState } from '../../../states/atom';
+import { isSelfWriteState, measureState, mySizeState, productSelfWriteState } from '../../../states/atom';
 import theme from '../../../styles/theme';
 
 function SizeCompare() {
@@ -22,6 +22,7 @@ function SizeCompare() {
   const [mySize, setMySize] = useRecoilState(mySizeState);
   const isSelfWrite = useRecoilValue(isSelfWriteState);
   const productSelfWrite = useRecoilValue(productSelfWriteState);
+  const [, setMeasure] = useRecoilState(measureState);
   const [isLoading, setIsLoading] = useState(true);
 
   const { currentTab = 'top', handleTab } = useTabs();
@@ -82,6 +83,7 @@ function SizeCompare() {
     localStorage.setItem('topSize', JSON.stringify(top));
     localStorage.setItem('bottomSize', JSON.stringify(bottom));
     setMySize({ top, bottom });
+    setMeasure({ top: top.isWidthOfTop, bottom: bottom.isWidthOfBottom });
   };
 
   const isEmptyData = (data: object) => {

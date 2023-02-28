@@ -31,3 +31,8 @@ export interface UserDataType {
   userId: number;
   token: string;
 }
+
+export interface MeasureType {
+  top: boolean;
+  bottom: boolean;
+}
