@@ -1,17 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
 import { TopOrBottom } from '../../states';
+import { topOrBottomState } from '../../states/atom';
 import { ValuesType } from '../../types/useForm';
 
 interface FormProps {
+  measure: '단면' | '둘레';
   initialValues: ValuesType;
   onSubmit: (values: object) => void;
 }
 
-function useForm({ initialValues, onSubmit }: FormProps) {
+function useForm(props: FormProps) {
+  const topOrBottom = useRecoilValue(topOrBottomState);
+  const { measure, initialValues, onSubmit } = props;
   const [values, setValues] = useState<ValuesType>(initialValues);
   const [addedValues, setAddedValues] = useState<ValuesType>(initialValues);
   const [isAddRow, setIsAddRow] = useState<TopOrBottom | null>(null);
+
+  useEffect(() => {
+    if (topOrBottom === 'top') {
+      setValues({
+        ...values,
+        shoulder: `${
+          measure === '둘레'
+            ? (parseFloat(values.shoulder) * 2).toFixed(1)
+            : (parseFloat(values.shoulder) / 2).toFixed(1)
+        }`,
+        chest: `${
+          measure === '둘레' ? (parseFloat(values.chest) * 2).toFixed(1) : (parseFloat(values.chest) / 2).toFixed(1)
+        }`,
+      });
+      setAddedValues({
+        ...addedValues,
+        shoulder: `${
+          measure === '둘레'
+            ? (parseFloat(addedValues.shoulder) * 2).toFixed(1)
+            : (parseFloat(addedValues.shoulder) / 2).toFixed(1)
+        }`,
+        chest: `${
+          measure === '둘레'
+            ? (parseFloat(addedValues.chest) * 2).toFixed(1)
+            : (parseFloat(addedValues.chest) / 2).toFixed(1)
+        }`,
+      });
+    }
+  }, [measure]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
