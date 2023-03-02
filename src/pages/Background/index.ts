@@ -5,7 +5,6 @@ const matchList = [
   'https://www.okmall.com/products/view?.*',
   'https://product.29cm.co.kr/[a-zA-Z]*',
   'https://www.wconcept.co.kr/Product/[a-zA-Z]*',
-  'ownsize.me',
 ];
 const shoppingMallList = [
   'https://www.musinsa.com/',
@@ -47,6 +46,13 @@ const inactivate = () => {
   chrome.storage.local.remove('currentView');
 };
 
+const inactivatedShowPopup = () => {
+  chrome.action.setIcon({
+    path: '/assets/img/icon-inactive.png',
+  });
+  chrome.action.setPopup({ popup: 'popup.html' });
+};
+
 const checkUrl = (url: string, tabId: number) => {
   if (url.includes(websiteUrl)) {
     reloadUserData(tabId);
@@ -66,21 +72,17 @@ const checkUrl = (url: string, tabId: number) => {
     return url.includes(v);
   });
 
-  console.log(isShoppingMall, isShoppingMallDetailPage);
-
-  if (isShoppingMall) {
-    if (isShoppingMallDetailPage) {
-      reloadProductData(tabId);
-      reloadSizeTable(tabId);
-      activate();
-    } else {
-      inactivate();
-    }
+  if (isShoppingMallDetailPage) {
+    reloadProductData(tabId);
+    reloadSizeTable(tabId);
+    activate();
   } else {
-    chrome.action.setIcon({
-      path: '/assets/img/icon-inactive.png',
-    });
-    chrome.storage.local.set({ currentView: 'check-enable' });
+    if (isShoppingMall) {
+      inactivate();
+    } else {
+      inactivatedShowPopup();
+      chrome.storage.local.set({ currentView: 'check-enable' });
+    }
   }
 };
 

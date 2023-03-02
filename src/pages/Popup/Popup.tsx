@@ -50,6 +50,7 @@ function Popup() {
       await checkCurrentView();
       await redirect();
     })();
+    chrome.storage.local.set({ isDownload: true });
   }, []);
 
   const renderView = () => {
@@ -72,6 +73,8 @@ function Popup() {
         return <SizeRecommend />;
       case 'loading':
         return <Loading />;
+      case 'check-enable':
+        return <CheckEnable />;
     }
   };
 
