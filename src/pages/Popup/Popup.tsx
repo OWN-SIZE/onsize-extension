@@ -22,9 +22,9 @@ function Popup() {
 
   const checkCurrentView = async () => {
     const { sizeTable } = await chrome.storage.local.get(['sizeTable']);
-    const { currentView } = await chrome.storage.local.get(['currentView']);
+    const { currentView: localCurrentView } = await chrome.storage.local.get(['currentView']);
 
-    if (currentView === 'check-enable') {
+    if (localCurrentView === 'check-enable') {
       setCurrentView('check-enable');
       return;
     }

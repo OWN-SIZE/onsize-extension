@@ -17,7 +17,13 @@ function SaveProduct() {
   const storageImage = localStorage.getItem('productImage');
   const [isLoading, setIsLoading] = useState(true);
 
-  const getLink = <Styled.Link onClick={() => window.open(DOMAIN.HOME)}>{LINK.SAVE}</Styled.Link>;
+  const onClickMoveToCloset = () => {
+    localStorage.removeItem('history');
+    localStorage.removeItem('currentView');
+    window.open(DOMAIN.HOME);
+  };
+
+  const getLink = <Styled.Link onClick={onClickMoveToCloset}>{LINK.SAVE}</Styled.Link>;
 
   const noRecommendedSize = !sizeRecommend || sizeRecommend === 'nosize';
   return (
