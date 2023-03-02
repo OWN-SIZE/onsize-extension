@@ -32,6 +32,7 @@ function Header(props: HeaderProps) {
       'productSizes',
       'topOrBottom',
     );
+    chrome.storage.local.remove('currentView');
     window.close();
   };
 

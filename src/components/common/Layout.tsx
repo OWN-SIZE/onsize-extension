@@ -22,7 +22,9 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
     if (history) {
       localStorage.setItem('history', history);
     }
-    localStorage.setItem('currentView', currentView);
+    if (currentView !== 'check-enable') {
+      localStorage.setItem('currentView', currentView);
+    }
 
     if (currentView !== 'compare') {
       localStorage.removeItem('currentTab');
