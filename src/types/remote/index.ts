@@ -80,3 +80,14 @@ export interface PostSizeTableOutput {
     id: number; // 상품 고유 id
   };
 }
+
+export interface RefreshInput {
+  accessToken: string;
+}
+
+export interface RefreshOutput {
+  data: {
+    token: string; //재발급된 access token
+    userId: number; // 로그인한 유저 고유 아이디
+  };
+}

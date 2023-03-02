@@ -3,6 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { useRecoilState } from 'recoil';
 
 import { DOMAIN } from '../contants/domain';
+import { useRefresh } from '../hooks/queries/useRefresh';
 import { currentViewState, userDataState } from '../states/atom';
 
 export const BASE_URL = process.env.REACT_APP_SERVER ?? '';
@@ -30,6 +31,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
   const [, setUserData] = useRecoilState(userDataState);
   const [, setCurrentView] = useRecoilState(currentViewState);
   const token = localStorage.getItem('token') || '';
+  const refresh = useRefresh({ accessToken: token });
 
   const requestIntercept = client.interceptors.request.use(
     (config: AxiosRequestConfig) => {
@@ -51,12 +53,14 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       }
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
-          const result = confirm('로그인 후 이용해 주세요');
+          alert('로그인 후 이용해 주세요');
           setUserData((prev) => ({ ...prev, userId: 0, token: '' }));
-          result ? window.open(DOMAIN.LOGIN) : window.close();
+          window.open(DOMAIN.LOGIN);
         } else {
-          const result = confirm('세션이 만료되었습니다. 다시 로그인 해주세요.');
-          result ? window.open(DOMAIN.LOGIN) : window.close();
+          const token = await refresh();
+          config.headers['Authorization'] = `${token}`;
+
+          return client(config);
         }
       }
 

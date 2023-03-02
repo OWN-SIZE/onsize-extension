@@ -120,8 +120,8 @@ const refreshExtension = () => {
         if (!url) return;
         checkUrl(url, tabs);
 
-        if (url === 'https://ownsize.me/lading') {
-          // checkIsExtensionDownloaded(tabs);
+        if (url === 'https://ownsize.me/landing') {
+          checkIsExtensionDownloaded(tabs);
         }
       });
     }
