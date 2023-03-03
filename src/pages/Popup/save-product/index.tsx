@@ -20,7 +20,10 @@ function SaveProduct() {
   const onClickMoveToCloset = () => {
     localStorage.removeItem('history');
     localStorage.removeItem('currentView');
-    window.open(DOMAIN.HOME);
+    // window.open(DOMAIN.HOME);
+    chrome.tabs.create({
+      url: DOMAIN.HOME,
+    });
   };
 
   const getLink = <Styled.Link onClick={onClickMoveToCloset}>{LINK.SAVE}</Styled.Link>;
