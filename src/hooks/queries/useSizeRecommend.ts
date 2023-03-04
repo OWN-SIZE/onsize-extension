@@ -27,14 +27,10 @@ export const useSizeRecommend = () => {
 
     if (!url) return;
 
-    const forwardUrlIndex = url.match('goods/')?.index;
-    const questionMarkIndex = url.split('').indexOf('?');
+    const regex = new RegExp(/\d/, 'g');
+    const matchNumbers = url.match(regex)?.join('');
+    const productId = Number(matchNumbers);
 
-    if (!forwardUrlIndex) return;
-    const productId =
-      questionMarkIndex >= 0
-        ? Number(url?.slice(forwardUrlIndex + 6, questionMarkIndex))
-        : Number(url?.slice(forwardUrlIndex + 6));
     return { productId, url };
   };
 

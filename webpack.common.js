@@ -1,4 +1,7 @@
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
+
 const getAbsolutePath = (pathDir) => path.resolve(__dirname, pathDir);
 const getHtmlPlugins = (chunks) => {
   return chunks.map(
@@ -8,6 +11,8 @@ const getHtmlPlugins = (chunks) => {
         title: `${title}`,
         filename: `${chunk}.html`,
         chunks: [chunk],
+        GA_KEY: process.env.REACT_APP_GA_KEY,
+        UA_KEY: process.env.REACT_APP_UA_KEY,
       }),
   );
 };

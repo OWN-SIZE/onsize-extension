@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import { useRedirect } from '../../hooks/queries/useRedirect';
 import { CurrentViewType } from '../../states';
 import { currentViewState } from '../../states/atom';
+import CheckEnable from '../check-enable';
 
 import CannotLoadSize from './cannotloadsize';
 import First from './first';
@@ -21,6 +22,12 @@ function Popup() {
 
   const checkCurrentView = async () => {
     const { sizeTable } = await chrome.storage.local.get(['sizeTable']);
+    const { currentView: localCurrentView } = await chrome.storage.local.get(['currentView']);
+
+    if (localCurrentView === 'check-enable') {
+      setCurrentView('check-enable');
+      return;
+    }
 
     const storedCurrentView = localStorage.getItem('currentView') as CurrentViewType;
     if (sizeTable) {
@@ -43,6 +50,7 @@ function Popup() {
       await checkCurrentView();
       await redirect();
     })();
+    chrome.storage.local.set({ isDownload: true });
   }, []);
 
   const renderView = () => {
@@ -65,6 +73,8 @@ function Popup() {
         return <SizeRecommend />;
       case 'loading':
         return <Loading />;
+      case 'check-enable':
+        return <CheckEnable />;
     }
   };
 

@@ -22,7 +22,8 @@ export type CurrentViewType =
   | 'cannotload'
   | 'nosize'
   | 'size-recommend'
-  | 'loading';
+  | 'loading'
+  | 'check-enable';
 
 export type IsRegisterType = 'null' | 'true' | 'false';
 
