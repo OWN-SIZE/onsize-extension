@@ -21,7 +21,6 @@ function Sizes(props: SizesProps) {
 
   const calculateDifference = (key: keyof SizePropType, size: number) => {
     if (!productSizes) return;
-    console.log(key, size, productSizes[key]);
     let compareTarget = (productSizes[key] as unknown as number) || 0;
     let updatedSize = size;
     const { isWidthOfTop } = mySize.top;
@@ -59,7 +58,6 @@ function Sizes(props: SizesProps) {
         compareTarget = newProductSize;
       }
     }
-    console.log(isWidthOfTop, isWidthOfBottom, measure, updatedSize, compareTarget);
     return updatedSize > compareTarget
       ? `-${(updatedSize - compareTarget).toFixed(1)}`
       : `+${(compareTarget - updatedSize).toFixed(1)}`;
