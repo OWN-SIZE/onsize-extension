@@ -99,8 +99,8 @@ function SizeWrite() {
         if (inputKey === 'size') {
           inputData.size = inputValue;
         } else {
-          const value = measure === '둘레' ? inputValue * 2 : inputValue;
-          inputData[inputKey] = parseFloat(value);
+          // const value = measure === '둘레' ? inputValue * 2 : inputValue;
+          inputData[inputKey] = parseFloat(inputValue);
         }
       });
 
