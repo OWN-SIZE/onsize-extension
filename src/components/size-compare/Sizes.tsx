@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { topBottomTextConverter, topBottomTextMapper } from '../../../utils/topBottomTextMapper';
 import { TopOrBottom } from '../../states';
-import { isSelfWriteState, measureState } from '../../states/atom';
+import { isSelfWriteState, measureState, mySizeState } from '../../states/atom';
 import theme from '../../styles/theme';
 
 import { BottomType, SizePropType, TopType } from '.';
@@ -17,24 +17,72 @@ function Sizes(props: SizesProps) {
   const { sizes, productSizes, currentTab } = props;
   const isSelfWrite = useRecoilValue(isSelfWriteState);
   const measure = useRecoilValue(measureState);
+  const mySize = useRecoilValue(mySizeState);
 
   const calculateDifference = (key: keyof SizePropType, size: number) => {
     if (!productSizes) return;
-    const compareTarget = (productSizes[key] as unknown as number) || 0;
-    return size > compareTarget ? `-${(size - compareTarget).toFixed(1)}` : `+${(compareTarget - size).toFixed(1)}`;
+    let compareTarget = (productSizes[key] as unknown as number) || 0;
+    let updatedSize = size;
+    const { isWidthOfTop } = mySize.top;
+    const { isWidthOfBottom } = mySize.bottom;
+    const ignore = ['topLength', 'bottomLength', 'rise'];
+    if (ignore.includes(key)) {
+      return updatedSize > compareTarget
+        ? `-${(updatedSize - compareTarget).toFixed(1)}`
+        : `+${(compareTarget - updatedSize).toFixed(1)}`;
+    }
+
+    if (isSelfWrite) {
+      if (currentTab === 'top') {
+        const [newSize, newProductSize] = checkMeasure(size, compareTarget, isWidthOfTop as boolean, measure.selfTop);
+        updatedSize = newSize;
+        compareTarget = newProductSize;
+      } else {
+        const [newSize, newProductSize] = checkMeasure(
+          size,
+          compareTarget,
+          isWidthOfBottom as boolean,
+          measure.selfBottom,
+        );
+        updatedSize = newSize;
+        compareTarget = newProductSize;
+      }
+    } else {
+      if (currentTab === 'top') {
+        const [newSize, newProductSize] = checkMeasure(size, compareTarget, isWidthOfTop as boolean, measure.top);
+        updatedSize = newSize;
+        compareTarget = newProductSize;
+      } else {
+        const [newSize, newProductSize] = checkMeasure(size, compareTarget, isWidthOfBottom as boolean, measure.bottom);
+        updatedSize = newSize;
+        compareTarget = newProductSize;
+      }
+    }
+    return updatedSize > compareTarget
+      ? `-${(updatedSize - compareTarget).toFixed(1)}`
+      : `+${(compareTarget - updatedSize).toFixed(1)}`;
+  };
+
+  const checkMeasure = (size: number, productSize: number, mySizeMeasure: boolean, compareMeasure: boolean) => {
+    if (mySizeMeasure && compareMeasure) {
+      return [size, productSize];
+    } else if (mySizeMeasure && !compareMeasure) {
+      return [size * 2, productSize];
+    } else if (!mySizeMeasure && compareMeasure) {
+      return [size / 2, productSize];
+    } else {
+      return [size, productSize];
+    }
   };
 
   const getMeasure = () => {
-    if (isSelfWrite) {
-      if (currentTab === 'top') {
-        return measure.selfTop ? '단면' : '둘레';
-      }
-      return measure.selfBottom ? '단면' : '둘레';
-    }
+    const { isWidthOfTop } = mySize.top;
+    const { isWidthOfBottom } = mySize.bottom;
     if (currentTab === 'top') {
-      return measure.top ? '단면' : '둘레';
+      return isWidthOfTop ? '단면' : '둘레';
+    } else {
+      return isWidthOfBottom ? '단면' : '둘레';
     }
-    return measure.bottom ? '단면' : '둘레';
   };
 
   return (

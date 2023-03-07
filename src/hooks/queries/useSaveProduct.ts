@@ -64,12 +64,13 @@ export const useSaveProduct = () => {
     const { image, mallName, productName } = await getProductData(); // 상품 이미지 및 상품명
 
     const { productUrl, faviconUrl } = await getUrlData();
+    const size = sizeRecommended === 'nosize' || !sizeRecommended ? null : sizeRecommended;
     const body = {
       productUrl,
       image,
       mallName,
       productName: productName.slice(0, 36),
-      size: sizeRecommended || null,
+      size,
       isRecommend: sizeRecommended ? true : false,
       faviconUrl,
       userId: Number(userId),

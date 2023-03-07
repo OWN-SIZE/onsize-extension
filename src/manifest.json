@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "1.1",
+  "version": "1.2",
   "name": "온사이즈 OWNSIZE",
   "description": "쉽고 똑똑한 나만의 쇼핑 도우미, 온사이즈",
   "background": { "service_worker": "script/background.js" },
